@@ -12,6 +12,7 @@
   "dependencies": {
     "quagga": "^0.12.1",
     "react": "^18.2.0",
+    "react-auth-kit": "^2.12.7",
     "react-dom": "^18.2.0",
     "react-jsbarcode": "^0.4.2"
   },
