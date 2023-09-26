@@ -1,0 +1,11 @@
+{
+    "sqltools.useNodeRuntime": true,
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "name": "ttt",
+            "database": "${workspaceFolder:qrcade}/backend/database/qrcade_db.db"
+        }
+    ]
+}
