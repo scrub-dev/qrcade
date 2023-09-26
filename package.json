@@ -1,0 +1,15 @@
+{
+  "name": "qrcade",
+  "version": "0.0.1",
+  "description": "KF7029 Research Project",
+  "main": "./backend/index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
