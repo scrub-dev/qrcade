@@ -7,6 +7,7 @@ import './index.css'
 import { AuthProvider, RequireAuth } from 'react-auth-kit'
 import Home from './components/routes/home.tsx'
 import Login from './components/routes/login.tsx'
+import Hit from './components/routes/Hit.tsx'
 
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
@@ -25,6 +26,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
           </RequireAuth>
         }></Route>
         <Route path='/login' element={<Login/>}></Route>
+        <Route path='/hit' element={<Hit/>}></Route>
       </Routes>
     </AuthProvider>
     </BrowserRouter>
