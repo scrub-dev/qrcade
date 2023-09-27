@@ -1,3 +1,5 @@
+import LoginWidget from "../login/LoginWidget"
+
 export default () => {
-    return <></>
+    return <LoginWidget/>
 }
