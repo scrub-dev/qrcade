@@ -12,7 +12,7 @@ const createDatabaseFile = () => fs.writeFileSync(config.DATABASE_DIR + config.D
 // const getTableList = () => config.TABLES.map(e => e.name)
 
 export const createDatabase = () => {
-    if(DEV_OPTIONS.DEV_MODE && DEV_OPTIONS.PERSIST_DB){
+    if(DEV_OPTIONS.DEV_MODE && !DEV_OPTIONS.PERSIST_DB){
         iniPrint(`Creating Database ${config.DATABASE_DIR + config.DATABASE_NAME}`)
         createDatabaseFile()
     }else{

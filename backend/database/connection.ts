@@ -1,8 +1,5 @@
 import {Sequelize } from "sequelize"
 import config_database from "../configs/config_database.js"
-import { Hit } from "../models/hits.js";
-import { User } from "../models/user.js";
-
 
 export const sequelize = new Sequelize(
   {
