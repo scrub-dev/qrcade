@@ -4,7 +4,13 @@
         {
             "previewLimit": 50,
             "driver": "SQLite",
-            "name": "ttt",
+            "name": ":memory:",
+            "database": ":memory:"
+        },
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "name": "thd",
             "database": "${workspaceFolder:qrcade}/backend/database/qrcade_db.db"
         }
     ]

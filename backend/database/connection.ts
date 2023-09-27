@@ -1,8 +1,23 @@
-import config from './config.js'
-import Database from 'better-sqlite3'
+import {Sequelize } from "sequelize"
+import config_database from "../configs/config_database.js"
+import { Hit } from "../models/hits.js";
+import { User } from "../models/user.js";
 
-export default () => {
-    let conn = new Database(config.DATABASE_DIR + config.DATABASE_NAME)
-    conn.pragma('journal_mode = WAL')
-    return conn
-}
+
+export const sequelize = new Sequelize(
+  {
+    dialect: "sqlite",
+    storage: config_database.DATABASE_DIR + "../database/" + config_database.DATABASE_NAME,
+    logging: false
+  }
+);
+
+sequelize.sync();
+
+(async () => {
+  try {
+    await sequelize.authenticate();
+  } catch (error) {
+    console.error("Unable to connect to the database:", error);
+  }
+})();

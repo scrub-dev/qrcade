@@ -1,6 +1,6 @@
 import figlet from "figlet";
-import { TDevOptions, TFigletOptions } from "./types.js";
-import { DEV_OPTIONS } from "../config.js";
+import { TDevOptions, TFigletOptions } from "../configs/types.js";
+import { DEV_OPTIONS } from "../configs/config_app.js";
 import chalk from 'chalk'
 import { pad } from "./pad.js";
 

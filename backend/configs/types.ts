@@ -6,7 +6,8 @@ export interface TDevOptions {
     PRINT_DEBUG_MESSAGES: boolean,
     SERVER_LOGGING: boolean,
     VERBOSE_SERVER_LOGGING: boolean,
-    LOG_HITS: boolean
+    LOG_HITS: boolean,
+    TEST_USER: boolean
 }
 
 export interface TFigletOptions {
@@ -24,4 +25,12 @@ export interface TTable {
 export interface TTableColumn {
     name: String,
     attr: String
+}
+
+export interface TUser {
+    id : Number
+    passwd: String
+    uname: String
+    is_admin: Boolean
+    team? : String
 }
