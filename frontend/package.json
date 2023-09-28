@@ -17,7 +17,8 @@
     "react": "^18.2.0",
     "react-auth-kit": "^2.12.7",
     "react-dom": "^18.2.0",
-    "react-jsbarcode": "^0.4.2"
+    "react-jsbarcode": "^0.4.2",
+    "react-to-print": "^2.14.13"
   },
   "devDependencies": {
     "@types/node": "^20.7.0",

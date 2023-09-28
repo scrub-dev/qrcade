@@ -1,11 +1,12 @@
 import {QRCodeSVG} from 'qrcode.react'
 
-export default (user_id: string, size? : number) => {
-    const x = `https://localhost:5173/hit?h=${user_id}`
+export default (props: any) => {
+    const x = `https://localhost:5173/hit?h=${props.userID}`
+    console.log(props.margin)
     return <QRCodeSVG
                 value={x}
-                size={(size) ? size : 600}
-                includeMargin
+                size={(props.size) ? props.size : 600}
+                includeMargin = {props.margin}
             />
 
 }

@@ -1,18 +1,17 @@
 import { useAuthUser } from "react-auth-kit"
 import Logout from "../login/Logout"
 import Qrcode from "../profile/qrcode"
-import qrcode from "../profile/qrcode"
+import PrintQRCode from "../profile/printQRCode"
 
 export default () => {
 
     const user = useAuthUser()
-    const code = qrcode(user()?.id)
 
     return <>
             <Logout/>
             <h1>Hello {user() ? user()?.uname : "User"}</h1>
-            <h1 className="bg-black text-white text-3xl">HelloWorld</h1>
-            {code}
+            <Qrcode size={400} userID={user()?.id} margin/>
+            <PrintQRCode userID={user()?.id} size={700} margin={false} username={user()?.uname}/>
 
     </>
 }
