@@ -16,6 +16,7 @@ import isAdmin from './lib/admin/isAdmin.js'
 import setOption from './lib/admin/setOption.js'
 import clearHits from './lib/admin/clearHits.js'
 import setTeam from './lib/game/setTeam.js'
+import clearTeams from './lib/admin/clearTeams.js'
 
 
 export const app = express()
@@ -173,9 +174,38 @@ router.get("/setteam", async (req: Request, res: Response) => {
     if(!result) return res.json({satus: "FAILED", message: "Invalid"}).status(200).end()
     else return res.json({satus: "SUCCESS", message: "Team changed"}).status(200).end()
 })
+router.get("/getTeamScore", async (req: Request, res: Response) => {
 
-router.get("/getTeamScore", async (req: Request, res: Response) => {return res.end()})
-router.get("/getPlayerScore", async (req: Request, res: Response) => {return res.end()})
+    let isTeamGame = (await getOption("GAMEMODE")) === "TDM"
+    if(!isTeamGame) return res.json({message: "Mode is currently FFA, no team stats available", status: "FAILED"}).status(200).end()
+
+    let userID = JSON.parse(req.cookies._qrcade_state).id
+    let user = await User.findOne({where : {id : userID}})
+    if(!user) return res.json({message: "No User specified", status: "FAILED"}).status(200).end()
+
+    let redCount =  await Hit.count({ where: {team : "RED"}})
+    let blueCount =  await Hit.count({ where: {team: "BLUE"}})
+
+    return res.json({status: "SUCCESS", results: {
+        red : redCount,
+        blue : blueCount
+    }}).status(200).end()
+})
+router.get("/getPlayerScore", async (req: Request, res: Response) => {
+    let userID = JSON.parse(req.cookies._qrcade_state).id
+
+    let user = await User.findOne({where : {id : userID}})
+    if(!user) return res.json({value: false}).status(200).end()
+
+    let playerHitCount =  await Hit.count({ where: {player : user.dataValues.id}})
+    let hitPlayerCount =  await Hit.count({ where: {player_hit : user.dataValues.id}})
+
+    return res.json({status: "SUCCESS", results: {
+        youHit : playerHitCount,
+        hitYou : hitPlayerCount
+    }}).status(200).end()
+
+})
 
 router.get("/admin/isadmin", async (req: Request, res: Response) => {
     let userID = JSON.parse(req.cookies._qrcade_state).id
@@ -199,6 +229,9 @@ router.get("/admin/clearteams", async (req: Request, res: Response) => {
 
     let userID = JSON.parse(req.cookies._qrcade_state).id
     if(!await isAdmin(userID)) return res.json({message: "Unauthorized"}).status(403).end()
+
+    await clearTeams()
+
     return res.json({message: "Teams Reset", status: "SUCCESS"}).status(201).end()
 
 })
