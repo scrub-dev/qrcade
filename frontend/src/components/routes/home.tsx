@@ -3,7 +3,7 @@ import Logout from "../login/Logout"
 import Qrcode from "../profile/qrcode"
 import PrintQRCode from "../profile/printQRCode"
 import { useEffect, useState } from "react"
-import axios from "axios"
+import { useNavigate } from 'react-router-dom'
 import AdminComponent from "../admin/AdminComponent"
 import {useFormik } from "formik"
 import { httpWithCreds } from "../../util/http"
@@ -14,6 +14,9 @@ export default () => {
     const [isAdmin, setIsAdmin] = useState(false)
     const [team, setTeam] = useState("")
 
+    const nav = useNavigate()
+
+    const viewScore = () => {nav("/score")}
 
     const checkAdmin = () => {
         httpWithCreds().get("/admin/isadmin").then(res => {
@@ -73,6 +76,7 @@ export default () => {
                 <PrintQRCode userID={user()?.id} size={700} margin={false} username={user()?.uname}/>
             </div>
             <div>
+                <button onClick={viewScore}>View Score</button>
                 {team ? "you are on team " +  team : ""}
                 {teamForm}
                 {isAdmin ? <AdminComponent/> : null}

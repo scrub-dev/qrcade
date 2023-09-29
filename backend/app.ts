@@ -17,15 +17,13 @@ import setOption from './lib/admin/setOption.js'
 import clearHits from './lib/admin/clearHits.js'
 import setTeam from './lib/game/setTeam.js'
 import clearTeams from './lib/admin/clearTeams.js'
+import 'dotenv/config.js'
 
 
 export const app = express()
 const router = express.Router()
 
-
 const frontend = (process.env.NODE_ENV === 'development') ? "http://localhost:5173" : "https://qrcade.xyz"
-
-
 
 const webLogger = (req: Request, res: Response, next: NextFunction) => {
     debugWebPrint(`Path: ${req.url} | Time: ${new Date(Date.now()).toUTCString()}`)
@@ -179,7 +177,7 @@ router.get("/setteam", async (req: Request, res: Response) => {
     if(!result) return res.json({satus: "FAILED", message: "Invalid"}).status(200).end()
     else return res.json({satus: "SUCCESS", message: "Team changed"}).status(200).end()
 })
-router.get("/getTeamScore", async (req: Request, res: Response) => {
+router.get("/getteamscore", async (req: Request, res: Response) => {
 
     let isTeamGame = (await getOption("GAMEMODE")) === "TDM"
     if(!isTeamGame) return res.json({message: "Mode is currently FFA, no team stats available", status: "FAILED"}).status(200).end()
@@ -196,7 +194,7 @@ router.get("/getTeamScore", async (req: Request, res: Response) => {
         blue : blueCount
     }}).status(200).end()
 })
-router.get("/getPlayerScore", async (req: Request, res: Response) => {
+router.get("/getplayerscore", async (req: Request, res: Response) => {
     let userID = JSON.parse(req.cookies._qrcade_state).id
 
     let user = await User.findOne({where : {id : userID}})

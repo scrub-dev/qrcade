@@ -8,6 +8,7 @@ import { AuthProvider, RequireAuth } from 'react-auth-kit'
 import Home from './components/routes/home.tsx'
 import Login from './components/routes/login.tsx'
 import Hit from './components/routes/Hit.tsx'
+import Score from './components/routes/Score.tsx'
 
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
@@ -23,6 +24,12 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <Route path='/' element={
           <RequireAuth loginPath='/login'>
             <Home/>
+          </RequireAuth>
+        }></Route>
+
+      <Route path='/score' element={
+          <RequireAuth loginPath='/login'>
+            <Score/>
           </RequireAuth>
         }></Route>
         <Route path='/login' element={<Login/>}></Route>
