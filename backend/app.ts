@@ -230,10 +230,9 @@ router.get("/admin/clearteams", async (req: Request, res: Response) => {
     let userID = JSON.parse(req.cookies._qrcade_state).id
     if(!await isAdmin(userID)) return res.json({message: "Unauthorized"}).status(403).end()
 
-    await clearTeams()
+    let teamsResetResult = await clearTeams()
 
-    return res.json({message: "Teams Reset", status: "SUCCESS"}).status(201).end()
-
+    return res.json({message: "Teams Reset", status: (teamsResetResult) ? "SUCCESS" : "FAILED"}).status(200).end()
 })
 router.get("/admin/setoption", async (req: Request, res: Response) => {
 
