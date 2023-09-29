@@ -2,3 +2,5 @@
 *.map
 
 *.js
+
+backend/database/qrcade_db.db
