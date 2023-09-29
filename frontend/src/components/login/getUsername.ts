@@ -1,3 +1,3 @@
-import axios from "axios";
+import { http } from "../../util/http";
 
-export default async (id: string) => (await axios.get(`http://localhost:3000/getUname?id=${id}`)).data.uname
+export default async (id: string) => (await http().get(`/getUname?id=${id}`)).data.uname

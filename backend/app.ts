@@ -22,13 +22,18 @@ import clearTeams from './lib/admin/clearTeams.js'
 export const app = express()
 const router = express.Router()
 
+
+const frontend = (process.env.NODE_ENV === 'development') ? "http://localhost:5173" : "https://qrcade.xyz"
+
+
+
 const webLogger = (req: Request, res: Response, next: NextFunction) => {
     debugWebPrint(`Path: ${req.url} | Time: ${new Date(Date.now()).toUTCString()}`)
     next()
 }
 
 app.use(cors({
-    origin: "http://localhost:5173",
+    origin: frontend,
     credentials: true,
     optionsSuccessStatus: 200
 }))

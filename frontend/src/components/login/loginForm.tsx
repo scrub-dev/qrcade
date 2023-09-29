@@ -1,10 +1,11 @@
 import { useIsAuthenticated, useSignIn } from 'react-auth-kit'
 import { useFormik } from 'formik'
 import { useState } from "react";
-import axios, { AxiosError } from "axios";
+import { AxiosError } from "axios";
 import getUserID from './getUserID';
 
 import {useNavigate} from 'react-router-dom'
+import { http } from '../../util/http';
 
 export default () => {
 
@@ -22,10 +23,10 @@ export default () => {
             else setError("")
 
             console.log(values)
-            try { if(values.register) await axios.post("http://localhost:3000/register", values)}
+            try { if(values.register) await http().post("/register", values)}
             catch (err) {return setError("Username Taken")}
 
-            const res = await axios.post("http://localhost:3000/auth", values)
+            const res = await http().post("/auth", values)
             console.log(res)
 
             if(res.status != 200 || !res.data.token) return setError("Invalid Credentials or User does not Exist")

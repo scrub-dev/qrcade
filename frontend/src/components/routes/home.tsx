@@ -6,6 +6,7 @@ import { useEffect, useState } from "react"
 import axios from "axios"
 import AdminComponent from "../admin/AdminComponent"
 import {useFormik } from "formik"
+import { httpWithCreds } from "../../util/http"
 
 export default () => {
 
@@ -15,18 +16,18 @@ export default () => {
 
 
     const checkAdmin = () => {
-        axios.get("http://localhost:3000/admin/isadmin", {withCredentials : true}).then(res => {
+        httpWithCreds().get("/admin/isadmin").then(res => {
             setIsAdmin(res.data.value)
         })
     }
 
     const getTeam = async () => {
-        let data = await axios.get("http://localhost:3000/getteam",  {withCredentials : true})
+        let data = await httpWithCreds().get("/getteam")
         return data.data.result
     }
 
     const setTeamRemote = (team: string) => {
-        axios.get(`http://localhost:3000/setteam?team=${team}`, {withCredentials: true}).then(() => {
+        httpWithCreds().get(`/setteam?team=${team}`).then(() => {
             getTeam()
         })
     }
