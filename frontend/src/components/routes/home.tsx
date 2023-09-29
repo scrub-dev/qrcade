@@ -5,7 +5,7 @@ import PrintQRCode from "../profile/printQRCode"
 import { useEffect, useState } from "react"
 import axios from "axios"
 import AdminComponent from "../admin/AdminComponent"
-import { Form, useFormik } from "formik"
+import {useFormik } from "formik"
 
 export default () => {
 
@@ -26,7 +26,7 @@ export default () => {
     }
 
     const setTeamRemote = (team: string) => {
-        axios.get(`http://localhost:3000/setteam?team=${team}`, {withCredentials: true}).then(res => {
+        axios.get(`http://localhost:3000/setteam?team=${team}`, {withCredentials: true}).then(() => {
             getTeam()
         })
     }

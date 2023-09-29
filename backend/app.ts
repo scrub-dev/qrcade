@@ -146,8 +146,6 @@ router.get("/hit", async (req: Request, res: Response) => {
     } else return res.json({message: errMessage || "invalid", status: errStatus}).status(200).end()
 })
 
-
-// TODO TEAM GETTERSETTER BACKEND
 router.get("/getteam", async (req: Request, res: Response) => {
     let userID = JSON.parse(req.cookies._qrcade_state).id
 
@@ -176,10 +174,8 @@ router.get("/setteam", async (req: Request, res: Response) => {
     else return res.json({satus: "SUCCESS", message: "Team changed"}).status(200).end()
 })
 
-
 router.get("/getTeamScore", async (req: Request, res: Response) => {return res.end()})
 router.get("/getPlayerScore", async (req: Request, res: Response) => {return res.end()})
-
 
 router.get("/admin/isadmin", async (req: Request, res: Response) => {
     let userID = JSON.parse(req.cookies._qrcade_state).id
@@ -190,17 +186,23 @@ router.get("/admin/isadmin", async (req: Request, res: Response) => {
     if(await isAdmin(userID)) return res.json({value: true}).status(200).end()
     else return res.json({value: false}).status(200).end()
 })
-
-router.get("/admin/resethits", async (req: Request, res: Response) => {
+router.get("/admin/clearhits", async (req: Request, res: Response) => {
 
     let userID = JSON.parse(req.cookies._qrcade_state).id
     if(!await isAdmin(userID)) return res.json({message: "Unauthorized"}).status(403).end()
 
     await clearHits()
-    return res.json({message: "Hits Removed"}).status(201).end()
+    return res.json({message: "Hits Removed", status: "SUCCESS"}).status(201).end()
 
 })
-router.get("/admin/option", async (req: Request, res: Response) => {
+router.get("/admin/clearteams", async (req: Request, res: Response) => {
+
+    let userID = JSON.parse(req.cookies._qrcade_state).id
+    if(!await isAdmin(userID)) return res.json({message: "Unauthorized"}).status(403).end()
+    return res.json({message: "Teams Reset", status: "SUCCESS"}).status(201).end()
+
+})
+router.get("/admin/setoption", async (req: Request, res: Response) => {
 
     let userID = JSON.parse(req.cookies._qrcade_state).id
 
@@ -212,8 +214,19 @@ router.get("/admin/option", async (req: Request, res: Response) => {
     if(! await getOption(option)) return res.json({message: "Invalid Option"}).status(406).end()
 
     await setOption(option, value)
-    return res.json({message: "Value Updated"}).status(201).end()
+    return res.json({message: "Value Updated", status: "SUCCESS"}).status(201).end()
 
+})
+router.get("/admin/getoption", async (req: Request, res: Response) => {
+    let userID = JSON.parse(req.cookies._qrcade_state).id
+
+    if(!await isAdmin(userID)) return res.json({message: "Unauthorized"}).status(403).end()
+
+    let option = req.query.option as string
+    let optionRes = await getOption(option)
+    if(!optionRes) return res.json({message: "Invalid Option"}).status(406).end()
+
+    return res.json({message: optionRes , status: "SUCCESS"}).status(201).end()
 })
 router.get("/brew", async (req: Request, res: Response) => {
     res.status(418).end()
