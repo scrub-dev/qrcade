@@ -17,7 +17,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       authType='cookie'
       authName='_qrcade'
       cookieDomain={window.location.hostname}
-      cookieSecure={false}
+      cookieSecure={(process.env.NODE_ENV === 'production')}
     >
       <Routes>
         <Route path='/' element={
@@ -26,9 +26,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
           </RequireAuth>
         }></Route>
         <Route path='/login' element={<Login/>}></Route>
-
         <Route path='/hit' element={<Hit/>}></Route>
-
       </Routes>
     </AuthProvider>
     </BrowserRouter>
