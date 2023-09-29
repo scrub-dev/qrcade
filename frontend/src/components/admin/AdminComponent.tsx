@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { httpWithCreds } from "../../util/http"
 import Gamemode from "./Gamemode"
 import GameState from "./GameState"
@@ -7,7 +7,6 @@ export default ()  => {
 
     const [clearHitsStatus, setClearHitsStatus] = useState("")
     const [clearTeamsStatus, setClearTeamsStatus] = useState("")
-
 
     const clearHits = async () => {
         let res = await httpWithCreds().get("/admin/clearhits")
@@ -20,7 +19,7 @@ export default ()  => {
     const clearTeams = async () => {
         let res = await httpWithCreds().get('/admin/clearteams')
         if(res.data.status == "SUCCESS") {
-            setClearHitsStatus("Hits Cleared")
+            setClearTeamsStatus("Teams Cleared")
             setTimeout(() => setClearTeamsStatus(""), 5000)
         }
     }
