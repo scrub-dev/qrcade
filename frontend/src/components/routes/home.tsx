@@ -20,11 +20,9 @@ export default () => {
         })
     }
 
-    const getTeam = () => {
-        axios.get("http://localhost:3000/getteam",  {withCredentials : true}).then(res => {
-            if(res.data.team == "RED" || res.data.team == "BLUE") return setTeam(res.data.team)
-            else return setTeam("NOTEAM")
-        })
+    const getTeam = async () => {
+        let data = await axios.get("http://localhost:3000/getteam",  {withCredentials : true})
+        return data.data.result
     }
 
     const setTeamRemote = (team: string) => {
@@ -33,11 +31,11 @@ export default () => {
         })
     }
 
-    useEffect(() => {
-        checkAdmin()
-        getTeam()
-
-        console.log(team)
+    useEffect( () => {
+        (async () => {
+            checkAdmin()
+            setTeam(await getTeam())
+        })()
     })
 
     const user = useAuthUser()
@@ -45,8 +43,10 @@ export default () => {
     // SET TEAM
     const teamList = [{name: "Red", key: "RED"},{name:"Blue", key: "BLUE"},{name: "No Team", key: "NOTEAM"}]
     const onSubmit = async (values: any) => {
-        let teamSelected = teamList.filter(e => e.name == values.team)[0]
+        let teamSelected = teamList.filter(e => e.name == values.team)[0] || "Red"
+
         setTeamRemote(teamSelected.key || "NOTEAM")
+        getTeam()
     }
     const formikTeam = useFormik({
         initialValues: {
