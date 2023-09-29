@@ -28,7 +28,7 @@ export default () => {
     }
 
     const setTeamRemote = (team: string) => {
-        axios.get(`http://localhost:3000/setteam?team=${team}`).then(res => {
+        axios.get(`http://localhost:3000/setteam?team=${team}`, {withCredentials: true}).then(res => {
             getTeam()
         })
     }

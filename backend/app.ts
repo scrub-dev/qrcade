@@ -15,6 +15,7 @@ import playerExists from './lib/game/playerExists.js'
 import isAdmin from './lib/admin/isAdmin.js'
 import setOption from './lib/admin/setOption.js'
 import clearHits from './lib/admin/clearHits.js'
+import setTeam from './lib/game/setTeam.js'
 
 
 export const app = express()
@@ -147,8 +148,33 @@ router.get("/hit", async (req: Request, res: Response) => {
 
 
 // TODO TEAM GETTERSETTER BACKEND
-router.get("/getteam", async (req: Request, res: Response) => { return res.json({team: "RED"}).end()})
-router.get("/setteam", async (req: Request, res: Response) => {return res.end()})
+router.get("/getteam", async (req: Request, res: Response) => {
+    let userID = JSON.parse(req.cookies._qrcade_state).id
+
+    let user = await User.findOne({where : {id : userID}})
+    if(!user) return res.json({satus: "FAILED", message: "User does not exist"}).status(200).end()
+
+    let team = await getTeam(userID)
+    if(team == null) team == "NOTEAM"
+
+    res.json({result: team, status: "SUCCSS"}).end
+})
+router.get("/setteam", async (req: Request, res: Response) => {
+    let userID = JSON.parse(req.cookies._qrcade_state).id
+
+    let user = await User.findOne({where : {id : userID}})
+    if(!user) return res.json({satus: "FAILED", message: "User does not exist"}).status(200).end()
+
+    let team = req.query.team as string
+    if(!team) return res.json({satus: "FAILED", message: "User does not exist"}).status(200).end()
+
+    let validTeamArr = ["RED", "BLUE", "NOTEAM"]
+    if(!validTeamArr.includes(team)) return res.json({satus: "FAILED", message: "Invalid Team"}).status(200).end()
+
+    let result = await setTeam(userID, team == null ? "NOTEAM" : team)
+    if(!result) return res.json({satus: "FAILED", message: "Invalid"}).status(200).end()
+    else return res.json({satus: "SUCCESS", message: "Team changed"}).status(200).end()
+})
 
 
 router.get("/getTeamScore", async (req: Request, res: Response) => {return res.end()})
