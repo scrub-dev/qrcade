@@ -1,8 +1,8 @@
 import passport from 'passport';
 import {Strategy as LocalStrat }from 'passport-local'
 import { User } from '../../models/user.js';
-import createUid from '../../auth/createUid.js';
-import hashPword from '../../auth/hashPword.js';
+import createUid from '../../lib/auth/auth/createUid.js';
+import hashPword from '../../lib/auth/auth/hashPword.js';
 
 passport.use('register', new LocalStrat(
     {

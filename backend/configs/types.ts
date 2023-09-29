@@ -34,3 +34,8 @@ export interface TUser {
     is_admin: Boolean
     team? : String
 }
+
+export interface TOption {
+    name: string,
+    value: string
+}

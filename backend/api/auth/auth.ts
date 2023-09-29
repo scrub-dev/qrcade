@@ -1,7 +1,7 @@
 import passport from 'passport'
 import {Strategy as LocalStrat }from 'passport-local'
 import { User } from '../../models/user.js'
-import validatePword from '../../auth/validatePword.js'
+import validatePword from '../../lib/auth/auth/validatePword.js'
 
 passport.use('auth', new LocalStrat(
     {

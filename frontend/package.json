@@ -23,7 +23,7 @@
   "devDependencies": {
     "@types/node": "^20.7.0",
     "@types/qrcode": "^1.5.2",
-    "@types/react": "^18.2.15",
+    "@types/react": "^18.2.23",
     "@types/react-dom": "^18.2.7",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
     "@typescript-eslint/parser": "^6.0.0",
@@ -34,7 +34,7 @@
     "eslint-plugin-react-refresh": "^0.4.3",
     "postcss": "^8.4.30",
     "tailwindcss": "^3.3.3",
-    "typescript": "^5.0.2",
+    "typescript": "^5.2.2",
     "vite": "^4.4.9"
   }
 }

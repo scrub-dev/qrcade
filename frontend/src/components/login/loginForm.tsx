@@ -6,7 +6,7 @@ import getUserID from './getUserID';
 
 import {useNavigate} from 'react-router-dom'
 
-export default (props: any) => {
+export default () => {
 
     const nav = useNavigate()
     const isAuth = useIsAuthenticated()
