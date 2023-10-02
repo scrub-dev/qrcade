@@ -7,5 +7,9 @@ export default () => {
     const nav = useNavigate()
 
     if(isAuth()) nav("/")
-    else return <LoginForm/>
+    else return (
+    <div className='bg-black w-full md:w-1/3 m-auto'>
+        <LoginForm/>
+    </div>
+    )
 }

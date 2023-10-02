@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+    font-family: "graffiti";
+    src: url("/fonts/Good_Brush.otf");
+  }
+
+
+.neon-glow {
+    text-shadow: 0px 5px 20px var(--tw-shadow-color), 0px 5px 20px var(--tw-shadow-color);
+}

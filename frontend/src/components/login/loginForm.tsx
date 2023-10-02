@@ -55,13 +55,32 @@ export default () => {
     });
 
     return (
-        <div>
+        <div className='bg-black shadow-md rounded px-8 pt-6 pb-8 mb-4'>
             <form onSubmit={formik.handleSubmit}>
-                <input name='uname' value={formik.values.uname} onChange={formik.handleChange} placeholder='username'/>
-                <input name='pword' value={formik.values.pword} onChange={formik.handleChange} placeholder='password'/>
-                <label>Register<input type="checkbox" name='register' value={formik.values.register} onChange={formik.handleChange}/></label>
-                <p>{error}</p>
-                <button type='submit'>Login</button>
+                <div className='mb-4 shadow-purple-500/50'>
+                    <label htmlFor="uname" className='font-bold text-white'>Username:</label>
+                    <input name='uname' value={formik.values.uname} onChange={formik.handleChange} placeholder='Username' className='appearance-none border rounded w-full py-2 px-3 bg-gray-700 shadow-xl shadow-purple-500/50 text-white'/>
+                </div>
+
+
+                <div className='mb-4'>
+                    <label htmlFor='pword' className='font-bold text-white'>Password:</label>
+                    <input name='pword' type='password' value={formik.values.pword} onChange={formik.handleChange} placeholder='Password' className='appearance-none border rounded w-full py-2 px-3 bg-gray-700 shadow-xl shadow-purple-500/50 text-white'/>
+                </div>
+
+
+                <div className='flex'>
+                    <div className='appearance-none rounded w-full py-2 px-3 mr-5 bg-gray-700 shadow-xl shadow-purple-500/50'>
+                        <label htmlFor='register' className='font-bold text-white'> New Account</label>
+                        <input type="checkbox" name='register' value={formik.values.register} onChange={formik.handleChange} className='ml-2 leading-tight'/>
+                    </div>
+
+                    <button type='submit' className='bg-purple-600 text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:bg-purple-500 font-bold shadow-xl hover:shadow-purple-500/50'>Login</button>
+                </div>
+
+                <p className='text-red-500 font-bold italic appearance-none rounded w-full pt-3 drop-shadow'>{error}</p>
+
+
             </form>
         </div>
     )

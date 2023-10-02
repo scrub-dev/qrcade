@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite --host NODE_ENV=development",
+    "dev": "vite dev --host",
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
@@ -12,6 +12,7 @@
   "dependencies": {
     "@ericblade/quagga2": "^1.8.2",
     "axios": "^1.5.0",
+    "dotenv": "^16.3.1",
     "formik": "^2.4.5",
     "qrcode.react": "^3.1.0",
     "react": "^18.2.0",

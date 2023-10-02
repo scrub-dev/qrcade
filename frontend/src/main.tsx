@@ -18,7 +18,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       authType='cookie'
       authName='_qrcade'
       cookieDomain={window.location.hostname}
-      cookieSecure={(process.env.NODE_ENV === 'production')}
+      cookieSecure={import.meta.env.DEV}
     >
       <Routes>
         <Route path='/' element={
