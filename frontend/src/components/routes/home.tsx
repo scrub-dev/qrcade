@@ -1,18 +1,19 @@
 import { useAuthUser } from "react-auth-kit"
-import Logout from "../login/Logout"
-import Qrcode from "../profile/qrcode"
-import PrintQRCode from "../profile/printQRCode"
+import Logout from "../home/Logout"
+import PrintQRCode from "../home/qrcodes/printQRCode"
 import { useEffect, useState } from "react"
 import { useNavigate } from 'react-router-dom'
 import AdminComponent from "../admin/AdminComponent"
-import {useFormik } from "formik"
 import { httpWithCreds } from "../../util/http"
+import TeamPicker from "../home/Team/TeamPicker"
+import Team from "../home/Team/Team"
 
 export default () => {
 
 
     const [isAdmin, setIsAdmin] = useState(false)
-    const [team, setTeam] = useState("")
+
+    const [team, teamForm] = TeamPicker()
 
     const nav = useNavigate()
 
@@ -24,62 +25,42 @@ export default () => {
         })
     }
 
-    const getTeam = async () => {
-        let data = await httpWithCreds().get("/getteam")
-        return data.data.result
-    }
-
-    const setTeamRemote = (team: string) => {
-        httpWithCreds().get(`/setteam?team=${team}`).then(() => {
-            getTeam()
-        })
-    }
-
     useEffect( () => {
         (async () => {
             checkAdmin()
-            setTeam(await getTeam())
         })()
     })
 
     const user = useAuthUser()
 
-    // SET TEAM
-    const teamList = [{name: "Red", key: "RED"},{name:"Blue", key: "BLUE"},{name: "No Team", key: "NOTEAM"}]
-    const onSubmit = async (values: any) => {
-        let teamSelected = teamList.filter(e => e.name == values.team)[0] || "Red"
-
-        setTeamRemote(teamSelected.key || "NOTEAM")
-        getTeam()
-    }
-    const formikTeam = useFormik({
-        initialValues: {
-            team: "Red"
-        },
-        onSubmit
-    })
-    const teamForm = (
-        <form onSubmit={formikTeam.handleSubmit}>
-            <select name="team" value={formikTeam.values.team} onChange={formikTeam.handleChange}>
-            {teamList.map(t => <option key={t.name}>{t.name}</option>)}
-            </select>
-            <button type="submit">Submit</button>
-        </form>
-    )
-
 
     return <>
+        <div className="h-screen w-full flex flex-col justify-between">
+        <div className="w-full bg-black">
+            <h1 className="font-graffiti text-white neon-glow text-center text-6xl shadow-purple-500/50 py-2">QRCADE</h1>
+        </div>
+        <div className="flex-grow">
+        <div className="bg-black flex w-full py-3 border-y-2 border-purple-500">
+            <div className="mx-auto">
+                <h1 className="font-graffiti text-white text-center my-auto text-2xl">Player</h1>
+                <span className="px-3  font-mono text-4xl text-white my-auto">{user() ? user()?.uname : "User"}</span>
+            </div>
+        </div>
+        <div className="w-full flex bg-black border-b-2 border-purple-500">
+            <button onClick={viewScore} className="font-graffiti text-white m-auto text-2xl bg-purple-600 px-8 py-1 my-2 rounded focus:outline-none focus:shadow-outline hover:bg-purple-500 font-bold shadow-xl hover:shadow-purple-500/50">View Scores</button>
+        </div>
+        <div>
+            <Team team={team}/>
+            {teamForm}
+        </div>
+        <div>
+            {isAdmin ? <AdminComponent/> : null}
+        </div>
+        </div>
+        <PrintQRCode userID={user()?.id} size={700} margin={false} username={user()?.uname}/>
+        <div className="w-full flex bg-black">
             <Logout/>
-            <h1>Hello {user() ? user()?.uname : "User"}</h1>
-            <Qrcode size={400} userID={user()?.id} margin/>
-            <div>
-                <PrintQRCode userID={user()?.id} size={700} margin={false} username={user()?.uname}/>
-            </div>
-            <div>
-                <button onClick={viewScore}>View Score</button>
-                {team ? "you are on team " +  team : ""}
-                {teamForm}
-                {isAdmin ? <AdminComponent/> : null}
-            </div>
+        </div>
+        </div>
     </>
 }

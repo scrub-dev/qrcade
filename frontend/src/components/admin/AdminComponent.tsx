@@ -26,13 +26,14 @@ export default ()  => {
 
     return (
         <div>
-            <p>You are an Admin</p>
-            <p>{clearHitsStatus}</p>
-            <p>{clearTeamsStatus}</p>
+            <p className="text-white">{clearHitsStatus}</p>
+            <p className="text-white">{clearTeamsStatus}</p>
             <Gamemode/>
             <GameState/>
-            <button onClick={clearHits}>Reset Hits</button>
-            <button onClick={clearTeams}>Reset Teams</button>
+            <div className="inline-flex justify-center w-full py-2">
+                <button onClick={clearHits} className="bg-purple-600 text-white py-1 px-1 rounded focus:outline-none focus:shadow-outline hover:bg-purple-500 font-bold shadow-xl hover:shadow-purple-500/50 mr-1">Reset Hits</button>
+                <button onClick={clearTeams} className="bg-purple-600 text-white py-1 px-1 rounded focus:outline-none focus:shadow-outline hover:bg-purple-500 font-bold shadow-xl hover:shadow-purple-500/50 ml-1">Reset Teams</button>
+            </div>
         </div>
     )
 }

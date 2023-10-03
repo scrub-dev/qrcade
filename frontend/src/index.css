@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+
+body {
+  background-color: black
+}
+
 @font-face {
     font-family: "graffiti";
     src: url("/fonts/Good_Brush.otf");

@@ -34,18 +34,16 @@ export default () => {
     })
 
     const gamestatusForm = (
-        <form onSubmit={formikGamestate.handleSubmit}>
-            <select name="gamestate" value={formikGamestate.values.gamestate} onChange={formikGamestate.handleChange}>
+        <div className="w-full">
+        <p className="text-white">Current Game State: {currentGameStatus}</p>
+        <form onSubmit={formikGamestate.handleSubmit}  className="mb-auto">
+            <select name="gamestate" value={formikGamestate.values.gamestate} onChange={formikGamestate.handleChange} className="m-auto appearance-none border rounded py-2 px-3 bg-gray-700 shadow-xl shadow-purple-500/50 text-white w-full mx-auto">
             {validGameStatus.map(t => <option key={t.name}>{t.name}</option>)}
             </select>
-            <button type="submit">Submit</button>
+            <button type="submit" className="bg-purple-600 text-white py-1 px-4 my-2 rounded focus:outline-none focus:shadow-outline hover:bg-purple-500 font-bold shadow-xl hover:shadow-purple-500/50">Submit</button>
         </form>
+        </div>
     )
 
-    return (
-        <>
-            <p>Current Game State: {currentGameStatus}</p>
-            {gamestatusForm}
-        </>
-    )
+    return gamestatusForm
 }

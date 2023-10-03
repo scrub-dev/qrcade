@@ -36,16 +36,16 @@ export default () => {
 
     const gamemodeForm = (
         <form onSubmit={formikGamemode.handleSubmit}>
-            <select name="gamemode" value={formikGamemode.values.gamemode} onChange={formikGamemode.handleChange}>
-            {validGamemodes.map(t => <option key={t.name}>{t.name}</option>)}
+            <select name="gamemode" value={formikGamemode.values.gamemode} onChange={formikGamemode.handleChange} className="m-auto w-full appearance-none border rounded py-2 px-3 bg-gray-700 shadow-xl shadow-purple-500/50 text-white">
+            {validGamemodes.map(t => <option key={t.name} className="">{t.name}</option>)}
             </select>
-            <button type="submit">Submit</button>
+            <button type="submit" className="bg-purple-600 text-white py-1 px-4 my-2 rounded focus:outline-none focus:shadow-outline hover:bg-purple-500 font-bold shadow-xl hover:shadow-purple-500/50">Submit</button>
         </form>
     )
 
     return (
         <>
-            <p>Current Gamemode: {currentGamemode}</p>
+            <p className="text-white">Current Gamemode: {currentGamemode}</p>
             {gamemodeForm}
         </>
     )

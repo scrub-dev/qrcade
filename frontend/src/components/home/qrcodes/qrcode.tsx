@@ -1,8 +1,8 @@
 import {QRCodeSVG} from 'qrcode.react'
-import { getBackendURI } from '../../util/http'
+import { getFrontendURI } from '../../../util/http'
 
 export default (props: any) => {
-    const x = `${getBackendURI()}/hit?h=${props.userID}`
+    const x = `${getFrontendURI()}/hit?h=${props.userID}`
     return <QRCodeSVG
                 value={x}
                 size={(props.size) ? props.size : 600}
