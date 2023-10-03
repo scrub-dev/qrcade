@@ -12,6 +12,6 @@ export default async () => {
         id: 22222,
         pword: await hashPword("123"),
         uname: "notScrub",
-        is_admin: true,
+        is_admin: false,
     })
 }

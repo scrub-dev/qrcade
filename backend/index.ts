@@ -26,6 +26,8 @@ app.listen(port, async () => {
     console.log("-".repeat(rlen))
     print("http://localhost:" + port , "Running on: ")
     console.log("-".repeat(rlen))
+    print(`Frontend : x${ (process.env.NODE_ENV === 'development') ? "http://localhost:5173" : "https://qrcade.xyz"}`)
+    console.log("-".repeat(rlen))
 
     setTimeout(() => game_options(), 100)
 
