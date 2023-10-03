@@ -1,3 +1,4 @@
+import 'dotenv/config'
 import express, { Request, Response, NextFunction, Router }  from 'express'
 import { debugWebPrint } from './util/print.js'
 import passport from 'passport'
