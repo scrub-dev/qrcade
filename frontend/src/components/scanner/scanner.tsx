@@ -36,10 +36,6 @@ export const Scanner: any = () => {
 
     }, [torch, setTorch])
 
-    const onDetect = useCallback((e:any) => {
-
-    }, [result, setResult])
-
 
     return (
         <div id="scanner-wrapper">
@@ -64,6 +60,7 @@ export const Scanner: any = () => {
                 }/>
                 {scanning ? <Camera scannerRef={scannerRef} cameraId={cameraId} onDetected={(result: any) => setResult(result)} onScannerReady={undefined} facingMode={undefined} /> : null}
             </div>
+            {result}
         </div>
     )
 }

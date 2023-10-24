@@ -1,5 +1,5 @@
 import {useIsAuthenticated} from 'react-auth-kit'
-import LoginForm from './LoginForm'
+import LoginForm from './loginForm'
 import {useNavigate} from 'react-router-dom'
 
 export default () => {
