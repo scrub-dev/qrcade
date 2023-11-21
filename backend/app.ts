@@ -19,12 +19,11 @@ import clearHits from './lib/admin/clearHits.js'
 import setTeam from './lib/game/setTeam.js'
 import clearTeams from './lib/admin/clearTeams.js'
 import 'dotenv/config.js'
+import { ORIGIN } from './config.js'
 
 
 export const app = express()
 const router = express.Router()
-
-const frontend = (process.env.NODE_ENV === 'development') ? "http://localhost:5173" : "https://qrcade.xyz"
 
 const webLogger = (req: Request, res: Response, next: NextFunction) => {
     debugWebPrint(`Path: ${req.url} | Time: ${new Date(Date.now()).toUTCString()}`)
@@ -32,10 +31,11 @@ const webLogger = (req: Request, res: Response, next: NextFunction) => {
 }
 
 app.use(cors({
-    origin: frontend,
+    origin: ORIGIN,
     credentials: true,
     optionsSuccessStatus: 200
 }))
+
 
 app.use(webLogger)
 app.use(express.json())
@@ -98,7 +98,7 @@ router.get("/hit", async (req: Request, res: Response) => {
 
 
     if(!await playerExists(+req.query.id) || ! await playerExists(+target_id)){
-        return res.json({message: "invalid", status: "INVALID HTI"}).status(200).end()
+        return res.json({message: "invalid", status: "INVALID HIT"}).status(200).end()
     }
 
 

@@ -9,16 +9,18 @@ import { User } from './models/user.js'
 import { Hit } from './models/hits.js'
 import { Option } from './models/option.js'
 import game_options from './configs/game_options.js'
+import { ORIGIN } from './config.js'
 
 
 const port = process.env.PORT || 3000
 
 const initDatabase = async () => {
     Hit; User; Option
-    await sequelize.sync()
-}
-app.listen(port, async () => {
     await sequelize.sync({force: true})
+}
+
+app.listen(port, async () => {
+    await initDatabase()
     const rlen = 35
     console.log(figletText("QRCade"))
     console.log("-".repeat(rlen))
@@ -26,7 +28,7 @@ app.listen(port, async () => {
     console.log("-".repeat(rlen))
     print("http://localhost:" + port , "Running on: ")
     console.log("-".repeat(rlen))
-    print(`Frontend : x${ (process.env.NODE_ENV === 'development') ? "http://localhost:5173" : "https://qrcade.xyz"}`)
+    print(`CORS Origin : ${ORIGIN}`)
     console.log("-".repeat(rlen))
 
     setTimeout(() => game_options(), 100)
