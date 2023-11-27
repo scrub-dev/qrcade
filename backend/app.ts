@@ -33,7 +33,7 @@ const webLogger = (req: Request, res: Response, next: NextFunction) => {
 }
 
 app.use(cors({
-    origin: ORIGIN,
+    origin: "*",
     credentials: true,
     optionsSuccessStatus: 200
 }))
