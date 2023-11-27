@@ -5,14 +5,6 @@ import CreateUser from "./user/CreateUser"
 
 
 export default () => {
-
-
-
-
-    const createUser = () => {}
-
-    const deleteUser = () => {}
-
     const [users, setUsers] = useState<any[]>()
     const listUsers = async () => {
         console.log("AAAA")
