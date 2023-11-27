@@ -25,6 +25,7 @@ import { ORIGIN } from './config.js'
 export const app = express()
 const router = express.Router()
 
+const frontend = (process.env.NODE_ENV === 'development') ? "http://localhost:5000" : "https://qrcade.xyz"
 const webLogger = (req: Request, res: Response, next: NextFunction) => {
     debugWebPrint(`Path: ${req.url} | Time: ${new Date(Date.now()).toUTCString()}`)
     next()
