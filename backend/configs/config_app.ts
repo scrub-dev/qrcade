@@ -9,3 +9,9 @@ export const DEV_OPTIONS: TDevOptions = {
     LOG_HITS: false,
     TEST_USER: false
 }
+
+export const DEPLOYMENT_OPTIONS = {
+    DEVELOPMENT: true
+}
+
+export const getFrontentURI = () => DEPLOYMENT_OPTIONS.DEVELOPMENT ? "http://localhost:5000" : "http://qrcade.xyz"

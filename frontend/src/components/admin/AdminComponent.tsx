@@ -2,6 +2,7 @@ import { useState } from "react"
 import { httpWithCreds } from "../../util/http"
 import Gamemode from "./Gamemode"
 import GameState from "./GameState"
+import UserManagement from "./UserManagement"
 
 export default ()  => {
 
@@ -34,6 +35,7 @@ export default ()  => {
                 <button onClick={clearHits} className="bg-purple-600 text-white py-1 px-1 rounded focus:outline-none focus:shadow-outline hover:bg-purple-500 font-bold shadow-xl hover:shadow-purple-500/50 mr-1">Reset Hits</button>
                 <button onClick={clearTeams} className="bg-purple-600 text-white py-1 px-1 rounded focus:outline-none focus:shadow-outline hover:bg-purple-500 font-bold shadow-xl hover:shadow-purple-500/50 ml-1">Reset Teams</button>
             </div>
+            <UserManagement/>
         </div>
     )
 }

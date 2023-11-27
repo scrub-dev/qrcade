@@ -39,3 +39,7 @@ export interface TOption {
     name: string,
     value: string
 }
+
+export interface TDepOptions {
+    DEPLOYMENT_OPTIONS: boolean
+}

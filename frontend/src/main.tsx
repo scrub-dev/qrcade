@@ -9,6 +9,7 @@ import Home from './components/routes/home.tsx'
 import Login from './components/routes/login.tsx'
 import Hit from './components/routes/Hit.tsx'
 import Score from './components/routes/Score.tsx'
+import Scoreboard from './components/routes/Scoreboard.tsx'
 
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
@@ -34,7 +35,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         }></Route>
         <Route path='/login' element={<Login/>}></Route>
         <Route path='/hit' element={<Hit/>}></Route>
-        <Route path='/scoreboard' element={<></>}></Route>
+        {/* <Route path='/scoreboard' element={<Scoreboard/>}></Route> */}
       </Routes>
     </AuthProvider>
     </BrowserRouter>

@@ -9,7 +9,6 @@ import { User } from './models/user.js'
 import { Hit } from './models/hits.js'
 import { Option } from './models/option.js'
 import game_options from './configs/game_options.js'
-import { ORIGIN } from './config.js'
 import generateDefaultUsers from './util/generateDefaultUsers.js'
 
 
@@ -28,8 +27,6 @@ app.listen(port, async () => {
     printDevOptions()
     console.log("-".repeat(rlen))
     print("http://localhost:" + port , "Running on: ")
-    console.log("-".repeat(rlen))
-    print(`CORS Origin : ${ORIGIN}`)
     console.log("-".repeat(rlen))
 
     setTimeout(() => game_options(), 100)

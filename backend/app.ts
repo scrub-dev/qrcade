@@ -20,12 +20,13 @@ import clearHits from './lib/admin/clearHits.js'
 import setTeam from './lib/game/setTeam.js'
 import clearTeams from './lib/admin/clearTeams.js'
 import 'dotenv/config.js'
-import { ORIGIN } from './config.js'
 import getPlayers from './lib/player/getPlayers.js'
 import getUserIDFromReq from './lib/auth/auth/getUserIDFromReq.js'
 import createUid from './lib/auth/auth/createUid.js'
 import createPlayer from './lib/player/createPlayer.js'
 import deletePlayer from './lib/player/deletePlayer.js'
+import getScores from './lib/game/getScores.js'
+import { getFrontentURI } from './configs/config_app.js'
 
 
 export const app = express()
@@ -39,6 +40,7 @@ const webLogger = (req: Request, res: Response, next: NextFunction) => {
 }
 
 app.use(cors({
+    origin: getFrontentURI(),
     credentials: true,
 }))
 
@@ -203,7 +205,8 @@ router.get("/getteamscore", async (req: Request, res: Response) => {
     }}).status(200).end()
 })
 router.get("/getplayerscore", async (req: Request, res: Response) => {
-    let userID = JSON.parse(req.cookies._qrcade_state).id
+    let userID = getUserIDFromReq(req)
+    if(!userID) userID = req.query.userid
 
     let user = await User.findOne({where : {id : userID}})
     if(!user) return res.json({value: false}).status(200).end()
@@ -212,12 +215,14 @@ router.get("/getplayerscore", async (req: Request, res: Response) => {
     let hitPlayerCount =  await Hit.count({ where: {player_hit : user.dataValues.id}})
 
     return res.json({status: "SUCCESS", results: {
+        id: userID,
         youHit : playerHitCount,
         hitYou : hitPlayerCount
     }}).status(200).end()
 
 })
 
+// Admin and Game Type checking / setting
 router.get("/admin/isadmin", async (req: Request, res: Response) => {
     let userID = getUserIDFromReq(req)
 
@@ -268,25 +273,25 @@ router.get("/admin/getoption", async (req: Request, res: Response) => {
 })
 
 // Player checking
-
 router.post("/admin/player/create",async (req: Request, res: Response) => {
     if(!await isAdmin(getUserIDFromReq(req))) return res.json({message: "Unauthorized"}).status(403).end()
 
     let player = req.body
+
+    console.log(player)
 
     let pword = player.pword
     let uname = player.uname
     let admin = !!+player.admin // 0 || 1 truthy
     let id    = createUid()
 
-    if(!player.pword || !player.uname || !player.admin) return res.json({message: "Failed to create", reason: "Missing parameter"})
+    if(!player.pword || !player.uname || player.admin == undefined) return res.json({message: "Failed to create", reason: "Missing parameter"})
 
     await createPlayer(uname, pword, id, admin)
 
     res.json({message:"User Created", data: {userid : id}}).status(201).end()
 
 })
-
 router.post("/admin/player/delete",async (req: Request, res: Response) => {
     let userID = getUserIDFromReq(req)
     if(!await isAdmin(userID)) return res.json({message: "Unauthorized"}).status(403).end()
@@ -295,11 +300,12 @@ router.post("/admin/player/delete",async (req: Request, res: Response) => {
 
     if(userIDToDelete == userID) return res.json({message:"Operation failed", reason: "Cannot delete yourself"}).status(406).end()
 
-    await deletePlayer(userIDToDelete)
-    res.json({message:"User Deleted"}).status(200).end()
+
+
+    if(await deletePlayer(userIDToDelete)) res.json({message:"User Deleted"}).status(200).end()
+    else res.json({message: "User does not exist"})
 
 })
-
 router.get("/admin/players",async (req: Request, res: Response) => {
     // if(!await isAdmin(getUserIDFromReq(req))) return res.json({message: "Unauthorized"}).status(403).end()
 
@@ -309,8 +315,6 @@ router.get("/admin/players",async (req: Request, res: Response) => {
 
     res.json({data: playerList, length: playerCount}).end()
 })
-
-
 router.get("/brew", async (req: Request, res: Response) => {
     res.status(418).end()
 })
