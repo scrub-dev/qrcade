@@ -12,7 +12,7 @@ const _http = axios.create({
 
 
 export const getBackendURI = () => (import.meta.env.PROD) ? "https://shooter.qrcade.xyz" : "http://localhost:3000"
-export const getFrontendURI = () => (import.meta.env.PROD) ? "https://shooter.qrcade.xyz" : "http://localhost:5173"
+export const getFrontendURI = () => (import.meta.env.PROD) ? "https://qrcade.xyz" : "http://localhost:5000"
 
 export const http = () => _http
 

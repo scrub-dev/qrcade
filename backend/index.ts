@@ -10,6 +10,7 @@ import { Hit } from './models/hits.js'
 import { Option } from './models/option.js'
 import game_options from './configs/game_options.js'
 import { ORIGIN } from './config.js'
+import generateDefaultUsers from './util/generateDefaultUsers.js'
 
 
 const port = process.env.PORT || 3000
@@ -36,4 +37,6 @@ app.listen(port, async () => {
     if(DEV_OPTIONS.DEV_MODE && DEV_OPTIONS.TEST_USER){
         setTimeout(() => testuser(), 1000)
     }
+    setTimeout(() => generateDefaultUsers(), 1000)
+
 })
