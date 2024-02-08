@@ -1,39 +1,8 @@
-import {app} from './app.js'
-import 'dotenv/config'
-import { figletText, printDevOptions, print } from './util/print.js'
-import { DEV_OPTIONS } from './configs/config_app.js'
-import testuser from './util/testuser.js'
-import {sequelize} from './database/connection.js'
+import init from "@lib/init/init";
 
-import { User } from './models/user.js'
-import { Hit } from './models/hits.js'
-import { Option } from './models/option.js'
-import game_options from './configs/game_options.js'
-import generateDefaultUsers from './util/generateDefaultUsers.js'
-
-
-const port = process.env.PORT || 3000
-
-const initDatabase = async () => {
-    Hit; User; Option
-    await sequelize.sync({force: true})
-}
-
-app.listen(port, async () => {
-    await initDatabase()
-    const rlen = 35
-    console.log(figletText("QRCade"))
-    console.log("-".repeat(rlen))
-    printDevOptions()
-    console.log("-".repeat(rlen))
-    print("http://localhost:" + port , "Running on: ")
-    console.log("-".repeat(rlen))
-
-    setTimeout(() => game_options(), 100)
-
-    if(DEV_OPTIONS.DEV_MODE && DEV_OPTIONS.TEST_USER){
-        setTimeout(() => testuser(), 1000)
-    }
-    setTimeout(() => generateDefaultUsers(), 1000)
-
-})
+/**
+ * WELCOME TO QRCADE BACKEND SERVICE
+ * THIS FILE IS THE ENTRY POINT TO LAUNCH THE BACKEND SERVICE FOR QRCADE
+ * THE CONFIG DIRECTORY PROVIDES SYSTEMS CONTROLS TO DECIDE THE BEHAVIOUR OF THE BACKEND
+ */
+init()

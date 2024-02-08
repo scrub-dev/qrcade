@@ -1,0 +1,6 @@
+{
+    "PRINT_TO_CONSOLE": false,
+    "LOG_INI" : true,
+    "LOG_ERRORS" : true,
+    "LOG_VERBOSE" : true
+}
