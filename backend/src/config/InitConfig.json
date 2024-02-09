@@ -1,4 +1,3 @@
 {
-    "PERSIST_DB" : false,
-    "DISPLAY_CONFIGS" : true
+    "PERSIST_DB" : false
 }

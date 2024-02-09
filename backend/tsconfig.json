@@ -8,7 +8,8 @@
       "@repository/*":["src/repositories/*"],
       "@server/*":["src/server/*"],
       "@controller":["src/server/controllers/*"],
-      "@response":["src/server/responses/*"]
+      "@response/*":["src/server/responses/*"],
+      "@localTypes/*" : ["src/types/*"]
     },
     "target": "esnext",                                  /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */
     "module": "esnext",                                /* Specify what module code is generated. */

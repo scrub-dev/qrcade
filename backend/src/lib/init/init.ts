@@ -14,7 +14,6 @@ export default () => {
 
     let configValues = [
         {name: "Initialisation", configs: iniConfig},
-        {name: "Database", configs: dbConfig},
         {name: "Log", configs: logConfig}
     ]
 
