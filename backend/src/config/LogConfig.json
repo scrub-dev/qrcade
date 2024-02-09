@@ -1,6 +1,7 @@
 {
-    "PRINT_TO_CONSOLE": false,
     "LOG_INI" : true,
     "LOG_ERRORS" : true,
-    "LOG_VERBOSE" : true
+    "LOG_VERBOSE" : true,
+    "PRINT_CONFIGS" : true,
+    "PRINT_TO_CONSOLE": true
 }

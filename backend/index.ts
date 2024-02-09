@@ -5,4 +5,12 @@ import init from "@lib/init/init";
  * THIS FILE IS THE ENTRY POINT TO LAUNCH THE BACKEND SERVICE FOR QRCADE
  * THE CONFIG DIRECTORY PROVIDES SYSTEMS CONTROLS TO DECIDE THE BEHAVIOUR OF THE BACKEND
  */
-init()
+
+
+const main = () => {
+    init()
+
+
+    // create server, start server
+}
+main()
