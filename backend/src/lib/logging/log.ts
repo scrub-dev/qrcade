@@ -1,12 +1,13 @@
-import config from '@config/LogConfig.json'
+import config from '@config/LogConfig.json' assert {type: "json"}
 import chalk from 'chalk'
-import { PadDirection, pad } from './pad'
+import { PadDirection, pad } from './pad.js'
 
 export enum LogType {
     VERBOSE,
     ERROR,
     INI,
-    API
+    API,
+    SERVER
 }
 
 const _Log = (message: string, type?: LogType) => type ? console.log(getLogStyle(type) + " " + message) : console.log(message)
@@ -37,6 +38,10 @@ export const getLogEnabledValue = (type: LogType) => {
             return config.LOG_ERRORS
         case LogType.API:
             return config.LOG_API
+        case LogType.INI:
+            return config.LOG_INI
+        case LogType.INI:
+            return config.LOG_SERVER
     }
 }
 
@@ -51,6 +56,8 @@ export const getLogStyle = (type?: LogType) => {
             return chalk.blue("[ INI ]")
         case LogType.API:
             return chalk.blue("[ API ]")
+        case LogType.SERVER:
+            return chalk.magenta("[ SVR ]")
     }
 }
 

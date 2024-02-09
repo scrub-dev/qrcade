@@ -1,10 +1,10 @@
-import { generateFiglet } from "@lib/logging/figlet"
-import { Log, LogConfigs, LogType } from "@lib/logging/log"
+import { generateFiglet } from "@lib/logging/figlet.js"
+import { Log, LogConfigs, LogType } from "@lib/logging/log.js"
 
-import sysConfig from '@config/SystemConfig.json'
-import iniConfig from '@config/InitConfig.json'
-import dbConfig from '@config/DatabaseConfig.json'
-import logConfig from '@config/LogConfig.json'
+import sysConfig from '@config/SystemConfig.json' assert {type: "json"}
+import iniConfig from '@config/InitConfig.json' assert {type: "json"}
+import dbConfig from '@config/DatabaseConfig.json' assert {type: "json"}
+import logConfig from '@config/LogConfig.json' assert {type: "json"}
 
 export default () => {
 
@@ -23,8 +23,4 @@ export default () => {
         LogConfigs(config)
     })
     if(logConfig.PRINT_CONFIGS) Log("Finished Printing Log Values...",LogType.INI, true)
-
-
-    // Do Database stuff
-
 }
