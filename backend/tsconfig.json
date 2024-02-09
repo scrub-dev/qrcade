@@ -4,7 +4,11 @@
     "baseUrl": ".",
     "paths": {
       "@lib/*" : ["src/lib/*"],
-      "@config/*":["src/config/*"]
+      "@config/*":["src/config/*"],
+      "@repository/*":["src/repositories/*"],
+      "@server/*":["src/server/*"],
+      "@controller":["src/server/controllers/*"],
+      "@response":["src/server/responses/*"]
     },
     "target": "es2016",                                  /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */
     "module": "commonjs",                                /* Specify what module code is generated. */

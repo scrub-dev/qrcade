@@ -6,7 +6,7 @@ export enum LogType {
     VERBOSE,
     ERROR,
     INI,
-    OK
+    API
 }
 
 const _Log = (message: string, type?: LogType) => type ? console.log(getLogStyle(type) + " " + message) : console.log(message)
@@ -35,8 +35,8 @@ export const getLogEnabledValue = (type: LogType) => {
             return config.LOG_VERBOSE
         case LogType.ERROR:
             return config.LOG_ERRORS
-        case LogType.INI:
-            return config.LOG_INI
+        case LogType.API:
+            return config.LOG_API
     }
 }
 
@@ -49,8 +49,8 @@ export const getLogStyle = (type?: LogType) => {
             return chalk.red("[ ERR ]")
         case LogType.INI:
             return chalk.blue("[ INI ]")
-        case LogType.OK:
-            return chalk.greenBright("[  OK ]")
+        case LogType.API:
+            return chalk.blue("[ API ]")
     }
 }
 

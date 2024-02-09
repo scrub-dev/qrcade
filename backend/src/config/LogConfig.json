@@ -3,5 +3,6 @@
     "LOG_ERRORS" : true,
     "LOG_VERBOSE" : true,
     "PRINT_CONFIGS" : true,
-    "PRINT_TO_CONSOLE": true
+    "PRINT_TO_CONSOLE": true,
+    "LOG_API": true
 }

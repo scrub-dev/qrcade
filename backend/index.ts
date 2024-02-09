@@ -1,4 +1,6 @@
+import { initialiseDatabase } from "@lib/init/database";
 import init from "@lib/init/init";
+import { Server } from "src/server/server";
 
 /**
  * WELCOME TO QRCADE BACKEND SERVICE
@@ -9,6 +11,9 @@ import init from "@lib/init/init";
 
 const main = () => {
     init()
+    initialiseDatabase()
+
+    const server = new Server()
 
 
     // create server, start server
