@@ -11,12 +11,12 @@ import express from 'express'
  * THE CONFIG DIRECTORY PROVIDES SYSTEMS CONTROLS TO DECIDE THE BEHAVIOUR OF THE BACKEND
  */
 
-const main = () => {
+const main = async () => {
     init()
 
     const databaseLocation = path.dirname(fileURLToPath(import.meta.url)) + `${path.sep}`
 
-    initialiseDatabase(databaseLocation)
+    await initialiseDatabase(databaseLocation)
 
     const app    = express()
     const server = new Server(app)
