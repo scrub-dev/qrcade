@@ -1,6 +1,8 @@
-import { Log } from "@lib/logging/log"
+import { Log } from "@lib/logging/log.js"
 
-export default (err: Error) => {
-    Log(err.message)
-    throw err
+export class ErrorHandler {
+    static Error = (e: Error | string) => {
+        if(typeof e === 'string') e = new Error(e)
+        throw e
+    }
 }
