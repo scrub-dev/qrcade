@@ -1,0 +1,9 @@
+export enum lobbyErrors {
+    LOBBY_INVALID_TYPE,
+    LOBBY_INVALID_DIFFERENT,
+}
+export enum teamErrors {
+    TEAM_INVALID_SCANNER,
+    TEAM_INVALID_SCANNED,
+    TEAM_INVALUD_IDENTICAL
+}
