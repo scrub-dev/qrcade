@@ -8,6 +8,8 @@
     "figlet": "^1.7.0",
     "json5": "^2.2.3",
     "minimist": "^1.2.8",
+    "sequelize": "^6.37.0",
+    "sqlite3": "^5.1.7",
     "strip-bom": "^3.0.0",
     "undici-types": "^5.26.5"
   },
