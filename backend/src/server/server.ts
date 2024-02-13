@@ -1,8 +1,10 @@
 import { Log, LogType } from '@lib/logging/log.js';
 import express, {Express, NextFunction, Request, Response, Router} from 'express'
 
+import {router as AuthRouter} from './routes/AuthRoute.js'
+import {router as TestRouter} from './routes/TestRoute.js'
+import {router as UserRouter} from './routes/UserRoute.js'
 
-import {router as testRouter} from './routes/TestRoute.js'
 import {logger} from './middleware/logger.js';
 
 export class Server {
@@ -17,6 +19,7 @@ export class Server {
 
         this.registerMiddleware()
         this.registerRouters()
+        this.declareCatchAll()
 
     }
 
@@ -40,11 +43,22 @@ export class Server {
 
     registerRouters = () => {
         const routes: {name: string, route: string, router: Router}[] = [
-            {name: "test", route: "/test", router: testRouter}
+            {name: "Test", route: "/test", router: TestRouter},
+            {name: "Auth", route: "/auth", router: AuthRouter},
+            {name: "User", route: "/user", router: UserRouter}
         ]
         routes.forEach(e => {
             this._app.use(e.route, e.router);
             Log(`Router loaded: ${e.name}`, LogType.SERVER)
+        })
+    }
+
+    declareCatchAll = () => {
+        // run this after registering routes
+        // running before will mean this will always be called
+        Log("Declaring catchall function...", LogType.SERVER)
+        this._app.use((req: Request,res: Response, next: NextFunction) => {
+            res.json({message:"The requested endpoint could not be found", code:"ENDPOINT_MISSING"}).status(404)
         })
     }
 

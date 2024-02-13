@@ -15,7 +15,6 @@ const main = async () => {
     init()
 
     const databaseLocation = path.dirname(fileURLToPath(import.meta.url)) + `${path.sep}`
-
     await initialiseDatabase(databaseLocation)
 
     const app    = express()
