@@ -1,0 +1,10 @@
+{
+    "GAMEMODES": ["SHOOTER-FFA", "SHOOTER-TDM", "LOOTER"],
+    "ID_PREFIXES": {
+        "USER" : "USER-",
+        "LOBBY": "LOBBY-",
+        "TEAM" : "TEAM-",
+        "HIT"  : "HIT-",
+        "FLAG" : "FLAG-"
+    }
+}

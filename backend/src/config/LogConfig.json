@@ -1,9 +1,11 @@
 {
     "LOG_INI" : true,
     "LOG_ERRORS" : true,
-    "LOG_VERBOSE" : true,
+    "LOG_VERBOSE" : false,
     "PRINT_CONFIGS" : true,
     "PRINT_TO_CONSOLE": true,
     "LOG_API": true,
-    "LOG_SERVER": true
+    "LOG_SERVER": true,
+    "LOG_DB_VERBOSE": true,
+    "LOG_DB": true
 }

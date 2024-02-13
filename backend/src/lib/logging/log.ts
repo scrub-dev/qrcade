@@ -7,7 +7,9 @@ export enum LogType {
     ERROR,
     INI,
     API,
-    SERVER
+    SERVER,
+    DATABASE,
+    DATABASE_VERBOSE
 }
 
 const _Log = (message: string, type?: LogType) => type ? console.log(getLogStyle(type) + " " + message) : console.log(message)
@@ -42,6 +44,10 @@ export const getLogEnabledValue = (type: LogType) => {
             return config.LOG_INI
         case LogType.INI:
             return config.LOG_SERVER
+        case LogType.DATABASE:
+            return config.LOG_DB
+        case LogType.DATABASE_VERBOSE:
+            return config.LOG_DB_VERBOSE
     }
 }
 
@@ -58,6 +64,10 @@ export const getLogStyle = (type?: LogType) => {
             return chalk.blue("[ API ]")
         case LogType.SERVER:
             return chalk.magenta("[ SVR ]")
+        case LogType.DATABASE:
+            return chalk.yellow("[  DB ]")
+        case LogType.DATABASE_VERBOSE:
+            return chalk.yellow("[ DBV ]")
     }
 }
 
