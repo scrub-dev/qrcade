@@ -1,4 +1,5 @@
 {
+    "DEFAULT_ID_LENGTH" : 5,
     "GAMEMODES": ["SHOOTER-FFA", "SHOOTER-TDM", "LOOTER"],
     "ID_PREFIXES": {
         "USER" : "USER-",
@@ -6,5 +7,9 @@
         "TEAM" : "TEAM-",
         "HIT"  : "HIT-",
         "FLAG" : "FLAG-"
+    },
+    "PLAYER" : {
+        "DEFAULT_NAME" : "Player",
+        "DEFAULT_PASSWD": "Player"
     }
 }
