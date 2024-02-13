@@ -13,11 +13,12 @@ export class Database {
     }
     static setInstance = async (loc: string) => {
         if(this.connection) return ErrorHandler.Error("Database instance already set")
-        Log(`Connecting to ${loc}`, LogType.INI)
+        Log(`Connecting to ${loc}`, LogType.DATABASE)
 
         this.connection = new Sequelize({
             dialect: 'sqlite',
-            storage: loc
+            storage: loc,
+            logging: (...msg) => Log(msg[0], LogType.DATABASE_VERBOSE),
         })
     }
 }
