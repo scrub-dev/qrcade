@@ -7,3 +7,7 @@ backend/node_modules
 *.js
 
 backend/database/qrcade_db.db
+
+.vscode/
+
+qrcade.session.sql
