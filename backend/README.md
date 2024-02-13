@@ -75,7 +75,8 @@ WHEN QR CODE SCANNED (FLAG)
 ---
 * When a player scans a lobby flag they will receive confirmation or error if the point counted
 * When a player scans a lobby flag they will receive information about the flag
-
+---
+* When a player scans all Looter-Lobby codes, their overall time taken to complete is logged from their first scan to their last scan
 
 ## Models
 ```

@@ -10,5 +10,10 @@
     "LOG_SERVER": true,
 
     "LOG_DB_VERBOSE": false,
-    "LOG_DB": true
+    "LOG_DB": true,
+
+    "GAME_LOG" : {
+        "PREFIX" : "LOG-",
+        "TYPES" : ["LOOTER_SCANNING_FINISHED"]
+    }
 }
