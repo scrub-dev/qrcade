@@ -1,7 +1,4 @@
 {
     "NAME" : "QRCade",
-    "VERSION":"0.0.1",
-    "SERVER" : {
-        "PORT" : 8000
-    }
+    "VERSION":"0.0.1"
 }

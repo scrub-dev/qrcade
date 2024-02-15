@@ -4,8 +4,12 @@ import express, {Express, NextFunction, Request, Response, Router} from 'express
 import {router as AuthRouter} from './routes/AuthRoute.js'
 import {router as TestRouter} from './routes/TestRoute.js'
 import {router as UserRouter} from './routes/UserRoute.js'
+import {router as RootRouter} from './routes/RootRoute.js'
+
 
 import {logger} from './middleware/logger.js';
+import DefaultResponse from './responses/DefaultResponse.js';
+import JsonResponse from './responses/JsonResponse.js';
 
 export class Server {
 
@@ -43,6 +47,7 @@ export class Server {
 
     registerRouters = () => {
         const routes: {name: string, route: string, router: Router}[] = [
+            {name: "Root", route: "/",     router: RootRouter},
             {name: "Test", route: "/test", router: TestRouter},
             {name: "Auth", route: "/auth", router: AuthRouter},
             {name: "User", route: "/user", router: UserRouter}
@@ -57,8 +62,8 @@ export class Server {
         // run this after registering routes
         // running before will mean this will always be called
         Log("Declaring catchall function...", LogType.SERVER)
-        this._app.use((req: Request,res: Response, next: NextFunction) => {
-            res.json({message:"The requested endpoint could not be found", code:"ENDPOINT_MISSING"}).status(404)
+        this._app.use((req: Request, res: Response, next: NextFunction) => {
+            new JsonResponse(res, {code: 404, contents: {message: "Sorry, the requested resource was not found on the server", code: "ENDPOINT_INVALID"}}).send()
         })
     }
 
