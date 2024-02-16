@@ -11,6 +11,7 @@
     "json5": "^2.2.3",
     "jsonwebtoken": "^9.0.2",
     "minimist": "^1.2.8",
+    "passport": "^0.7.0",
     "sequelize": "^6.37.0",
     "sqlite3": "^5.1.7",
     "strip-bom": "^3.0.0",
