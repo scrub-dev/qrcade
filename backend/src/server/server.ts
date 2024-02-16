@@ -8,7 +8,7 @@ import {router as RootRouter} from './routes/RootRoute.js'
 
 
 import {logger} from './middleware/logger.js';
-import DefaultResponse from './responses/DefaultResponse.js';
+import DefaultResponse, { ResponseCode } from './responses/DefaultResponse.js';
 import JsonResponse from './responses/JsonResponse.js';
 
 export class Server {
@@ -63,7 +63,7 @@ export class Server {
         // running before will mean this will always be called
         Log("Declaring catchall function...", LogType.SERVER)
         this._app.use((req: Request, res: Response, next: NextFunction) => {
-            new JsonResponse(res, {code: 404, contents: {message: "Sorry, the requested resource was not found on the server", code: "ENDPOINT_INVALID"}}).send()
+            new JsonResponse(res, {code: 404, contents: {message: "Sorry, the requested resource was not found on the server", code: ResponseCode.NOT_FOUND}}).send()
         })
     }
 

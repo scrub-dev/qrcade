@@ -1,17 +1,30 @@
 import { Response } from "express"
 
-export type Code = ResponseCode | GameCode | AuthCode
+export type Code = GameCode | AuthCode
 
 export enum AuthCode {
     SUCCESS, FAIL, UNAME_DUPLICATE
 }
-export enum ResponseCode {
-    SUCCESS, FAILED_GENERAL, ENDPOINT_INVALID
-}
 export enum GameCode {
 
 }
+export enum ResponseCode {
+    SUCCESS        = 200,
 
+    REDIRECT_PERM  = 301,
+    MOVED_TEMP     = 307,
+    MOVED_PERM     = 308,
+
+    BAD_RESP       = 400,
+    UNAUTHORISED   = 401,
+    FORBIDDEN      = 403,
+    NOT_FOUND      = 404,
+    WRONG_METHOD   = 405,
+    TEAPOT         = 418,
+    RATELIMIT      = 429,
+
+    SERVER_ERROR   = 500,
+}
 
 
 export default class {
@@ -24,7 +37,7 @@ export default class {
         options?: {
             code?: number,
             contents?: string | object,
-            type?: ResponseType
+            type?: ResponseCode
         })
     {
         this._respObj = respObj
@@ -33,6 +46,16 @@ export default class {
 
         if(options.code) this._statusCode = options.code
         if(options.contents) this._respBody = options.contents
+    }
+
+    code = (c: ResponseCode) => {
+        this._statusCode = c
+        return this
+    }
+
+    body = (c: string | object) => {
+        this._respBody = c
+        return this
     }
 
     send = () => {
