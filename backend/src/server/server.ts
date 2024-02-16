@@ -1,5 +1,7 @@
 import { Log, LogType } from '@lib/logging/log.js';
 import express, {Express, NextFunction, Request, Response, Router} from 'express'
+import cors from 'cors'
+import cookieParser from 'cookie-parser'
 
 import {router as AuthRouter} from './routes/AuthRoute.js'
 import {router as TestRouter} from './routes/TestRoute.js'
@@ -35,9 +37,11 @@ export class Server {
 
     registerMiddleware = () => {
         const middleware = [
-            {name: "logger",     func: logger},
-            {name: "urlencoded", func: express.urlencoded({extended: true})},
-            {name: "json",       func: express.json()}
+            {name: "cors",         func: cors()},
+            {name: "logger",       func: logger},
+            {name: "urlencoded",   func: express.urlencoded({extended: true})},
+            {name: "json",         func: express.json()},
+            {name: "cookieparser", func: cookieParser()}
         ]
         middleware.forEach(e => {
             this._app.use(e.func);
