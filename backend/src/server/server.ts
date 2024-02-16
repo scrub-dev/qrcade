@@ -8,9 +8,8 @@ import {router as TestRouter} from './routes/TestRoute.js'
 import {router as UserRouter} from './routes/UserRoute.js'
 import {router as RootRouter} from './routes/RootRoute.js'
 
-
 import {logger} from './middleware/logger.js';
-import DefaultResponse, { ResponseCode } from './responses/DefaultResponse.js';
+import { ResponseCode } from './responses/DefaultResponse.js';
 import JsonResponse from './responses/JsonResponse.js';
 
 export class Server {

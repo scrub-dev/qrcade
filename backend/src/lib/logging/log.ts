@@ -14,7 +14,7 @@ export enum LogType {
 
 const _Log = (message: string, type?: LogType) => type ? console.log(getLogStyle(type) + " " + message) : console.log(message)
 
-export const Log = (message: string, type?: LogType, override?: boolean) => {
+export const Log = (message: any, type?: LogType, override?: boolean) => {
 
     if(override) {
         _Log(message, type)

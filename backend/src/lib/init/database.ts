@@ -48,4 +48,5 @@ export const initialiseDatabase = async (location: string) => {
         if(err instanceof Error) msg = err.message
         ErrorHandler.Error(msg)
     }
+    Log("Models created and available: " + (await Database.getInstance()).modelManager.all.map(m => m.name), LogType.DATABASE)
 }
