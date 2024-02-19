@@ -42,11 +42,11 @@ export const initialiseDatabase = async (location: string) => {
         const database = await Database.getInstance()
         models().forEach(m => m(database))
         associations(database)
-        database.sync()
+        await database.sync()
+        Log("Models created and available: " + (await Database.getInstance()).modelManager.all.map(m => m.name), LogType.DATABASE)
     } catch (err) {
         let msg = "Unknown error occured"
         if(err instanceof Error) msg = err.message
         ErrorHandler.Error(msg)
     }
-    Log("Models created and available: " + (await Database.getInstance()).modelManager.all.map(m => m.name), LogType.DATABASE)
 }

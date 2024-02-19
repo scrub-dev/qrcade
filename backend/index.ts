@@ -4,6 +4,8 @@ import path from "path";
 import { Server } from "src/server/server.js";
 import { fileURLToPath } from "url";
 import express from 'express'
+import { Database } from "@lib/database/database.js";
+import {default as initUsers} from "@lib/init/users.js";
 
 /**
  * WELCOME TO QRCADE BACKEND SERVICE
@@ -17,16 +19,11 @@ const main = async () => {
     const databaseLocation = path.dirname(fileURLToPath(import.meta.url)) + `${path.sep}`
     await initialiseDatabase(databaseLocation)
 
+    Database.getInstance().then(instance => initUsers(instance))
+
     const app    = express()
     const server = new Server(app)
     server.listen()
 
 }
 main()
-
-
-// Middleware Manager
-// Route Manager
-// Auth Manager
-
-// Routes
