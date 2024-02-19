@@ -2,7 +2,7 @@ import { Log, LogType } from "@lib/logging/log.js";
 import createUser, { createDefaultUser } from "@lib/models/user/createUser.js";
 import config from "@config/InitConfig.json" assert {type: "json"}
 import gameConfig from "@config/GameConfig.json" assert {type: "json"}
-import { getUserCount } from "@lib/models/user/getUser.js";
+import {getUserCount } from "@lib/models/user/getUser.js";
 
 import { Sequelize } from "sequelize";
 

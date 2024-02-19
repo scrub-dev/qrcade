@@ -4,9 +4,6 @@ import JsonResponse from '@server/responses/JsonResponse.js'
 import { Request, Response } from 'express'
 
 
-export const login = (req: Request, res: Response) => {
-    new JsonResponse(res, {contents: {message:"Test", code: ResponseCode.TEAPOT}}).send()
-
-
-
+export const ping = (req: Request, res: Response) => {
+    new JsonResponse(res, {contents: {message: "PONG!", code: ResponseCode.SUCCESS}}).send()
 }

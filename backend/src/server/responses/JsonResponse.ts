@@ -16,7 +16,7 @@ export default class {
         options?: {
             code?: number,
             contents?: JsonResponseType,
-            type?: ResponseCode
+            type?: Code
         })
     {
         this._respObj = respObj

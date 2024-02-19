@@ -1,7 +1,5 @@
-import DataResponse from '@server/responses/DataResponse'
-import DefaultResponse from '@server/responses/DefaultResponse.js'
+import { ping } from '@server/controllers/RootController.js'
 import express from 'express'
 export const router = express.Router()
 
-router.get("/ping", (req, res) => {
-})
+router.get("/ping", (req, res) => ping(req,res))

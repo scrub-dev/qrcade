@@ -1,6 +1,6 @@
 import { Response } from "express"
 
-export type Code = GameCode | AuthCode
+export type Code = GameCode | AuthCode | ResponseCode
 
 export enum AuthCode {
     SUCCESS, FAIL, UNAME_DUPLICATE
