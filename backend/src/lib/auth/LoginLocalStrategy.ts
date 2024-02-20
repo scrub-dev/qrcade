@@ -39,7 +39,7 @@ export default () => {
             if(!user) return callback(null, false, {message: "User not Found"})
 
             //@ts-ignore
-            const validated = validatePassword(pword, user.pword)
+            const validated = validatePassword(pword, user.Passwd)
 
             if(!validated) return callback(null, false, {message: "Wrong Password"})
 
