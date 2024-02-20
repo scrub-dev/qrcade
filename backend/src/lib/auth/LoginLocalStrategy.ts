@@ -9,25 +9,6 @@ import { LogType, Log } from '@lib/logging/log.js'
 import { IUser } from '@src/models/user.js'
 
 export default () => {
-    // passport.use('auth', new LocalStrategy(
-    //     {
-    //         usernameField: "username",
-    //         passwordField: "password"
-    //     },
-    //     async (uname: string, pword: string, cb: Function) => {
-
-    //         Log("TEST", LogType.API)
-
-    //     const foundUser: any = await getUserByUsername(s, uname)
-
-    //     if(!foundUser) return cb(null, false, {state: AuthState.FAILED_NO_USER})
-
-    //     const validated = validatePassword(pword, foundUser.Passwd)
-
-    //     if(!validated) return cb(null, false, {state: AuthState.FAILED_WRONG_PASSWORD})
-
-    //     return cb(null, foundUser as Model, {state: AuthState.SUCCESS_AUTH})
-    // }))
     passport.use('auth', new LocalStrategy(
         {
             usernameField: "uname",

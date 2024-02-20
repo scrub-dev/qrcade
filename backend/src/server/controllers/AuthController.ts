@@ -20,12 +20,33 @@ const genericErrorResponse = (err: Error, res: Response) => {
 }
 
 
-export const register = (error: Error | null, user: IUser, info: {state: AuthState}, req: Request, res: Response) => {
+export const register = (err: Error | null, user: IUser, info: {state: AuthState, message: string}, req: Request, res: Response) => {
+    if(err) return genericErrorResponse(err, res)
+    if(info.state == AuthState.FAILED_EXISTING_USER) {
+        return new JsonResponse(res, {
+            statusCode: ResponseCode.SUCCESS,
+            contents: {
+                message: "Username already used.",
+                code: AuthCode.UNAME_DUPLICATE
+            }
+        }).send()
+    }
+    if(info.state == AuthState.SUCCESS_REGISTER){
+        return new JsonResponse(res, {
+            statusCode: ResponseCode.SUCCESS,
+            contents: {
+                message: "User Created",
+                code: AuthCode.SUCCESS
+            }
+        }).send()
+    }
+
+    return genericErrorResponse(new Error(`General Failure: ${info.message}`), res)
 }
 
 export const login = (err: Error | null, user: IUser | boolean, info: {state: AuthState}, req: Request, res: Response) => {
     if(err) return genericErrorResponse(err, res)
-    if(!user){
+    if(info.state == AuthState.FAILED_WRONG_PASSWORD || info.state == AuthState.FAILED_NO_USER){
         return new JsonResponse(res, {
             statusCode: ResponseCode.SUCCESS,
             contents: {
@@ -34,6 +55,27 @@ export const login = (err: Error | null, user: IUser | boolean, info: {state: Au
             }
         }).send()
     }
+
+    if(info.state == AuthState.MISSING_PWORD) {
+        return new JsonResponse(res, {
+            statusCode: ResponseCode.SUCCESS,
+            contents: {
+                message: "Password field missing!",
+                code: AuthCode.FAIL
+            }
+        }).send()
+    }
+
+    if(info.state == AuthState.MISSING_UNAME) {
+        return new JsonResponse(res, {
+            statusCode: ResponseCode.SUCCESS,
+            contents: {
+                message: "Username field missing!",
+                code: AuthCode.FAIL
+            }
+        }).send()
+    }
+
     req.logIn(user, {session: false}, async (error: Error) => {
         if(error) return genericErrorResponse(error, res)
 
@@ -49,7 +91,7 @@ export const login = (err: Error | null, user: IUser | boolean, info: {state: Au
             contents: {
                 message: "Logged in",
                 code: AuthCode.SUCCESS,
-                token: token
+                data : token
             }
         }).send()
     })

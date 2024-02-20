@@ -1,6 +1,7 @@
 import { sequelize } from "@lib/database/database.js"
 import createUserID from "@lib/user/createUserID.js"
 import hashPassword from "@lib/user/hashPassword.js"
+import { IUser } from "@src/models/user.js"
 
 const createUser = async (opts: {
     userName    : string,
@@ -15,7 +16,7 @@ const createUser = async (opts: {
         Passwd: hashPassword(opts.passwd),
         Admin: opts.admin || false
     })
-    return x
+    return (await x) as unknown
 }
 
 export const createDefaultUser = async () => {
