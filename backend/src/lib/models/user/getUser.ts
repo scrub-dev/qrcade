@@ -1,11 +1,12 @@
 import { sequelize } from "@lib/database/database.js"
+import { IUser } from "@src/models/user"
 import { Sequelize, WhereOptions, Op } from "sequelize"
 
 export const getUserByID = async (id: string) => {
     return (await getUserByFilter({UserID: id}))
 }
 export const getUserByUsername = async (name: string) => {
-    return sequelize.models.Users.findOne({where: {Username: name}})
+    return (await sequelize.models.Users.findOne({where: {Username: name}})) as unknown
 }
 export const getUsersInLobbyByLobbyID = async (lobbyID: string) => {
 

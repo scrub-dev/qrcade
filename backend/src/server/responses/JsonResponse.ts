@@ -3,7 +3,8 @@ import { Code, ResponseCode } from "./DefaultResponse.js"
 
 export type JsonResponseType = {
     message: string,
-    code: Code
+    code: Code,
+    [key: string]: any
 }
 
 export default class {

@@ -4,13 +4,14 @@ export type Code = GameCode | AuthCode | GeneralCode
 
 export enum GeneralCode {
     SUCCESS = "SUCCESS",
-    NOT_FOUND = "NOT_FOUND"
+    NOT_FOUND = "NOT_FOUND",
+    GENERAL_FAILURE = "GENERAL_FAILURE"
 }
 
 export enum AuthCode {
-    SUCCESS = "SUCCESS",
-    FAIL = "FAIL",
-    UNAME_DUPLICATE = "UNAME_DUPLICATE"
+    SUCCESS = "AUTH_SUCCESS",
+    FAIL = "AUTH_FAIL",
+    UNAME_DUPLICATE = "REGISTER_UNAME_DUPLICATE"
 }
 export enum GameCode {
 

@@ -6,6 +6,7 @@ import { AuthState } from './states.js'
 import validatePassword from '@lib/user/validatePassword.js'
 import { Model } from 'sequelize'
 import { LogType, Log } from '@lib/logging/log.js'
+import { IUser } from '@src/models/user.js'
 
 export default () => {
     // passport.use('auth', new LocalStrategy(
@@ -33,16 +34,15 @@ export default () => {
             passwordField: "pword"
         },
         //@ts-ignore
-        async (uname, pword, callback) => {
-            const user =  await getUserByUsername(uname)
+        async (username, password, done: (err: Error | null, user: IUser | boolean, {message: string, state: AuthState}) => void) => {
+            const user =  (await getUserByUsername(username)) as IUser
 
-            if(!user) return callback(null, false, {message: "User not Found"})
+            if(!user) return done(null, false, {message: "User not Found", state: AuthState.FAILED_NO_USER})
 
-            //@ts-ignore
-            const validated = validatePassword(pword, user.Passwd)
+            const validated = validatePassword(password, user.Passwd)
 
-            if(!validated) return callback(null, false, {message: "Wrong Password"})
+            if(!validated) return done(null, false, {message: "Wrong Password", state: AuthState.FAILED_WRONG_PASSWORD})
 
-            return callback(null, user, { message: 'Logged in Successfully' });
+            return done(null, user, { message: 'Logged in Successfully', state: AuthState.SUCCESS_AUTH});
         }))
 }

@@ -10,3 +10,11 @@ export default (seq: Sequelize) => {
     })
     return User
 }
+
+export interface IUser {
+    UserID: string,
+    Username: string,
+    DisplayName: string,
+    Passwd: string,
+    Admin: Boolean
+}

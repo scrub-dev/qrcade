@@ -3,6 +3,8 @@
     "outDir": "./build",
     "baseUrl": ".",
     "paths": {
+      "@src/*" : ["src/*"],
+      "@models/*" : ["src/models/*"],
       "@lib/*" : ["src/lib/*"],
       "@config/*":["src/config/*"],
       "@repository/*":["src/repositories/*"],

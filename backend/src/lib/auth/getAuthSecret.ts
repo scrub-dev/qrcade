@@ -1,1 +1,1 @@
-export default () => process.env.JWT_SECRET
+export default (): string | undefined => process.env.JWT_SECRET

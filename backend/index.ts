@@ -1,3 +1,4 @@
+import 'dotenv/config'
 import { initialiseDatabase } from "@lib/init/database.js";
 import init from "@lib/init/init.js";
 import { Server } from "src/server/server.js";
@@ -22,6 +23,5 @@ const main = async () => {
     const app    = express()
     const server = new Server(app)
     server.listen()
-
 }
 main()

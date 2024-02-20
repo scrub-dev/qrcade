@@ -5,26 +5,23 @@ import { Log, LogType } from '@lib/logging/log.js'
 import { sequelize } from '@lib/database/database.js'
 import {ErrorHandler} from '@lib/errorhandler/ErrorHandler.js'
 import associations, { models } from 'src/models/associations.js'
-import { getUserByUsername } from '@lib/models/user/getUser.js'
+import { cwd } from 'node:process'
 
-export const doesFileExist = (location: string, name: string) => {
-    return fs.existsSync(location + name)
+export const doesFileExist = (location: string) => {
+    return fs.existsSync(location)
 }
-export const deleteFile    = async (location: string, name: string) => {
-    fs.unlinkSync(location + name)
+export const deleteFile    = async (location: string,) => {
+    fs.unlinkSync(location)
 }
-export const createFile    = async (location: string, name: string) => {
-    fs.writeFileSync(location + name, '')
-}
+
 
 export const initialiseDatabase = async (location: string) => {
+    console.log(location)
 
-    if(!iniConfig.PERSIST_DB && doesFileExist(location, config.DATABASE_NAME) ){
+    if(!iniConfig.PERSIST_DB && doesFileExist(location) ){
         Log(`Database file already exists, deleting...`, LogType.INI)
-        deleteFile(location, config.DATABASE_NAME).then(() => Log(`Database file deleted: ${location}`, LogType.INI))
+        deleteFile(location).then(() => Log(`Database file deleted: ${location}`, LogType.INI))
     }
-
-    createFile(location, config.DATABASE_NAME).then(() => Log(`Created database file: ${location}`, LogType.INI))
 
     try {
 
