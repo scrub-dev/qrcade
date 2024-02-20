@@ -1,13 +1,21 @@
 import { Response } from "express"
 
-export type Code = GameCode | AuthCode | ResponseCode
+export type Code = GameCode | AuthCode | GeneralCode
+
+export enum GeneralCode {
+    SUCCESS = "SUCCESS",
+    NOT_FOUND = "NOT_FOUND"
+}
 
 export enum AuthCode {
-    SUCCESS, FAIL, UNAME_DUPLICATE
+    SUCCESS = "SUCCESS",
+    FAIL = "FAIL",
+    UNAME_DUPLICATE = "UNAME_DUPLICATE"
 }
 export enum GameCode {
 
 }
+
 export enum ResponseCode {
     SUCCESS        = 200,
 
@@ -26,7 +34,6 @@ export enum ResponseCode {
     SERVER_ERROR   = 500,
 }
 
-
 export default class {
 
     protected _respBody: string | object | undefined
@@ -35,20 +42,20 @@ export default class {
 
     constructor(respObj: Response,
         options?: {
-            code?: number,
+            code?: Code,
             contents?: string | object,
-            type?: ResponseCode
+            statusCode: ResponseCode
         })
     {
         this._respObj = respObj
 
         if(!options) return
 
-        if(options.code) this._statusCode = options.code
+        if(options.statusCode) this._statusCode = options.statusCode
         if(options.contents) this._respBody = options.contents
     }
 
-    code = (c: ResponseCode) => {
+    statusCode = (c: ResponseCode) => {
         this._statusCode = c
         return this
     }

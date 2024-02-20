@@ -1,11 +1,10 @@
 import { initialiseDatabase } from "@lib/init/database.js";
 import init from "@lib/init/init.js";
-import path from "path";
 import { Server } from "src/server/server.js";
-import { fileURLToPath } from "url";
+
 import express from 'express'
-import { Database } from "@lib/database/database.js";
 import {default as initUsers} from "@lib/init/users.js";
+import DatabaseConfig from "@config/DatabaseConfig.js";
 
 /**
  * WELCOME TO QRCADE BACKEND SERVICE
@@ -16,10 +15,9 @@ import {default as initUsers} from "@lib/init/users.js";
 const main = async () => {
     init()
 
-    const databaseLocation = path.dirname(fileURLToPath(import.meta.url)) + `${path.sep}`
-    await initialiseDatabase(databaseLocation)
+    await initialiseDatabase(DatabaseConfig.DATABASE_LOCATION)
 
-    Database.getInstance().then(instance => initUsers(instance))
+    initUsers()
 
     const app    = express()
     const server = new Server(app)

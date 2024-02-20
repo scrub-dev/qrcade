@@ -3,14 +3,18 @@ import express, {Express, NextFunction, Request, Response, Router} from 'express
 import cors from 'cors'
 import cookieParser from 'cookie-parser'
 
+import LoginLocalStrategy from '@lib/auth/LoginLocalStrategy.js'
+import RegisterLocalStrategy from '@lib/auth/RegisterLocalStrategy.js'
+
 import {router as AuthRouter} from './routes/AuthRoute.js'
 import {router as TestRouter} from './routes/TestRoute.js'
 import {router as UserRouter} from './routes/UserRoute.js'
 import {router as RootRouter} from './routes/RootRoute.js'
 
 import {logger} from './middleware/logger.js';
-import { ResponseCode } from './responses/DefaultResponse.js';
+import { GeneralCode, ResponseCode } from './responses/DefaultResponse.js';
 import JsonResponse from './responses/JsonResponse.js';
+import passport from 'passport';
 
 export class Server {
 
@@ -23,6 +27,7 @@ export class Server {
         Log("Server created", LogType.SERVER)
 
         this.registerMiddleware()
+        this.registerAuthStrategies()
         this.registerRouters()
         this.declareCatchAll()
 
@@ -38,9 +43,11 @@ export class Server {
         const middleware = [
             {name: "cors",         func: cors()},
             {name: "logger",       func: logger},
-            {name: "urlencoded",   func: express.urlencoded({extended: true})},
+            {name: "passport",     func: passport.initialize()},
+            {name: "cookieparser", func: cookieParser()},
+            {name: "urlencoded",   func: express.urlencoded({extended: false})},
             {name: "json",         func: express.json()},
-            {name: "cookieparser", func: cookieParser()}
+
         ]
         middleware.forEach(e => {
             this._app.use(e.func);
@@ -61,12 +68,18 @@ export class Server {
         })
     }
 
+    registerAuthStrategies = () => {
+        LoginLocalStrategy()
+        RegisterLocalStrategy()
+        Log("Declaring auth strategies", LogType.SERVER)
+    }
+
     declareCatchAll = () => {
         // run this after registering routes
         // running before will mean this will always be called
         Log("Declaring catchall function...", LogType.SERVER)
         this._app.use((req: Request, res: Response, next: NextFunction) => {
-            new JsonResponse(res, {code: 404, contents: {message: "Sorry, the requested resource was not found on the server", code: ResponseCode.NOT_FOUND}}).send()
+            new JsonResponse(res, {statusCode: 404,contents: {message: "Sorry, the requested resource was not found on the server", code: GeneralCode.NOT_FOUND}}).statusCode(ResponseCode.NOT_FOUND).send()
         })
     }
 

@@ -7,8 +7,8 @@ import {getUserCount } from "@lib/models/user/getUser.js";
 import { Sequelize } from "sequelize";
 
 
-export default (s: Sequelize) => {
-    createDefaultUser(s).then(() => {Log("Created default user...", LogType.INI)})
+export default () => {
+    createDefaultUser().then(() => {Log("Created default user...", LogType.INI)})
 
     if(config.PERSIST_DB && config.GENERATE_ACCOUNTS) return Log("Skipping generating accounts, database persisted")
 
@@ -22,7 +22,7 @@ export default (s: Sequelize) => {
         for(let i = 0; i < 10; i++) {
             let _uname = `${PLAYER_UNAME_PREFIX}${i + 1}`
             let _pword = `${PLAYER_PWORD_PREFIX}${i + 1}`
-            let promise = createUser(s, {
+            let promise = createUser({
                 userName: _uname,
                 passwd: _pword,
                 admin: false
@@ -31,7 +31,7 @@ export default (s: Sequelize) => {
         }
 
         Promise.all(promiseArr).then(async () => {
-            let userCount = await getUserCount(s)
+            let userCount = await getUserCount()
             Log(`Default Accounts Created: ${ACCOUNTS_COUNT} | Total Users: ${userCount}`, LogType.INI)
         })
     }

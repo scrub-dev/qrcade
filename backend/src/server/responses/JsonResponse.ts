@@ -3,31 +3,30 @@ import { Code, ResponseCode } from "./DefaultResponse.js"
 
 export type JsonResponseType = {
     message: string,
-    code:    ResponseCode
+    code: Code
 }
 
 export default class {
 
     protected _respBody: JsonResponseType | undefined
-    protected _statusCode: number | undefined
+    protected _statusCode: ResponseCode | undefined
     protected _respObj: Response
 
     constructor(respObj: Response,
         options?: {
-            code?: number,
+            statusCode?: ResponseCode,
             contents?: JsonResponseType,
-            type?: Code
         })
     {
         this._respObj = respObj
 
         if(!options) return
 
-        if(options.code) this._statusCode = options.code
+        if(options.statusCode) this._statusCode = options.statusCode
         if(options.contents) this._respBody = options.contents
     }
 
-    code = (c: ResponseCode) => {
+    statusCode = (c: ResponseCode) => {
         this._statusCode = c
         return this
     }

@@ -1,4 +1,4 @@
-import { Database } from "@lib/database/database.js"
+import { sequelize } from "@lib/database/database.js"
 import user from "./user.js"
 import lobby from "./lobby.js"
 import hit from "./hit.js"

@@ -3,7 +3,7 @@ import { Log, LogConfigs, LogType } from "@lib/logging/log.js"
 
 import sysConfig from '@config/SystemConfig.json' assert {type: "json"}
 import iniConfig from '@config/InitConfig.json' assert {type: "json"}
-import dbConfig from '@config/DatabaseConfig.json' assert {type: "json"}
+import dbConfig from '@config/DatabaseConfig' assert {type: "json"}
 import logConfig from '@config/LogConfig.json' assert {type: "json"}
 
 export default () => {

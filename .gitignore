@@ -11,3 +11,5 @@ backend/database/qrcade_db.db
 .vscode/
 
 qrcade.session.sql
+
+backend/.env

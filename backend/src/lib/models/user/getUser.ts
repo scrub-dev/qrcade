@@ -1,25 +1,27 @@
+import { sequelize } from "@lib/database/database.js"
 import { Sequelize, WhereOptions, Op } from "sequelize"
 
-export const getUserByID = async (s: Sequelize, id: string) => {
-    return (await getUserByFilter(s, {UserID: id}))
+export const getUserByID = async (id: string) => {
+    return (await getUserByFilter({UserID: id}))
 }
-export const getUserByUsername = async (s: Sequelize, name: string) => {
-    return (await getUserByFilter(s, {Username: name}))
+export const getUserByUsername = async (name: string) => {
+    return sequelize.models.Users.findOne({where: {Username: name}})
 }
-export const getUsersInLobbyByLobbyID = async (s: Sequelize, lobbyID: string) => {
+export const getUsersInLobbyByLobbyID = async (lobbyID: string) => {
 
 }
-export const getUsersByFilter = async (s: Sequelize, filter: WhereOptions) => {
-    return (await s.models.Users.findAll({where: filter}))
+export const getUsersByFilter = async (filter: WhereOptions) => {
+
+    return (await sequelize.models.Users.findAll({where: filter}))
 }
 
-export const getUserByFilter = async (s: Sequelize, filter: WhereOptions) => {
-    return (await s.models.Users.findOne({where: filter}))
+export const getUserByFilter = async (filter: WhereOptions) => {
+    return (await sequelize.models.Users.findOne({where: filter}))
 }
 
-export const getHighestUserPlayerNumber = async (s: Sequelize) => {
-    return (await getUsersByFilter(s, {Username: {[Op.like] : "Player%"}})).length + 1
+export const getHighestUserPlayerNumber = async () => {
+    return (await getUsersByFilter({Username: {[Op.like] : "Player%"}})).length + 1
 }
-export const getUserCount = async (s: Sequelize) => {
-    return (await s.models.Users.count({distinct: true, col: "UserID"}))
+export const getUserCount = async () => {
+    return (await sequelize.models.Users.count({distinct: true, col: "UserID"}))
 }

@@ -14,10 +14,10 @@ router.get("/", (req, res) => {
 
 
 router.get("/output/raw", (req,res) => {
-    new DefaultResponse(res).code(ResponseCode.SUCCESS).body("Test Body").send()
+    new DefaultResponse(res).statusCode(ResponseCode.SUCCESS).body("Test Body").send()
 })
 router.get("/output/json", (req,res) => {
-    new JsonResponse(res).code(ResponseCode.SUCCESS).send()
+    new JsonResponse(res).statusCode(ResponseCode.SUCCESS).send()
 })
 router.get("/output/data", (req,res) => {
     new DataResponse(res).send()
