@@ -22,7 +22,7 @@ export default async (s: Sequelize) => {
     User.init
     Lobby.init
 
-    Lobby.hasMany(User, {as: 'LobbyParticipants'})
+    Lobby.hasMany(User)
     User.belongsTo(Lobby)
 
     Lobby.hasMany(Flag)
@@ -30,7 +30,7 @@ export default async (s: Sequelize) => {
 
     Lobby.hasMany(Team)
     Team.belongsTo(Lobby)
-    Team.hasMany(User, {as: "TeamPlayers"})
+    Team.hasMany(User)
     User.belongsTo(Team)
 
     // Hit.hasOne(User, {as: "Scanner"})
