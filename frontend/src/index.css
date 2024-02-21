@@ -1,3 +1,26 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+    font-family: "graffiti";
+    src: url("/fonts/Good_Brush.otf");
+  }
+
+body {
+    background-color: white;
+}
+
+.qrc-shadow {
+  text-shadow: 0px 5px 20px var(--tw-shadow-color), 0px 5px 20px var(--tw-shadow-color);
+}
+
+html::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+html {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
