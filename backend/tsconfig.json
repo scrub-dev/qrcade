@@ -9,7 +9,7 @@
       "@config/*":["src/config/*"],
       "@repository/*":["src/repositories/*"],
       "@server/*":["src/server/*"],
-      "@controller":["src/server/controllers/*"],
+      "@controller/*":["src/server/controllers/*"],
       "@response/*":["src/server/responses/*"],
       "@localTypes/*" : ["src/types/*"],
       "@routers/*" : ["src/server/routes/*"]
