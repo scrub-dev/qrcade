@@ -9,8 +9,8 @@ export default () => {
                 <h1 className="text-7xl drop-shadow-2xl qrc-shadow shadow-main font-graffiti">QRCade</h1>
             </div>
             <div id="buttons" className="grow flex items-center justify-center md:justify-end md:pr-5 py-2 gap-2">
-                <Loginout/>
                 <ViewScoreBtn/>
+                <Loginout isRoot={true}/>
             </div>
         </div>
         <div id="content-wrapper" className="bg-black flex-grow p-10 gap-2 flex flex-col md:px-[10%] lg:px-[20%] xl:px-[25%]">

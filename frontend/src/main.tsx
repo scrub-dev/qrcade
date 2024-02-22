@@ -9,14 +9,13 @@ import RequireAuth from '@auth-kit/react-router/RequireAuth'
 import Dashboard from './page/dashboard.tsx'
 import Login from './page/login.tsx'
 import Lobby from './page/lobby.tsx'
-import location from './components/util/connection/location.ts'
 import config from './components/util/connection/config.ts'
 
 
 const authStore = createStore({
   authName: '_qrc',
   authType: 'cookie',
-  cookieDomain: location.frontend,
+  cookieDomain: window.location.hostname,
   cookieSecure: config.PROD
 })
 
@@ -37,6 +36,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
                 <Dashboard/>
               </RequireAuth>}>
             </Route>
+            // Scoreboard
+            // Score
+            // Hit
           </Routes>
         </BrowserRouter>
       </AuthProvider>

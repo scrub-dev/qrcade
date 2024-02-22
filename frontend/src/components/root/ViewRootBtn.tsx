@@ -4,5 +4,5 @@ import Button from "../core/Button"
 export default () => {
     const nav = useNavigate()
 
-    return <Button text={"View Scoreboards"} onClick={() => nav("/scoreboard")}/>
+    return <Button text={"Home"} onClick={() => nav("/")}/>
 }
