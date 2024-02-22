@@ -13,8 +13,8 @@ export default () => {
                 <ViewScoreBtn/>
             </div>
         </div>
-        <div id="content-wrapper" className="bg-main_dark flex-grow p-10 gap-2 flex flex-col md:px-[10%] lg:px-[20%] xl:px-[25%]">
-            <div id="content1" className="rounded justify-center bg-black p-2 shadow-lg shadow-main_light">
+        <div id="content-wrapper" className="bg-black flex-grow p-10 gap-2 flex flex-col md:px-[10%] lg:px-[20%] xl:px-[25%]">
+            <div id="content1" className="rounded justify-center bg-main_light p-2 shadow-lg shadow-main_light hover:bg-main_dark hover:shadow-main_dark transition-all">
                 <p className="text-2xl">Welcome to QRCade!</p>
                 <p className="pt-1">QRCade is a simple, mobile gaming platform designed around open play!</p>
                 <br></br>
@@ -33,7 +33,7 @@ export default () => {
                     </ul>
                 </div>
             </div>
-            <div id="content2" className="rounded bg-black p-2 shadow-lg shadow-main_light">
+            <div id="content2" className="rounded bg-main_light p-2 shadow-lg shadow-main_light hover:bg-main_dark hover:shadow-main_dark transition-all">
                 <p className="text-2xl">What is open play?</p>
                 <p className="pt-1">Remeber in primary school, where you would invent games on the playground with your own rules?</p>
                 <p className="">Its that!</p>
