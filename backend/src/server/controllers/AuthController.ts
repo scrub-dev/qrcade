@@ -36,7 +36,7 @@ export const register = (err: Error | null, user: IUser, info: {state: AuthState
             statusCode: ResponseCode.SUCCESS,
             contents: {
                 message: "User Created",
-                code: AuthCode.SUCCESS
+                code: AuthCode.REGISTER_SUCCESS
             }
         }).send()
     }
@@ -84,15 +84,17 @@ export const login = (err: Error | null, user: IUser | boolean, info: {state: Au
         if(!authSecret) throw new Error("Missing Auth Secret, check getAuthSecret()")
 
         const body = {_id: user.UserID, _DisplayName: user.DisplayName, _Username: user.Username}
-        const token = jwt.sign({user: body}, authSecret)
+        const token = jwt.sign({user: body}, authSecret, {expiresIn: '365d'})
 
         return new JsonResponse(res, {
             statusCode: ResponseCode.SUCCESS,
             contents: {
                 message: "Logged in",
                 code: AuthCode.SUCCESS,
-                data : token
+                token: token,
+                userState: {...user, Passwd: "", Admin: ""}
+                }
             }
-        }).send()
+        ).send()
     })
 }

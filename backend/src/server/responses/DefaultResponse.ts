@@ -11,7 +11,8 @@ export enum GeneralCode {
 export enum AuthCode {
     SUCCESS = "AUTH_SUCCESS",
     FAIL = "AUTH_FAIL",
-    UNAME_DUPLICATE = "REGISTER_UNAME_DUPLICATE"
+    UNAME_DUPLICATE = "REGISTER_UNAME_DUPLICATE",
+    REGISTER_SUCCESS = "REGISTER_SUCCESS"
 }
 export enum GameCode {
 
