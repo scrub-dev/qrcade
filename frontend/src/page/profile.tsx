@@ -6,9 +6,6 @@ export default () => {
 
     const user = useAuthUser() as any
 
-
-
-
     return (<>
     <div id="layout" className="flex flex-col h-screen text-white">
         <div id="banner" className="flex flex-col items-center justify-center w-screen bg-black py-3">
