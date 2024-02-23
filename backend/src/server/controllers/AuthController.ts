@@ -3,6 +3,7 @@ import { Log, LogType } from '@lib/logging/log.js'
 import { AuthCode, GeneralCode, ResponseCode } from '@server/responses/DefaultResponse.js'
 import JsonResponse from '@server/responses/JsonResponse.js'
 import getAuthSecret from '@src/lib/auth/getAuthSecret.js'
+import sanitiseUser from '@src/lib/user/sanitiseUser.js'
 import { IUser } from '@src/models/user.js'
 import { Request, Response } from 'express'
 import jwt from 'jsonwebtoken'
@@ -92,7 +93,7 @@ export const login = (err: Error | null, user: IUser | boolean, info: {state: Au
                 message: "Logged in",
                 code: AuthCode.SUCCESS,
                 token: token,
-                userState: {...user, Passwd: "", Admin: ""}
+                userState: {...sanitiseUser(user)}
                 }
             }
         ).send()

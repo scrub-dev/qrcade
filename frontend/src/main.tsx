@@ -10,6 +10,7 @@ import Dashboard from './page/dashboard.tsx'
 import Login from './page/login.tsx'
 import Lobby from './page/lobby.tsx'
 import config from './components/util/connection/config.ts'
+import Profile from './page/profile.tsx'
 
 
 const authStore = createStore({
@@ -25,17 +26,27 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <BrowserRouter>
           <Routes>
             <Route path='/' element={<Root/>}></Route>
+
             <Route path='/login' element={<Login/>}></Route>
+
             <Route path='/lobby' element={
               <RequireAuth fallbackPath={'/'}>
                 <Lobby/>
               </RequireAuth>}>
             </Route>
+
             <Route path='/dashboard' element={
               <RequireAuth fallbackPath={'/'}>
                 <Dashboard/>
               </RequireAuth>}>
             </Route>
+
+            <Route path='/profile' element={
+              <RequireAuth fallbackPath={'/'}>
+                <Profile/>
+              </RequireAuth>}>
+            </Route>
+
             // Scoreboard
             // Score
             // Hit
