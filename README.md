@@ -6,7 +6,7 @@ Backend:
   * Typescript
   * Express
   * Sequelize (Sqlite)
----
+
 Frontend:
   * Typescript
   * React
