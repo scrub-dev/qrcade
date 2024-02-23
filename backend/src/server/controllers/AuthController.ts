@@ -93,7 +93,7 @@ export const login = (err: Error | null, user: IUser | boolean, info: {state: Au
                 message: "Logged in",
                 code: AuthCode.SUCCESS,
                 token: token,
-                userState: {...sanitiseUser(user)}
+                userState: sanitiseUser(user)
                 }
             }
         ).send()

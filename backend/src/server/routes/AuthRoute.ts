@@ -1,17 +1,22 @@
 
 import { AuthState } from '@lib/auth/states.js'
-import { Log, LogType } from '@lib/logging/log.js'
 import { login, register } from '@server/controllers/AuthController.js'
 import { IUser } from '@src/models/user.js'
-import express, { Request, Response } from 'express'
+import express, { NextFunction, Request, Response } from 'express'
 import passport from 'passport'
-import { Model } from 'sequelize'
+import UserAuthorisationHandler from '../handlers/UserAuthorisationHandler.js'
+import AdminAuthorisationHandler from '../handlers/AdminAuthorisationHandler.js'
 export const router = express.Router()
 
 
 
-router.get("/test", (_, res: Response) => {
-    res.json({"Time": new Date(Date.now()).toUTCString(), message: "HELLOWORLD"}).end()
+// router.get("/test", passport.authenticate('jwt', {session: false}), (req: Request, res: Response) => {
+//         console.log(req)
+// })
+
+router.get("/test/:username", UserAuthorisationHandler, (req: Request , res: Response) => {
+    console.log(req.params)
+    res.send("HELLO WORLD")
 })
 
 router.post('/login', async (req: Request, res: Response) => {

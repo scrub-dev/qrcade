@@ -3,7 +3,7 @@ import { IUser } from "@src/models/user"
 import { Sequelize, WhereOptions, Op } from "sequelize"
 
 export const getUserByID = async (id: string) => {
-    return (await getUserByFilter({UserID: id}))
+    return (await getUserByFilter({UserID: id}))?.dataValues
 }
 export const getUserByUsername = async (name: string) => {
     return (await sequelize.models.Users.findOne({where: {Username: name}})) as unknown

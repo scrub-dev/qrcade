@@ -1,5 +1,5 @@
 import { Response } from "express"
-import { Code, ResponseCode } from "./DefaultResponse.js"
+import { AuthCode, Code, GeneralCode, ResponseCode } from "./DefaultResponse.js"
 
 export type JsonResponseType = {
     message: string,
@@ -40,4 +40,8 @@ export default class {
     send = () => {
         this._respObj?.send(this._respBody).status(this._statusCode || 200).end()
     }
+
+
+    static InsuffientPermissions = (res: Response) => new this(res, {statusCode: ResponseCode.UNAUTHORISED, contents: {code: AuthCode.UNAUTHORIZED , message: "You do not have sufficient permissions to perform this action!"}})
+    static FieldNotSupported = (res: Response) => new this(res, {statusCode: ResponseCode.SUCCESS, contents: {code: GeneralCode.NOT_SUPPORTED, message: "You cannot modify this field."}})
 }

@@ -5,6 +5,7 @@ import cookieParser from 'cookie-parser'
 
 import LoginLocalStrategy from '@lib/auth/LoginLocalStrategy.js'
 import RegisterLocalStrategy from '@lib/auth/RegisterLocalStrategy.js'
+import AuthorizeJWTStrategy from '@src/lib/auth/AuthorizeJWTStrategy.js';
 
 import {router as AuthRouter} from './routes/AuthRoute.js'
 import {router as TestRouter} from './routes/TestRoute.js'
@@ -15,6 +16,7 @@ import {logger} from './middleware/logger.js';
 import { GeneralCode, ResponseCode } from './responses/DefaultResponse.js';
 import JsonResponse from './responses/JsonResponse.js';
 import passport from 'passport';
+import {addUserToReqFromBearerToken} from './middleware/getUserFromBearerToken.js';
 
 export class Server {
 
@@ -47,6 +49,7 @@ export class Server {
             {name: "cookieparser", func: cookieParser()},
             {name: "urlencoded",   func: express.urlencoded({extended: false})},
             {name: "json",         func: express.json()},
+            {name: "userparser",   func: addUserToReqFromBearerToken}
 
         ]
         middleware.forEach(e => {
@@ -71,6 +74,7 @@ export class Server {
     registerAuthStrategies = () => {
         LoginLocalStrategy()
         RegisterLocalStrategy()
+        AuthorizeJWTStrategy()
         Log("Declaring auth strategies", LogType.SERVER)
     }
 
