@@ -2,9 +2,12 @@ import { AuthState } from '@lib/auth/states.js'
 import { IUser } from '@src/models/user.js'
 import { Request, Response } from 'express'
 import JsonResponse from '../responses/JsonResponse.js'
+import { sequelize } from '@src/lib/database/database.js'
+import { getUserByID, getUserByUsername } from '@src/lib/models/user/getUser.js'
+import hashPassword from '@src/lib/user/hashPassword.js'
 
 type TUpdateParams = {
-    username: string,
+    userid: string,
     field: string,
     newValue: string
 }
@@ -16,20 +19,32 @@ export const update = (req: Request, res: Response) => {
     switch(params.field.toUpperCase()) {
         default:
             return JsonResponse.FieldNotSupported(res)
-
         case "PASSWORD":
-            updatePassword(params.username, params.newValue)
-            return JsonResponse.FieldNotSupported(res)
-
+            updatePassword(params.userid, params.newValue)
+            return JsonResponse.FieldUpdated(res, "PASSWORD")
+        case "DISPLAYNAME":
+            updateDisplayName(params.userid, params.newValue)
+            return JsonResponse.FieldUpdated(res, "DISPLAYNAME")
         case "USERNAME":
-
-            return JsonResponse.FieldNotSupported(res)
-
+            updateUsername(params.userid, params.field)
+            return JsonResponse.FieldUpdated(res, "USERNAME")
     }
 }
 
-const updatePassword = (user: string, newPassword: string) => {
+const updatePassword = async (userID: string, newPassword: string) => {
+    const res = (await sequelize.models.Users.update({Passwd: hashPassword(newPassword)}, {
+        where: { UserID: (await getUserByID(userID))}
+    }))
 }
-const updateUsername = (user: string, newUsername: string) => {
 
+const updateDisplayName = async (userID: string, newDisplayName: string) => {
+    const res = (await sequelize.models.Users.update({DisplayName: newDisplayName}, {
+        where: { UserID: (await getUserByID(userID))}
+    }))
+}
+
+const updateUsername = async (userID: string, newUsername: string) => {
+    const res = (await sequelize.models.Users.update({Username: newUsername}, {
+        where: { UserID: (await getUserByID(userID))}
+    }))
 }

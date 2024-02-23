@@ -44,4 +44,6 @@ export default class {
 
     static InsuffientPermissions = (res: Response) => new this(res, {statusCode: ResponseCode.UNAUTHORISED, contents: {code: AuthCode.UNAUTHORIZED , message: "You do not have sufficient permissions to perform this action!"}})
     static FieldNotSupported = (res: Response) => new this(res, {statusCode: ResponseCode.SUCCESS, contents: {code: GeneralCode.NOT_SUPPORTED, message: "You cannot modify this field."}})
+    static FieldUpdated = (res: Response, field: string) => new this(res, {statusCode: ResponseCode.SUCCESS, contents: {code: GeneralCode.FIELD_UPDATED, message: `Field updated: ${field}`}})
+
 }
