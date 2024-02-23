@@ -1,42 +1,57 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import {Route, Routes, BrowserRouter} from 'react-router-dom'
-
 import './index.css'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import AuthProvider from 'react-auth-kit/AuthProvider'
+import createStore from 'react-auth-kit/createStore'
+import Root from './page/root.tsx'
+import RequireAuth from '@auth-kit/react-router/RequireAuth'
+import Dashboard from './page/dashboard.tsx'
+import Login from './page/login.tsx'
+import Lobby from './page/lobby.tsx'
+import config from './components/util/connection/config.ts'
+import Profile from './page/profile.tsx'
 
-import { AuthProvider, RequireAuth } from 'react-auth-kit'
-import Home from './components/routes/home.tsx'
-import Login from './components/routes/login.tsx'
-import Hit from './components/routes/Hit.tsx'
-import Score from './components/routes/Score.tsx'
 
+const authStore = createStore({
+  authName: '_qrc',
+  authType: 'cookie',
+  cookieDomain: window.location.hostname,
+  cookieSecure: config.PROD
+})
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <BrowserRouter>
-    <AuthProvider
-      authType='cookie'
-      authName='_qrcade'
-      cookieDomain={window.location.hostname}
-      cookieSecure={import.meta.env.DEV}
-    >
-      <Routes>
-        <Route path='/' element={
-          <RequireAuth loginPath='/login'>
-            <Home/>
-          </RequireAuth>
-        }></Route>
+      <AuthProvider store={authStore}>
+        <BrowserRouter>
+          <Routes>
+            <Route path='/' element={<Root/>}></Route>
 
-      <Route path='/score' element={
-          <RequireAuth loginPath='/login'>
-            <Score/>
-          </RequireAuth>
-        }></Route>
-        <Route path='/login' element={<Login/>}></Route>
-        <Route path='/hit' element={<Hit/>}></Route>
-      </Routes>
-    </AuthProvider>
-    </BrowserRouter>
+            <Route path='/login' element={<Login/>}></Route>
 
+            <Route path='/lobby' element={
+              <RequireAuth fallbackPath={'/'}>
+                <Lobby/>
+              </RequireAuth>}>
+            </Route>
+
+            <Route path='/dashboard' element={
+              <RequireAuth fallbackPath={'/'}>
+                <Dashboard/>
+              </RequireAuth>}>
+            </Route>
+
+            <Route path='/profile' element={
+              <RequireAuth fallbackPath={'/'}>
+                <Profile/>
+              </RequireAuth>}>
+            </Route>
+
+            // Scoreboard
+            // Score
+            // Hit
+          </Routes>
+        </BrowserRouter>
+      </AuthProvider>
   </React.StrictMode>,
 )

@@ -1,6 +1,15 @@
+backend/build
+backend/node_modules
+
+
 
 *.map
-
 *.js
 
 backend/database/qrcade_db.db
+
+.vscode/
+
+qrcade.session.sql
+
+backend/.env

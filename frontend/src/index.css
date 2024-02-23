@@ -2,17 +2,25 @@
 @tailwind components;
 @tailwind utilities;
 
-
-body {
-  background-color: black
-}
-
 @font-face {
     font-family: "graffiti";
     src: url("/fonts/Good_Brush.otf");
   }
 
+body {
+    background-color: white;
+}
 
-.neon-glow {
-    text-shadow: 0px 5px 20px var(--tw-shadow-color), 0px 5px 20px var(--tw-shadow-color);
+.qrc-shadow {
+  text-shadow: 0px 5px 20px var(--tw-shadow-color), 0px 5px 20px var(--tw-shadow-color);
+}
+
+html::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+html {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }
