@@ -8,4 +8,4 @@ router.get("/test", (req, res) => {
 })
 
 
-router.patch("/:userid/update/:field/:newValue", UserAuthorisationHandler, update)
+router.patch("/:userid/update/:field", UserAuthorisationHandler, update)

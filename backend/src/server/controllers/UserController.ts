@@ -15,18 +15,19 @@ type TUpdateParams = {
 export const update = (req: Request, res: Response) => {
 
     const params = req.params as TUpdateParams
+    const newValue = req.body.password || req.body.username || req.body.displayname
 
     switch(params.field.toUpperCase()) {
         default:
             return JsonResponse.FieldNotSupported(res)
         case "PASSWORD":
-            updatePassword(params.userid, params.newValue)
+            updatePassword(params.userid, newValue)
             return JsonResponse.FieldUpdated(res, "PASSWORD")
         case "DISPLAYNAME":
-            updateDisplayName(params.userid, params.newValue)
+            updateDisplayName(params.userid, newValue)
             return JsonResponse.FieldUpdated(res, "DISPLAYNAME")
         case "USERNAME":
-            updateUsername(params.userid, params.field)
+            updateUsername(params.userid, newValue)
             return JsonResponse.FieldUpdated(res, "USERNAME")
     }
 }
