@@ -11,6 +11,7 @@ import Login from './page/login.tsx'
 import Lobby from './page/lobby.tsx'
 import config from './components/util/connection/config.ts'
 import Profile from './page/profile.tsx'
+import Admin from './page/admin.tsx'
 
 
 const authStore = createStore({
@@ -21,7 +22,7 @@ const authStore = createStore({
 })
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
+  // <React.StrictMode>
       <AuthProvider store={authStore}>
         <BrowserRouter>
           <Routes>
@@ -47,11 +48,17 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
               </RequireAuth>}>
             </Route>
 
+            <Route path='/admin' element={
+              <RequireAuth fallbackPath={'/'}>
+                <Admin/>
+              </RequireAuth>}>
+            </Route>
+
             // Scoreboard
             // Score
             // Hit
           </Routes>
         </BrowserRouter>
       </AuthProvider>
-  </React.StrictMode>,
+  // </React.StrictMode>,
 )
