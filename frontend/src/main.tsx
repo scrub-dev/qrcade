@@ -12,6 +12,10 @@ import Lobby from './page/lobby.tsx'
 import config from './components/util/connection/config.ts'
 import Profile from './page/profile.tsx'
 import Admin from './page/admin.tsx'
+import UserCreate from './page/AdminSubPages/UserCreate.tsx'
+import UserList from './page/AdminSubPages/UserList.tsx'
+import LobbyCreate from './page/AdminSubPages/LobbyCreate.tsx'
+import LobbyList from './page/AdminSubPages/LobbyList.tsx'
 
 
 const authStore = createStore({
@@ -51,6 +55,26 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
             <Route path='/admin' element={
               <RequireAuth fallbackPath={'/'}>
                 <Admin/>
+              </RequireAuth>}>
+            </Route>
+            <Route path='/admin/user/create' element={
+              <RequireAuth fallbackPath={'/'}>
+                <UserCreate/>
+              </RequireAuth>}>
+            </Route>
+            <Route path='/admin/user/list' element={
+              <RequireAuth fallbackPath={'/'}>
+                <UserList/>
+              </RequireAuth>}>
+            </Route>
+            <Route path='/admin/lobby/create' element={
+              <RequireAuth fallbackPath={'/'}>
+                <LobbyCreate/>
+              </RequireAuth>}>
+            </Route>
+            <Route path='/admin/lobby/list' element={
+              <RequireAuth fallbackPath={'/'}>
+                <LobbyList/>
               </RequireAuth>}>
             </Route>
 
