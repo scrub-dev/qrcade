@@ -1,11 +1,8 @@
-import { sequelize } from '@lib/database/database.js'
 import { getUserByUsername } from '@lib/models/user/getUser.js'
 import passport from 'passport'
 import {Strategy as LocalStrategy} from 'passport-local'
 import { AuthState } from './states.js'
 import validatePassword from '@lib/user/validatePassword.js'
-import { Model } from 'sequelize'
-import { LogType, Log } from '@lib/logging/log.js'
 import { IUser } from '@src/models/user.js'
 
 export default () => {
@@ -16,7 +13,7 @@ export default () => {
         },
         //@ts-ignore
         async (username, password, done: (err: Error | null, user: IUser | boolean, {message: string, state: AuthState}) => void) => {
-            const user =  (await getUserByUsername(username)) as IUser
+            const user =  (await getUserByUsername(username)) as unknown as IUser
 
             if(!user) return done(null, false, {message: "User not Found", state: AuthState.FAILED_NO_USER})
 
