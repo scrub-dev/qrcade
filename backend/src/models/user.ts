@@ -12,6 +12,7 @@ export default (seq: Sequelize) => {
 }
 
 export interface IUser {
+    [x: string]: unknown;
     UserID: string,
     Username: string,
     DisplayName: string,
