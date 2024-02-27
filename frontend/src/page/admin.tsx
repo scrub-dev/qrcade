@@ -49,7 +49,7 @@ export default () => {
                     </div>
                 </div>
             </div>
-            <Modal buttonName={"Test"} title={"Test"}>
+            <Modal buttonName={"Test"} title={"ABCDEFGHIJKLMNOPQRSTUVWXYZ"}>
                 <p>Test</p>
             </Modal>
         </div>

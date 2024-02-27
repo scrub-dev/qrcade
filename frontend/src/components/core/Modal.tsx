@@ -3,8 +3,9 @@ import { defaultButtonStyle, defaultButtonStyleAlt } from "./Button"
 
 export interface TModalProps {
     buttonName: string,
-    title     : string
-    children  : ReactNode
+    title     : string,
+    children  : ReactNode,
+    style?    : string
 }
 
 export default (props: TModalProps) => {
@@ -12,7 +13,7 @@ export default (props: TModalProps) => {
     return (
       <>
         <button
-          className={defaultButtonStyle}
+          className={props.style || defaultButtonStyle}
           type="button"
           onClick={() => setShowModal(true)}
         >
@@ -22,9 +23,9 @@ export default (props: TModalProps) => {
           <>
             <div className="flex justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
               <div className="relative w-auto my-6 mx-auto max-w-3xl">
-                <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-secondary_light outline-none focus:outline-none">
+                <div className="border-1 border-main_light shadow-2xl shadow-main_light rounded-lg relative flex flex-col w-full bg-black border outline-none focus:outline-none">
                   <div className="flex items-start justify-between p-2">
-                    <h3 className="text-2xl font-semibold">{props.title}</h3>
+                    <h3 className="text-md font-semibold">{props.title}</h3>
                   </div>
                   <div className="p-2">
                     {props.children}

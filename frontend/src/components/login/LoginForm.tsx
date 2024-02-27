@@ -89,7 +89,7 @@ export default () => {
         <div className="flex items-center justify-center">
             <BackButton/>
         </div>
-        <div id='errorBox' className='text-failure absolute font-extrabold flex items-center justify-center left-0 right-0 m-auto pt-5'>
+        <div id='errorBox' className='text-failure absolute font-extrabold flex items-center justify-center left-0 right-0 m-auto pt-5 text-center px-5'>
             <p>{error}</p>
         </div>
     </div>
