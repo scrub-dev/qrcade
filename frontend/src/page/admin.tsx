@@ -4,6 +4,7 @@ import { useEffect } from "react"
 import BackButton from "../components/core/BackButton"
 import { useNavigate } from "react-router-dom"
 import Button from "../components/core/Button"
+import Modal from "../components/core/Modal"
 
 export default () => {
     const nav = useNavigate()
@@ -31,7 +32,7 @@ export default () => {
                 <BackButton/>
             </div>
         </div>
-        <div id="content-wrapper" className="bg-black flex-grow p-10 gap-2 flex flex-col md:px-[10%] lg:px-[20%] xl:px-[25%] items-center justify-center">
+        <div id="content-wrapper" className="bg-black flex-grow p-10 gap-2 flex flex-col md:px-[10%] lg:px-[20%] xl:px-[25%] items-center">
             <div>
                 <div id="content1" className="pb-4 p-2 border-main border-2 rounded">
                     <p className="font-bold pb-1">Users</p>
@@ -48,7 +49,9 @@ export default () => {
                     </div>
                 </div>
             </div>
-
+            <Modal buttonName={"Test"} title={"Test"}>
+                <p>Test</p>
+            </Modal>
         </div>
         <div id="footer" className="text-white bg-black">
             <p>QRCade © {new Date(Date.now()).getFullYear()}</p>
