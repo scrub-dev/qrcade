@@ -8,7 +8,7 @@ export default () => {
             <div id="title" className="w-full md:w-max flex items-center justify-center py-2 md:pl-5">
                 <h1 className="text-7xl drop-shadow-2xl qrc-shadow shadow-main font-graffiti">QRCade</h1>
             </div>
-            <div id="buttons" className="grow flex items-center justify-center md:justify-end md:pr-5 py-2 gap-2">
+            <div id="buttons" className="grow flex flex-wrap items-center justify-center md:justify-end md:pr-5 py-2 gap-2">
                 <ViewScoreBtn/>
                 <Loginout isRoot={true}/>
             </div>
@@ -33,7 +33,7 @@ export default () => {
                     </ul>
                 </div>
             </div>
-            <div id="content2" className="rounded bg-main_light p-2 shadow-lg shadow-main_light hover:bg-main_dark hover:shadow-main_dark transition-all">
+            {/* <div id="content2" className="rounded bg-main_light p-2 shadow-lg shadow-main_light hover:bg-main_dark hover:shadow-main_dark transition-all">
                 <p className="text-2xl">What is open play?</p>
                 <p className="pt-1">Remeber in primary school, where you would invent games on the playground with your own rules?</p>
                 <p className="">Its that!</p>
@@ -41,7 +41,7 @@ export default () => {
                 <p className="">You might now be asking yourself, how can I do open play with a mobile game?</p>
                 <p className="">Don't worry, the mobile app simply provides tools for you to still do this.</p>
                 <p className="">It provides a set of tools for you to build games around (of course they have to revolve around scanning a QR Code, sorry).</p>
-            </div>
+            </div> */}
         </div>
         <div id="footer" className="text-white bg-black">
             <p>QRCade © {new Date(Date.now()).getFullYear()}</p>

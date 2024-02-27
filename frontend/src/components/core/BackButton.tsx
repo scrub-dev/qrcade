@@ -1,7 +1,10 @@
 import { useNavigate } from "react-router-dom"
 import Button from "./Button"
 
-export default () => {
+export type TBackButtonProps = {
+    handleOnClick? : any
+}
+export default (props: TBackButtonProps) => {
     const nav = useNavigate()
-    return <Button text={"Go Back"} onClick={() => nav(-1)}/>
+    return <Button text={"Go Back"} onClick={props.handleOnClick || (() => nav(-1))}/>
 }

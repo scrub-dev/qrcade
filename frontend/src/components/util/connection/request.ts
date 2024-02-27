@@ -12,7 +12,7 @@ export const requestWithCookie    = () => _request({cookie: true})
 export default {
     request: _request,
     post   : (str: string, obj?: {cookie?: boolean, data: any}) => _request(obj).post(`${location.backend}/${str}`, obj?.data),
-    get    : (str: string, obj?: {cookie?: boolean, data: any}) => _request(obj).get(`${location.backend}/${str}`, obj?.data),
+    get    : async (str: string, obj?: {cookie?: boolean, data: any}) => (await _request(obj).get(`${location.backend}/${str}`, obj?.data)),
     patch  : (str: string, obj?: {cookie?: boolean, data: any}) => _request(obj).patch(`${location.backend}/${str}`, obj?.data),
     delete : (str: string, obj?: {cookie?: boolean, data: any}) => _request(obj).delete(`${location.backend}/${str}`, obj?.data),
 }
