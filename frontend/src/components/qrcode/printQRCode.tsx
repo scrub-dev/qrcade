@@ -5,7 +5,9 @@ import Button from '../core/Button';
 
 
 export interface TPrintQRCodeProps {
-    ID: string
+    ID: string,
+    style? : string,
+    name?  : string
 }
 
 export default (props: TPrintQRCodeProps) => {
@@ -22,7 +24,7 @@ export default (props: TPrintQRCodeProps) => {
         <QrcodeContent ID={props.ID}/>
       </div>
     </div>
-        <Button text={'QR Code'} onClick={handlePrint}/>
+        <Button text={props.name || 'QR Code'} onClick={handlePrint} className={props.style}/>
     </>
   );
 };

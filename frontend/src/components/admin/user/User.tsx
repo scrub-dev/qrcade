@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react"
 import Modal from "../../core/Modal"
 import Button from "../../core/Button"
 import request from "../../util/connection/request"
+import PrintQRCode from "../../qrcode/printQRCode"
 
 export interface TUserProps {
     UserID: string,
@@ -64,21 +65,21 @@ export default (props: TUserProps) => {
     }
 
     return (
-        <Modal buttonName={`${props.Username} (${props.DisplayName})`} title="User Controls" style="rounded bg-main p-1 font-graffiti w-full">
+        <Modal buttonName={`${props.Username} (${props.UserID})`} title="User Controls" style="rounded bg-main p-1 font-mono w-full">
             <p>
                 <span className="font-bold">UserID: </span><span>{userInfo.UserID}</span> <br/>
                 <span className="font-bold">Username: </span><span>{userInfo.Username}</span> <br/>
                 <span className="font-bold">DisplayName: </span><span>{userInfo.DisplayName}</span>
             </p>
         <div className="flex flex-col justify-center items-center gap-3 m-5">
-        <Button text={"Print QR Code"} onClick={printQRCode} className="rounded bg-main p-1 font-graffiti w-full px-5"/>
+        <PrintQRCode ID={userInfo.UserID} name="Print QR Code" style="rounded bg-main p-1 font-mono w-full px-5"/>
             {props.Admin ?
-                    <Button text={"Remove User Admin"} onClick={removeAdmin} className="rounded bg-main p-1 font-graffiti w-full px-5"/>:
-                    <Button text={"Make User Admin"} onClick={makeAdmin} className="rounded bg-main p-1 font-graffiti w-full px-5"/>
+                    <Button text={"Remove User Admin"} onClick={removeAdmin} className="rounded bg-main p-1 font-mono w-full px-5"/>:
+                    <Button text={"Make User Admin"} onClick={makeAdmin} className="rounded bg-main p-1 font-mono w-full px-5"/>
             }
-        <Button text={"Reset DisplayName"} onClick={resetDisplayName} className="rounded bg-main p-1 font-graffiti w-full px-5"/>
-        <Button text={"Reset Password"} onClick={resetPassword} className="rounded bg-main p-1 font-graffiti w-full px-5"/>
-        <Button text={"Delete User"} onClick={deleteUser} className="rounded bg-main p-1 font-graffiti w-full px-5"/>
+        <Button text={"Reset DisplayName"} onClick={resetDisplayName} className="rounded bg-main p-1 font-mono w-full px-5"/>
+        <Button text={"Reset Password"} onClick={resetPassword} className="rounded bg-main p-1 font-mono w-full px-5"/>
+        <Button text={"Delete User"} onClick={deleteUser} className="rounded bg-main p-1 font-mono w-full px-5"/>
         </div>
         <div className="flex items-center justify-center">
             <p className="text-white absolute">{result}</p>
