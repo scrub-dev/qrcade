@@ -49,9 +49,6 @@ export default () => {
                     </div>
                 </div>
             </div>
-            <Modal buttonName={"Test"} title={"ABCDEFGHIJKLMNOPQRSTUVWXYZ"}>
-                <p>Test</p>
-            </Modal>
         </div>
         <div id="footer" className="text-white bg-black">
             <p>QRCade © {new Date(Date.now()).getFullYear()}</p>

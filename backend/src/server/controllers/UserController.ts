@@ -3,10 +3,11 @@ import { IUser } from '@src/models/user.js'
 import { Request, Response } from 'express'
 import JsonResponse from '../responses/JsonResponse.js'
 import { sequelize } from '@src/lib/database/database.js'
-import { getUserByID, getUserByUsername } from '@src/lib/models/user/getUser.js'
+import { getAllUsers, getUserByID, getUserByUsername } from '@src/lib/models/user/getUser.js'
 import hashPassword from '@src/lib/user/hashPassword.js'
 import { GeneralCode, ResponseCode } from '../responses/DefaultResponse.js'
 import sanitiseUser from '@src/lib/user/sanitiseUser.js'
+import DataResponse from '../responses/DataResponse.js'
 
 type TUpdateParams = {
     userid: string,
@@ -79,4 +80,9 @@ export const getUserInformation = async (req: Request, res: Response) => {
             break
     }
     return new JsonResponse(res, {contents: {message: `User data (FILTER: ${filter})`, code: GeneralCode.SUCCESS, data: data}, statusCode: ResponseCode.SUCCESS}).send()
+}
+
+export const getAll = async (req: Request, res: Response) => {
+    let x = (await getAllUsers()).map(e => sanitiseUser(e as unknown as IUser))
+    return new DataResponse(res, {code: ResponseCode.SUCCESS, contents: {code: GeneralCode.SUCCESS, data: x, length: x.length}}).send()
 }

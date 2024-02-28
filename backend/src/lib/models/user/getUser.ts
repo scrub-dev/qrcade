@@ -26,3 +26,6 @@ export const getHighestUserPlayerNumber = async () => {
 export const getUserCount = async () => {
     return (await sequelize.models.Users.count({distinct: true, col: "UserID"}))
 }
+export const getAllUsers = async () => {
+    return (await sequelize.models.Users.findAll())
+}

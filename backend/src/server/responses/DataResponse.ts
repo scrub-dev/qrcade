@@ -2,7 +2,7 @@ import { Response } from "express"
 import { Code, ResponseCode } from "./DefaultResponse.js"
 
 type DataResponseType = {
-    code:   ResponseCode,
+    code:   Code,
     data:   any[],
     length: number
 }
