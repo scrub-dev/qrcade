@@ -36,11 +36,6 @@ export default (props: TUserProps) => {
         })()
     }, [])
 
-    const printQRCode = () => {
-        setResultBox("Loading QR Code")
-        updateUserInfo()
-    }
-
     const deleteUser = () => {
         setResultBox("Deleted User")
         updateUserInfo()
