@@ -1,9 +1,9 @@
 import useAuthUser from "react-auth-kit/hooks/useAuthUser"
 import ViewAdminBtn from "../components/admin/ViewAdminBtn"
-import PrintQRCodeBtn from "../components/dashboard/PrintQRCodeBtn"
 import Loginout from "../components/login/loginout"
 import ViewProfileBtn from "../components/profile/ViewProfileBtn"
 import { useEffect, useState } from "react"
+import PrintQRCode from "../components/qrcode/printQRCode"
 
 export default () => {
 
@@ -45,7 +45,7 @@ export default () => {
             </div>
             <div id="buttonRow1" className="grow flex flex-wrap items-center justify-center md:justify-end py-2 gap-2">
                 <ViewProfileBtn/>
-                <PrintQRCodeBtn/>
+                <PrintQRCode ID={user.UserID}/>
                 <Loginout/>
                 {isAdmin ? <ViewAdminBtn/> : ""}
             </div>
