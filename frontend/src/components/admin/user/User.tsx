@@ -36,27 +36,41 @@ export default (props: TUserProps) => {
         })()
     }, [])
 
-    const deleteUser = () => {
-        setResultBox("Deleted User")
-        updateUserInfo()
+    const deleteUser = async () => {
+        let res = (await request.delete(`admin/delete/${userInfo.UserID}`)).data
+        if(res.code == "SUCCESS") {
+            setResultBox("User deleted, refresh list")
+        } else setResultBox(`An Error Occured: ${res.code}`)
     }
 
-    const makeAdmin = () => {
-        setResultBox("User Admin Added")
-        updateUserInfo()
+    const makeAdmin = async () => {
+        let res = (await request.patch(`admin/add/${userInfo.UserID}/admin`)).data
+        if(res.code == "FIELD_UPDATED") {
+            updateUserInfo()
+            setResultBox("Added as Admin")
+        } else setResultBox(`An Error Occured: ${res.code}`)
     }
-    const removeAdmin = () => {
-        setResultBox("User Admin Removed")
-        updateUserInfo()
+    const removeAdmin = async () => {
+        let res = (await request.patch(`admin/remove/${userInfo.UserID}/admin`)).data
+        if(res.code == "FIELD_UPDATED") {
+            updateUserInfo()
+            setResultBox("Removed as Admin")
+        } else setResultBox(`An Error Occured: ${res.code}`)
     }
 
-    const resetDisplayName = () => {
-        setResultBox("DisplayName Reset")
-        updateUserInfo()
+    const resetDisplayName = async () => {
+        let res = (await request.patch(`admin/reset/${userInfo.UserID}/displayname`)).data
+        if(res.code == "FIELD_UPDATED") {
+            updateUserInfo()
+            setResultBox("DisplayName Reset")
+        } else setResultBox(`An Error Occured: ${res.code}`)
     }
-    const resetPassword = () => {
-        setResultBox("Password Reset")
-        updateUserInfo()
+    const resetPassword = async () => {
+        let res = (await request.patch(`admin/reset/${userInfo.UserID}/password`)).data
+        if(res.code == "FIELD_UPDATED") {
+            updateUserInfo()
+            setResultBox("Password Reset")
+        } else setResultBox(`An Error Occured: ${res.code}`)
     }
 
     return (
@@ -68,7 +82,7 @@ export default (props: TUserProps) => {
             </p>
         <div className="flex flex-col justify-center items-center gap-3 m-5">
         <PrintQRCode ID={userInfo.UserID} name="Print QR Code" style="rounded bg-main p-1 font-mono w-full px-5"/>
-            {props.Admin ?
+            {userInfo.Admin ?
                     <Button text={"Remove User Admin"} onClick={removeAdmin} className="rounded bg-main p-1 font-mono w-full px-5"/>:
                     <Button text={"Make User Admin"} onClick={makeAdmin} className="rounded bg-main p-1 font-mono w-full px-5"/>
             }

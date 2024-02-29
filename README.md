@@ -14,17 +14,8 @@ Frontend:
   * Vite
   * Tailwind
 
-
-
-
 ## Todo
-* Backend admin function
-* Backend player CRUD
-* Backend lobby CRUD
-* Backend team CRUD
-* hit logic
-* frontend dashboard
-* frontend scoreboard
-* frontend lobby and team logic
-
-but hey... at least you can login
+* Lobby Creation
+* Lobby Type Management
+* Lobby Editing
+* Hit management and game logic

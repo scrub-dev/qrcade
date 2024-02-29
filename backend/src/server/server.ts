@@ -11,6 +11,9 @@ import {router as AuthRouter} from './routes/AuthRoute.js'
 import {router as TestRouter} from './routes/TestRoute.js'
 import {router as UserRouter} from './routes/UserRoute.js'
 import {router as RootRouter} from './routes/RootRoute.js'
+import {router as AdminRouter} from './routes/AdminRoute.js'
+import {router as LobbyRouter} from './routes/LobbyRoute.js'
+
 
 import {logger} from './middleware/logger.js';
 import { GeneralCode, ResponseCode } from './responses/DefaultResponse.js';
@@ -63,7 +66,9 @@ export class Server {
             {name: "Root", route: "/",     router: RootRouter},
             {name: "Test", route: "/test", router: TestRouter},
             {name: "Auth", route: "/auth", router: AuthRouter},
-            {name: "User", route: "/user", router: UserRouter}
+            {name: "User", route: "/user", router: UserRouter},
+            {name: "Admin", route: "/admin", router: AdminRouter},
+            {name: "Lobby", route: "/lobby", router: LobbyRouter}
         ]
         routes.forEach(e => {
             this._app.use(e.route, e.router);
