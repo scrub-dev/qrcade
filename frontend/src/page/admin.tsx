@@ -42,7 +42,7 @@ export default () => {
                     </div>
                 </div>
                 <div id="content1" className="mt-2 p-2 border-main border-2 rounded">
-                    <p className="pb-1 font-bold">Lobbys</p>
+                    <p className="pb-1 font-bold">Lobbies</p>
                     <div className="flex gap-2 items-center justify-center">
                     <Button text={"Create"} onClick={() => {nav("/admin/lobby/create")}}/>
                     <Button text={"List"} onClick={() => {nav("/admin/lobby/list")}}/>
