@@ -4,7 +4,6 @@ import { useEffect } from "react"
 import BackButton from "../components/core/BackButton"
 import { useNavigate } from "react-router-dom"
 import Button from "../components/core/Button"
-import Modal from "../components/core/Modal"
 
 export default () => {
     const nav = useNavigate()

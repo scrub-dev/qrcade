@@ -3,6 +3,7 @@ import { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import request from "../../components/util/connection/request"
 import BackButton from "../../components/core/BackButton"
+import CreateLobbyForm from "../../components/admin/lobby/CreateLobbyForm"
 
 export default () => {
     const nav = useNavigate()
@@ -30,8 +31,8 @@ export default () => {
                 <BackButton/>
             </div>
         </div>
-        <div id="content-wrapper" className="bg-black flex-grow p-10 gap-2 flex flex-col md:px-[10%] lg:px-[20%] xl:px-[25%] items-center justify-center">
-
+        <div id="content-wrapper" className="bg-black flex-grow p-10 gap-2 flex flex-col md:px-[10%] lg:px-[20%] xl:px-[25%] items-center">
+            <CreateLobbyForm/>
         </div>
         <div id="footer" className="text-white bg-black">
             <p>QRCade © {new Date(Date.now()).getFullYear()}</p>
