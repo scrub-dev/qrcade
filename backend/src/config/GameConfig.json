@@ -1,6 +1,5 @@
 {
     "DEFAULT_ID_LENGTH" : 5,
-    "GAMEMODES": ["SHOOTER-FFA", "SHOOTER-TDM", "LOOTER"],
     "ID_PREFIXES": {
         "USER" : "USER-",
         "LOBBY": "LOBBY-",
@@ -11,5 +10,10 @@
     "PLAYER" : {
         "DEFAULT_NAME" : "Player",
         "DEFAULT_PASSWD": "Player"
-    }
+    },
+    "GAMEMODES" : [
+        {"name" : "SHOOTER_FFA", "readableName": "Free-For-All Shooter","rules": []},
+        {"name" : "SHOOTER_TDM", "readableName": "Team-based Shooter","rules": ["REQUIRED_TEAM"]},
+        {"name" : "LOOTER_FFA", "readableName": "Treasure Hunt","rules": ["REQUIRED_FLAG"]}
+    ]
 }

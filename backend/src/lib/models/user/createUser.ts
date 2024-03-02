@@ -1,7 +1,6 @@
 import { sequelize } from "@lib/database/database.js"
 import createUserID from "@lib/user/createUserID.js"
 import hashPassword from "@lib/user/hashPassword.js"
-import { IUser } from "@src/models/user.js"
 
 const createUser = async (opts: {
     userName    : string,

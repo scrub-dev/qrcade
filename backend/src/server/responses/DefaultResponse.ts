@@ -7,7 +7,8 @@ export enum GeneralCode {
     NOT_FOUND = "NOT_FOUND",
     GENERAL_FAILURE = "GENERAL_FAILURE",
     NOT_SUPPORTED   = "NOT_SUPPORTED",
-    FIELD_UPDATED   = "FIELD_UPDATED"
+    FIELD_UPDATED   = "FIELD_UPDATED",
+    DUPLICATE       = "DUPLICATE"
 }
 
 export enum AuthCode {

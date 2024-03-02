@@ -1,13 +1,14 @@
-import { Sequelize } from "sequelize";
+import { Sequelize } from "sequelize"
+import generateString from "../util/generateString.js"
 import config from "@config/GameConfig.json" assert {type: "json"}
-import generateString from "@lib/util/generateString.js";
+
 
 export default (s: Sequelize) => {
     const ID_LEN = config.DEFAULT_ID_LENGTH || 5
 
     let id = generateString(ID_LEN)
-    while (!s.models.Users.findOne({where: {UserID: config.ID_PREFIXES.USER+id}})){
+    while (!s.models.Lobbies.findOne({where: {LobbyID: config.ID_PREFIXES.LOBBY + id}})){
         id = generateString(ID_LEN)
     }
-    return config.ID_PREFIXES.USER + id
+    return config.ID_PREFIXES.LOBBY + id
 }

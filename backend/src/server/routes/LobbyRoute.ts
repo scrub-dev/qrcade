@@ -1,6 +1,7 @@
 import express, {Request, Response} from "express"
 import JsonResponse from "../responses/JsonResponse.js"
 import AdminAuthorisationHandler from "../handlers/AdminAuthorisationHandler.js"
+import { createLobby, getLobbyInfo, getLobbyTypes, listLobbies } from "../controllers/LobbyController.js"
 
 export const router = express.Router()
 
@@ -18,13 +19,12 @@ router.get("/test" ,(req: Request , res: Response) => {
  * (Store lobbytype as the LobbyEnumName, lookup in config when it needs to be evaluated into rules)
 */
 
+router.get("/types", getLobbyTypes) // return types of lobbies and their human-readable counterparts
+router.get("/list", listLobbies) // return list of lobbies
 
-router.get("/types") // return types of lobbies and their human-readable counterparts
-router.get("/list") // return list of lobbies
+router.post("/create", AdminAuthorisationHandler, createLobby) // create a lobby
 
-router.post("/create", AdminAuthorisationHandler) // create a lobby
-
-router.get("/:lobbyid") // Get Lobby Details
+router.get("/:lobbyid", getLobbyInfo) // Get Lobby Details
 
 router.get("/:lobbyid/users") // List lobby users
 router.get("/:lobbyid/flags") // list lobby flags
