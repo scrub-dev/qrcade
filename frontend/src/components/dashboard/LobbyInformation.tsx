@@ -1,5 +1,6 @@
-import { useEffect } from "react"
 import Button from "../core/Button"
+import Modal from "../core/Modal"
+import UserLobbyList from "../lobby/UserLobbyList"
 
 export interface TLobbyInformation {
     LobbyID: string,
@@ -8,21 +9,25 @@ export interface TLobbyInformation {
 
 export default (props: TLobbyInformation) => {
 
-
-    useEffect(() => {
-        (async () => {
-
-        })()
-    }, [])
+    const leaveLobby = (lobbyID: string) => {
+        // leave lobby
+        props.ParentCallback()
+    }
 
     const LobbyComponents = (
-        <div className="rounded bg-main_dark shadow-lg shadow-main text-center py-2 flex flex-row items-center justify-center gap-2">
-            <p className="flex-grow text-center text-white text-3xl font-graffiti">{props.LobbyID}</p>
+        <div className="rounded bg-main_dark shadow-lg shadow-main text-center py-2 flex flex-col items-center justify-center gap-2">
+            <p className="flex gap-2"><span className="font-graffiti text-2xl">Lobby:</span><span>{}</span></p>
+            <Button text={"Participants"} onClick={()=> {}}/>
+            <Button text={"Leave"} onClick={()=> {leaveLobby(props.LobbyID)}}/>
         </div>
     )
     const NoLobbyComponents = (
-        <div className="rounded bg-main_dark shadow-lg shadow-main text-center py-2 flex flex-row items-center justify-center gap-2">
-            <Button text={"Join Lobby"} onClick={() => {props.ParentCallback()}}/>
+        <div className="flex flex-col rounded bg-main_dark shadow-lg shadow-main text-center py-2 items-center justify-center gap-2">
+            <p className="flex gap-2"><span className="font-graffiti text-2xl">Lobby:</span><span>Not Available</span></p>
+            <Modal title={""} buttonName={"Join Lobby"}>
+                <p className="qrc-shadow font-graffiti text-2xl px-5">Lobbies</p>
+                <UserLobbyList ParentCallback={props.ParentCallback}/>
+            </Modal>
     </div>
     )
 

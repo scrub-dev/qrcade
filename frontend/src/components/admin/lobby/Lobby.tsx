@@ -20,7 +20,6 @@ export default (props: TLobbyProps) => {
 
     const setResultBox = (str: string) => {
         if(timeoutRef.current !== null) clearTimeout(timeoutRef.current)
-
         setResult(str)
         timeoutRef.current = setTimeout(clearResultBox, 2000)
     }
@@ -30,10 +29,7 @@ export default (props: TLobbyProps) => {
         let data = {...res}
 
         let ruleList = data.GameInfo.rules
-        console.log(ruleList)
         setRules(ruleList)
-
-
         setLobbyInfo(data)
     }
 

@@ -68,7 +68,7 @@ export default () => {
                 {isAdmin ? <ViewAdminBtn/> : ""}
             </div>
         </div>
-        <div id="content-wrapper" className="bg-black flex-grow p-10 gap-2 flex flex-col md:px-[10%] lg:px-[20%] xl:px-[25%]">
+        <div id="content-wrapper" className="bg-black flex-grow px-10 gap-2 flex flex-col md:px-[10%] lg:px-[20%] xl:px-[25%]">
             <UserInformation DisplayName={userInfo.DisplayName}/>
             <LobbyInformation LobbyID={userInfo.LobbyID} ParentCallback = {rerenderCallback}/>
             {showTeam ? <TeamInformation/> : ""}
