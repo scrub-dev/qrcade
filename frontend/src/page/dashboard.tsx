@@ -18,6 +18,9 @@ export default () => {
 
     const [showTeam, setShowTeam] = useState(false)
 
+    const [teamInfo, setTeamInfo] = useState<any>([{}])
+    const [lobbyInfo, setLobbyInfo] = useState<any>([{}])
+
     const [_refresh, refreshDashboard] = useState(false)
 
     const rerenderCallback = () => refreshDashboard(!_refresh)
@@ -32,13 +35,16 @@ export default () => {
             setUserInfo(_userInfo.data)
             setIsAdmin(user.Admin)
 
-            // does user have lobby
-            // get lobby information
+            if(_userInfo.data.LobbyID) {
+                let _lobbyInfo = (await request.get(`lobby/${_userInfo.data.LobbyID}`)).data
+                setLobbyInfo(_lobbyInfo.data)
 
-            // does lobby require teams
-            // get team information
-            // show teams
-
+                if(_lobbyInfo.data.TeamBased) {
+                    let _teamInfo = (await request.get(`lobby/${_userInfo.data.TeamID}/teams`)).data
+                    setTeamInfo(_teamInfo.data)
+                    setShowTeam(true)
+                }
+            }
         })()
     }, [_refresh])
 
@@ -51,9 +57,6 @@ export default () => {
     // display user info
     // display team info
     // link to player score
-
-    // if user is not in lobby
-    // prompt to join lobby
 
     return (
     <div id="layout" className="flex flex-col h-screen text-white">
