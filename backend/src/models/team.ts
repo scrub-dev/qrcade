@@ -1,7 +1,7 @@
 import { DataTypes, Model, Sequelize } from "sequelize";
 
 export default (seq: Sequelize) => {
-    const Team = seq.define('Team', {
+    const Team = seq.define('Teams', {
         TeamID : DataTypes.STRING,
         TeamName: DataTypes.STRING
     })

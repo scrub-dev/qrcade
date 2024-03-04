@@ -7,7 +7,8 @@ export interface TLobbyProps {
     LobbyID: string,
     LobbyName: string,
     LobbyType: string,
-    GameInfo: {name: string, readableName: string, rules: string[]}
+    GameInfo: {name: string, readableName: string, rules: string[]},
+    Participants: {count: number, players: any[]}
 }
 
 export default (props: TLobbyProps) => {
@@ -39,6 +40,11 @@ export default (props: TLobbyProps) => {
         })()
     }, [])
 
+    const deleteLobby = async () => {
+        let res = (await request.delete(`lobby/delete/${props.LobbyID}`)).data
+        setResultBox(res.message)
+    }
+
     // Delete Lobby
     // Get number of lobbyparticipants
     // list lobbyparticipants
@@ -60,12 +66,14 @@ export default (props: TLobbyProps) => {
             <p className="">
                 <span className="font-bold">ID: </span><span>{lobbyInfo.LobbyID}</span><br/>
                 <span className="font-bold">Name: </span><span>{lobbyInfo.LobbyName}</span> <br/>
-                <span className="font-bold">Type: </span><span>{lobbyInfo.GameInfo?.readableName}</span>
+                <span className="font-bold">Type: </span><span>{lobbyInfo.GameInfo?.readableName}</span> <br/>
+                <span className="font-bold">Players: </span><span>{lobbyInfo.Participants?.count}</span>
+
             </p>
         <div className="flex flex-col justify-center items-center gap-3 m-5">
             {rules.includes("REQUIRED_FLAG") ? FlagComponents : null}
             {rules.includes("REQUIRED_TEAM") ? TeamComponents : null}
-            <Button text={"Delete Lobby"} onClick={() => {}} className="rounded bg-main p-1 font-mono w-full px-5"/>
+            <Button text={"Delete Lobby"} onClick={deleteLobby} className="rounded bg-main p-1 font-mono w-full px-5"/>
         </div>
         <div className="flex items-center justify-center">
             <p className="text-white absolute">{result}</p>

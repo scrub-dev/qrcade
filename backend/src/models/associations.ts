@@ -5,7 +5,6 @@ import hit from "./hit.js"
 import flag from "./flag.js"
 import team from "./team.js"
 import { Sequelize } from "sequelize"
-import log from "./log.js"
 
 export const models = () => [lobby,hit,flag,team,user]
 
@@ -17,21 +16,22 @@ export default async (s: Sequelize) => {
     const Flag  = flag(s)
     const Team  = team(s)
 
-    const Log = log(s)
-
     User.init
     Lobby.init
+    Flag.init
+    Team.init
 
-    Lobby.hasMany(User)
-    User.belongsTo(Lobby)
+    // Lobby.hasMany(User, {foreignKey: "LobbyID", as: ""})
+    User.belongsTo(Lobby, {foreignKey: "LobbyID", as: ""})
 
     Lobby.hasMany(Flag)
     Flag.belongsTo(Lobby)
 
     Lobby.hasMany(Team)
     Team.belongsTo(Lobby)
-    Team.hasMany(User)
-    User.belongsTo(Team)
+
+    // Team.hasMany(User)
+    User.belongsTo(Team, {foreignKey: "TeamID", as: ""})
 
     // Hit.hasOne(User, {as: "Scanner"})
     // Hit.hasOne(User, {as: "ScannedPlayer"})

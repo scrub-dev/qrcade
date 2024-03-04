@@ -8,7 +8,7 @@ import { Sequelize } from "sequelize";
 
 
 export default () => {
-    createDefaultUser().then(() => {Log("Created default user...", LogType.INI)})
+    if(!config.PERSIST_DB) createDefaultUser().then(() => {Log("Created default user...", LogType.INI)})
 
     if(config.PERSIST_DB && config.GENERATE_ACCOUNTS) return Log("Skipping generating accounts, database persisted")
 

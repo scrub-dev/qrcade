@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom"
 import UserInformation from "../components/dashboard/UserInformation"
 import LobbyInformation from "../components/dashboard/LobbyInformation"
 import TeamInformation from "../components/dashboard/TeamInformation"
+import Button, { defaultButtonStyleAlt } from "../components/core/Button"
 
 export default () => {
     const nav = useNavigate()
@@ -16,14 +17,16 @@ export default () => {
     const [userInfo, setUserInfo] = useState<any>([])
     const [isAdmin, setIsAdmin] = useState(false)
 
-    const [showTeam, setShowTeam] = useState(false)
-
     const [teamInfo, setTeamInfo] = useState<any>([{}])
     const [lobbyInfo, setLobbyInfo] = useState<any>([{}])
 
     const [_refresh, refreshDashboard] = useState(false)
 
-    const rerenderCallback = () => refreshDashboard(!_refresh)
+    const rerenderCallback = () => {
+        setLobbyInfo({})
+        setTeamInfo({})
+        refreshDashboard(!_refresh)
+    }
     const getUserInformation = async () => (await request.get(`user/${user.UserID}`))
 
     useEffect(() => {
@@ -39,10 +42,9 @@ export default () => {
                 let _lobbyInfo = (await request.get(`lobby/${_userInfo.data.LobbyID}`)).data
                 setLobbyInfo(_lobbyInfo.data)
 
-                if(_lobbyInfo.data.TeamBased) {
+                if((_lobbyInfo.data.GameInfo.rules as string[]).includes("REQUIRE_TEAMS")) {
                     let _teamInfo = (await request.get(`lobby/${_userInfo.data.TeamID}/teams`)).data
                     setTeamInfo(_teamInfo.data)
-                    setShowTeam(true)
                 }
             }
         })()
@@ -72,9 +74,10 @@ export default () => {
             </div>
         </div>
         <div id="content-wrapper" className="bg-black flex-grow px-10 gap-2 flex flex-col md:px-[10%] lg:px-[20%] xl:px-[25%]">
+            <Button text={"Scores"} onClick={() => {}} className={defaultButtonStyleAlt}/>
             <UserInformation DisplayName={userInfo.DisplayName}/>
-            <LobbyInformation LobbyID={userInfo.LobbyID} ParentCallback = {rerenderCallback}/>
-            {showTeam ? <TeamInformation/> : ""}
+            <LobbyInformation LobbyInfo={lobbyInfo} ParentCallback = {rerenderCallback}/>
+            {teamInfo.TeamID ? <TeamInformation/> : ""}
         </div>
         <div id="footer" className="text-white bg-black">
             <p>QRCade © {new Date(Date.now()).getFullYear()}</p>

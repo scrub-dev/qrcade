@@ -2,7 +2,7 @@ import { DataTypes, Sequelize } from "sequelize";
 
 export default (seq: Sequelize) => {
     const User = seq.define('Users', {
-        UserID     : DataTypes.STRING,
+        UserID     : {type: DataTypes.STRING, primaryKey: true},
         Username   : DataTypes.STRING,
         DisplayName: DataTypes.STRING,
         Passwd     : DataTypes.STRING,

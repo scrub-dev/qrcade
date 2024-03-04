@@ -10,7 +10,7 @@ export interface TUserLobbyProps {
 export default (props: TUserLobbyProps) => {
 
     const handleOnClick = () => {
-        props.onClick("test")
+        props.onClick(lobbyInfo.LobbyID)
     }
 
     const [lobbyInfo, setLobbyInfo] = useState<any>({})
@@ -30,7 +30,7 @@ export default (props: TUserLobbyProps) => {
             <div className="flex flex-col flex-grow">
                 <p className="font-semibold text-start">{lobbyInfo.LobbyName}</p>
                 <p className="text-start">{lobbyInfo.GameInfo?.readableName}</p>
-                <p className="text-start">Players: {"0"}</p>
+                <p className="text-start">Players: {lobbyInfo.Participants?.count}</p>
             </div>
 
             <Button text={"Join"} onClick={handleOnClick} className="rounded bg-secondary p-2 px-5 shadow-md shadow-secondary_light font-graffiti text-2xl hover:shadow-secondary_dark hover:bg-secondary_dark"/>
