@@ -2,10 +2,13 @@ import getGamemodes from "@src/lib/lobby/getGamemodes.js"
 import { Request, Response } from "express"
 import JsonResponse from "../responses/JsonResponse.js"
 import { GameCode, GeneralCode, ResponseCode } from "../responses/DefaultResponse.js"
-import { getAllLobbies, getLobbyByID, getLobbyByName } from "@src/lib/models/lobby/getLobby.js"
-import {default as createNewLobby } from '@lib/models/lobby/createLobby.js'
+import { getAllLobbies, getLobbyByID, getLobbyByName, getLobbyUsers } from "@src/lib/models/lobby/get/getLobby.js"
+import {default as createNewLobby } from '@src/lib/models/lobby/create/createLobby.js'
 import { sequelize } from "@src/lib/database/database.js"
 import getLobbyInformation from "@src/lib/lobby/getLobbyInformation.js"
+import removeUsersFromLobby from "@src/lib/lobby/removeUsersFromLobby.js"
+import { getUserByID } from "@src/lib/models/user/getUser.js"
+import { IUser } from "@src/models/user.js"
 
 export const getLobbyTypes = (req: Request, res: Response) => {
     let values = getGamemodes()
@@ -48,7 +51,62 @@ export const getLobbyInfo = async (req: Request, res: Response) => {
     let lobby = (await getLobbyByID(req.params.lobbyid))?.dataValues
     if(!lobby) return JsonResponse.NotFound(res).send()
     else {
-        lobby.GameInfo = getLobbyInformation(lobby.LobbyType)
+        let [userList, userCount] = await getLobbyUsers(lobby.LobbyID)
+        lobby.GameInfo = {...getLobbyInformation(lobby.LobbyType)}
+        lobby.Participants = {count: userCount, players: userList}
         return new JsonResponse(res, {statusCode: ResponseCode.SUCCESS, contents: {code: GeneralCode.SUCCESS, message: `Lobby info found`, data: lobby}}).send()
     }
+}
+
+export const deleteLobby = async (req: Request, res: Response) => {
+    let lobby = (await getLobbyByID(req.params.lobbyid))?.dataValues
+    if(!lobby) return JsonResponse.NotFound(res).send()
+
+    await sequelize.models.Lobbies.destroy({where: {LobbyID: req.params.lobbyid}})
+    await removeUsersFromLobby(req.params.lobbyid)
+
+    return JsonResponse.Deleted(res, "Lobby").send()
+}
+
+export const getLobbyFlags = async (req: Request, res: Response) => {
+    let lobby = (await getLobbyByID(req.params.lobbyid))?.dataValues
+    if(!lobby) return JsonResponse.NotFound(res).send()
+}
+
+export const getLobbyTeams = async (req: Request, res: Response) => {
+    let lobby = (await getLobbyByID(req.params.lobbyid))?.dataValues
+    if(!lobby) return JsonResponse.NotFound(res).send()
+}
+
+export const getLobbyPlayers = async (req: Request, res: Response) => {
+    let lobby = (await getLobbyByID(req.params.lobbyid))?.dataValues
+    if(!lobby) return JsonResponse.NotFound(res).send()
+
+    let [users,userCount] = (await getLobbyUsers(lobby.LobbyID))
+}
+
+
+export const joinLobby = async (req: Request, res: Response) => {
+    let lobby = (await getLobbyByID(req.params.lobbyid))?.dataValues
+    if(!lobby) return JsonResponse.NotFound(res, "lobby").send()
+
+    let user = (await getUserByID(req.params.userid)) as unknown as IUser
+    if(!user) return JsonResponse.NotFound(res, "user").send()
+
+    await sequelize.models.Users.update({LobbyID: lobby.LobbyID}, {where: {UserID: user.UserID}})
+
+    return JsonResponse.UserJoinedLobby(res).send()
+}
+
+export const leaveLobby = async (req: Request, res: Response) => {
+    let lobby = (await getLobbyByID(req.params.lobbyid))?.dataValues
+
+    if(!lobby) return JsonResponse.NotFound(res, "lobby").send()
+
+    let user = (await getUserByID(req.params.userid)) as unknown as IUser
+    if(!user) return JsonResponse.NotFound(res, "user").send()
+
+    await sequelize.models.Users.update({LobbyID: null, TeamID: null}, {where: {UserID: req.params.userid}})
+
+    return JsonResponse.UserLeftLobby(res).send()
 }

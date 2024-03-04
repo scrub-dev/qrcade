@@ -1,5 +1,5 @@
 import { Response } from "express"
-import { AuthCode, Code, GeneralCode, ResponseCode } from "./DefaultResponse.js"
+import { AuthCode, Code, GameCode, GeneralCode, ResponseCode } from "./DefaultResponse.js"
 
 export type JsonResponseType = {
     message: string,
@@ -45,9 +45,18 @@ export default class {
     static InsuffientPermissions = (res: Response) => new this(res, {statusCode: ResponseCode.UNAUTHORISED, contents: {code: AuthCode.UNAUTHORIZED , message: "You do not have sufficient permissions to perform this action!"}})
     static FieldNotSupported = (res: Response) => new this(res, {statusCode: ResponseCode.SUCCESS, contents: {code: GeneralCode.NOT_SUPPORTED, message: "You cannot modify this field."}})
     static FieldUpdated = (res: Response, field: string) => new this(res, {statusCode: ResponseCode.SUCCESS, contents: {code: GeneralCode.FIELD_UPDATED, message: `Field updated: ${field}`}})
-    static NotFound = (res: Response) => new this(res, {statusCode: ResponseCode.SUCCESS, contents: {code: GeneralCode.NOT_FOUND, message: `The requested resource was not found`}})
-    static Deleted = (res: Response) => new this(res, {statusCode: ResponseCode.SUCCESS, contents: {code: GeneralCode.SUCCESS, message: `Object deleted`}})
+    static NotFound = (res: Response, found?: string) => new this(res, {statusCode: ResponseCode.SUCCESS, contents: {code: GeneralCode.NOT_FOUND, message: `The requested resource was not found ${found || ""}`}})
+    static Deleted = (res: Response, deleted?: string) => new this(res, {statusCode: ResponseCode.SUCCESS, contents: {code: GeneralCode.SUCCESS, message: `${deleted || "Object"} deleted`}})
     static NoResults = (res: Response) => new this(res, {statusCode: ResponseCode.SUCCESS, contents: {code: GeneralCode.NOT_FOUND, message: `No Results`}})
+
+    // GAME SPECIFIC
+    static UserLeftLobby = (res: Response) => new this(res, {statusCode: ResponseCode.SUCCESS, contents: {code: GameCode.USER_LEFT_LOBBY, message: `Lobby Left`}})
+
+    static UserJoinedLobby = (res: Response) => new this(res, {statusCode: ResponseCode.SUCCESS, contents: {code: GameCode.USER_JOINED_LOBBY, message: `Lobby Joined`}})
+
+    static UserLeftTeam = (res: Response) => new this(res, {statusCode: ResponseCode.SUCCESS, contents: {code: GameCode.USER_LEFT_TEAM, message: `Team Left`}})
+
+    static UserJoinedTeam = (res: Response) => new this(res, {statusCode: ResponseCode.SUCCESS, contents: {code: GameCode.USER_JOINED_TEAM, message: `Team Joined`}})
 
 
 }

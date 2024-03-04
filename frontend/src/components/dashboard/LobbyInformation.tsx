@@ -1,24 +1,27 @@
 import Button from "../core/Button"
 import Modal from "../core/Modal"
 import UserLobbyList from "../lobby/UserLobbyList"
+import request from "../util/connection/request"
+import useAuthUser from "react-auth-kit/hooks/useAuthUser"
 
 export interface TLobbyInformation {
-    LobbyID: string,
+    LobbyInfo: {[x: string]: any},
     ParentCallback: any
 }
 
 export default (props: TLobbyInformation) => {
+    const authedUser = useAuthUser() as any
 
-    const leaveLobby = (lobbyID: string) => {
-        // leave lobby
+    const leaveLobby = async () => {
+        (await request.patch(`lobby/${props.LobbyInfo.LobbyID}/leave/${authedUser.UserID}`))
         props.ParentCallback()
     }
 
     const LobbyComponents = (
         <div className="rounded bg-main_dark shadow-lg shadow-main text-center py-2 flex flex-col items-center justify-center gap-2">
-            <p className="flex gap-2"><span className="font-graffiti text-2xl">Lobby:</span><span>{}</span></p>
+            <p className="flex gap-2"><span className="font-graffiti text-2xl">Lobby:</span><span className="text-xl font-semibold font-mono">{props.LobbyInfo.LobbyName}</span></p>
             <Button text={"Participants"} onClick={()=> {}}/>
-            <Button text={"Leave"} onClick={()=> {leaveLobby(props.LobbyID)}}/>
+            <Button text={"Leave"} onClick={leaveLobby}/>
         </div>
     )
     const NoLobbyComponents = (
@@ -30,6 +33,5 @@ export default (props: TLobbyInformation) => {
             </Modal>
     </div>
     )
-
-    return props.LobbyID ? LobbyComponents : NoLobbyComponents
+    return props.LobbyInfo.LobbyID ? LobbyComponents : NoLobbyComponents
 }

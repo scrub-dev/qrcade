@@ -9,16 +9,17 @@ export const getLobbyByName= async (name: string) => {
 export const getLobbyType = async (lobbyID: string) => {
     return (await getLobbyByID(lobbyID))?.dataValues.LobbyType
 }
-export const getLobbyParticipants = async (lobbyID: string) => {
-    return (await sequelize.models.Users.findAll({where: {LobbyID: lobbyID}}))
+export const getAllLobbies = async () => {
+    return (await sequelize.models.Lobbies.findAll())
+}
+
+export const getLobbyUsers = async (lobbyID: string) => {
+    let users = (await sequelize.models.Users.findAll({where: {LobbyID: lobbyID}}))
+    return [users, users.length]
 }
 export const getLobbyTeams = async (lobbyID: string) => {
     return (await sequelize.models.Teams.findAll({where: {LobbyID: lobbyID}}))
 }
 export const getLobbyFlags = async (lobbyID: string) => {
     return (await sequelize.models.Flags.findAll({where: {LobbyID: lobbyID}}))
-}
-
-export const getAllLobbies = async () => {
-    return (await sequelize.models.Lobbies.findAll())
 }

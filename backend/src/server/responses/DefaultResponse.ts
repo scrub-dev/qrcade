@@ -20,7 +20,10 @@ export enum AuthCode {
 }
 
 export enum GameCode {
-
+    USER_LEFT_LOBBY = "USER_LEFT_LOBBY",
+    USER_JOINED_LOBBY = "USER_JOINED_LOBBY",
+    USER_LEFT_TEAM = "USER_LEFT_TEAM",
+    USER_JOINED_TEAM = "USER_JOINED_TEAM",
 }
 
 export enum ResponseCode {
