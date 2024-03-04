@@ -1,4 +1,3 @@
-import React from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
@@ -16,6 +15,10 @@ import UserCreate from './page/AdminSubPages/UserCreate.tsx'
 import UserList from './page/AdminSubPages/UserList.tsx'
 import LobbyCreate from './page/AdminSubPages/LobbyCreate.tsx'
 import LobbyList from './page/AdminSubPages/LobbyList.tsx'
+import FlagCreate from './page/AdminSubPages/FlagCreate.tsx'
+import FlagList from './page/AdminSubPages/FlagList.tsx'
+import TeamCreate from './page/AdminSubPages/TeamCreate.tsx'
+import TeamList from './page/AdminSubPages/TeamList.tsx'
 
 
 const authStore = createStore({
@@ -75,6 +78,28 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
             <Route path='/admin/lobby/list' element={
               <RequireAuth fallbackPath={'/'}>
                 <LobbyList/>
+              </RequireAuth>}>
+            </Route>
+
+            <Route path='/admin/flag/add/:lobbyid' element={
+              <RequireAuth fallbackPath={'/'}>
+                <FlagCreate/>
+              </RequireAuth>}>
+            </Route>
+            <Route path='/admin/flag/list/:lobbyid' element={
+              <RequireAuth fallbackPath={'/'}>
+                <FlagList/>
+              </RequireAuth>}>
+            </Route>
+
+            <Route path='/admin/team/add/:lobbyid' element={
+              <RequireAuth fallbackPath={'/'}>
+                <TeamCreate/>
+              </RequireAuth>}>
+            </Route>
+            <Route path='/admin/team/list/:lobbyid' element={
+              <RequireAuth fallbackPath={'/'}>
+                <TeamList/>
               </RequireAuth>}>
             </Route>
 

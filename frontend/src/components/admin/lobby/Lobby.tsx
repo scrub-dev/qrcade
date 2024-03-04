@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react"
 import Modal from "../../core/Modal"
 import request from "../../util/connection/request"
 import Button from "../../core/Button"
+import { useNavigate } from "react-router-dom"
 
 export interface TLobbyProps {
     LobbyID: string,
@@ -12,6 +13,9 @@ export interface TLobbyProps {
 }
 
 export default (props: TLobbyProps) => {
+
+    const nav = useNavigate()
+
     const [lobbyInfo, setLobbyInfo] = useState({...props})
     const [result, setResult] = useState("")
     const [rules, setRules] = useState<any>([])
@@ -45,21 +49,18 @@ export default (props: TLobbyProps) => {
         setResultBox(res.message)
     }
 
-    // Delete Lobby
-    // Get number of lobbyparticipants
-    // list lobbyparticipants
-
-    //empty lobbyparticipants
-
-    // GET LOBBY TYPE
-    // IF LOBBY NEEDS FLAG, ADD ADD FLAG BUTTON AND LIST FLAGS
-    // IF LOBBY NEEDS TEAM, ADD ADD TEAM BUTTON AND LIST TEAMS
-
     const TeamComponents = (
-        <Button text={"Add Team"} onClick={() => {}} className="rounded bg-main p-1 font-mono w-full px-5"/>
+    <>
+            <Button text={"Add Team"} onClick={() => {nav(`/admin/team/add/${lobbyInfo.LobbyID}`)}} className="rounded bg-main p-1 font-mono w-full px-5"/>
+            <Button text={"List Teams"} onClick={() => {nav(`/admin/team/list/${lobbyInfo.LobbyID}`)}} className="rounded bg-main p-1 font-mono w-full px-5"/>
+    </>
+
     )
     const FlagComponents = (
-        <Button text={"Add Flag"} onClick={() => {}} className="rounded bg-main p-1 font-mono w-full px-5"/>
+    <>
+        <Button text={"Add Flag"} onClick={() => {nav(`/admin/flag/add/${lobbyInfo.LobbyID}`)}} className="rounded bg-main p-1 font-mono w-full px-5"/>
+        <Button text={"List Flags"} onClick={() => {nav(`/admin/flag/list/${lobbyInfo.LobbyID}`)}} className="rounded bg-main p-1 font-mono w-full px-5"/>
+    </>
     )
     return (
         <Modal buttonName={`${props.LobbyName} (${props.LobbyID})`} title="Lobby Controls" style="rounded bg-main p-1 font-mono w-full">

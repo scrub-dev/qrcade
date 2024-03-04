@@ -24,11 +24,11 @@ export default async (s: Sequelize) => {
     // Lobby.hasMany(User, {foreignKey: "LobbyID", as: ""})
     User.belongsTo(Lobby, {foreignKey: "LobbyID", as: ""})
 
-    Lobby.hasMany(Flag)
-    Flag.belongsTo(Lobby)
+    // Lobby.hasMany(Flag)
+    Flag.belongsTo(Lobby, {foreignKey: "LobbyID", as: ""})
 
-    Lobby.hasMany(Team)
-    Team.belongsTo(Lobby)
+    // Lobby.hasMany(Team)
+    Team.belongsTo(Lobby, {foreignKey: "LobbyID", as: ""})
 
     // Team.hasMany(User)
     User.belongsTo(Team, {foreignKey: "TeamID", as: ""})

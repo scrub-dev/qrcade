@@ -13,7 +13,8 @@ export default () => {
         else setLobbyList(await result.data)
     }
 
-    const lobbyListComponent = (lobbyList.length > 0) ? lobbyList.map((lobby: any) => <Lobby key={lobby.LobbyID} LobbyID={lobby.LobbyID} LobbyName={lobby.LobbyName} LobbyType={lobby.LobbyType} GameInfo={lobby.GameInfo}/>) : null
+    const lobbyListComponent = (lobbyList.length > 0) ? lobbyList.map((lobby: any) => <Lobby key={lobby.LobbyID} LobbyID={lobby.LobbyID} LobbyName={lobby.LobbyName} LobbyType={lobby.LobbyType} GameInfo={lobby.GameInfo} Participants={lobby.Participants}/>) : null
+
     useEffect(() => {
         (async () => {
             getLobbyList()
