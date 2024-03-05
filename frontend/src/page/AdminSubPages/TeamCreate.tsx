@@ -1,11 +1,7 @@
-import { useNavigate, useParams } from "react-router-dom"
+import { useParams } from "react-router-dom"
 import BackButton from "../../components/core/BackButton"
 import CreateTeamForm from "../../components/admin/team/createTeamForm"
-import { useEffect } from "react"
-
 export default ( ) => {
-
-    const nav = useNavigate()
 
     const {lobbyid} = useParams<{lobbyid: string}>()
 
