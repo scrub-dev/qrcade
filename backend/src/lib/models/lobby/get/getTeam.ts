@@ -6,3 +6,6 @@ export const getTeamParticipants = (teamID: string) => {
 export const getTeamByID = (teamID: string) => {
     return sequelize.models.Teams.findOne({where: {TeamID: teamID}})
 }
+export const getTeamsInLobby = (lobbyID: string) => {
+    return sequelize.models.Teams.findAll({where: {LobbyID: lobbyID}})
+}

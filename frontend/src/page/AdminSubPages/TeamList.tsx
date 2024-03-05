@@ -1,9 +1,12 @@
 import { useParams } from "react-router-dom"
 import BackButton from "../../components/core/BackButton"
+import ListTeam from "../../components/admin/team/ListTeam"
 
 export default () => {
 
     const {lobbyid} = useParams<{lobbyid: string}>()
+
+    if(!lobbyid) return (<></>)
 
     return (
         <>
@@ -16,7 +19,8 @@ export default () => {
                         <BackButton/>
                     </div>
                 </div>
-                <div id="content-wrapper" className="bg-black flex-grow p-10 gap-2 flex flex-col md:px-[10%] lg:px-[20%] xl:px-[25%] items-center justify-center">
+                <div id="content-wrapper" className="bg-black flex-grow p-10 gap-2 flex flex-col md:px-[10%] lg:px-[20%] xl:px-[25%] items-center">
+                    <ListTeam LobbyID={lobbyid}/>
                 </div>
                 <div id="footer" className="text-white bg-black">
                     <p>QRCade © {new Date(Date.now()).getFullYear()}</p>

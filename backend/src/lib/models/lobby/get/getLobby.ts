@@ -15,7 +15,7 @@ export const getAllLobbies = async () => {
 
 export const getLobbyUsers = async (lobbyID: string) => {
     let users = (await sequelize.models.Users.findAll({where: {LobbyID: lobbyID}}))
-    return [users, users.length]
+    return [users, (users.length) as number]
 }
 export const getLobbyTeams = async (lobbyID: string) => {
     return (await sequelize.models.Teams.findAll({where: {LobbyID: lobbyID}}))
