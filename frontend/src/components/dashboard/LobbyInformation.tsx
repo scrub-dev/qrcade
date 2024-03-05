@@ -20,8 +20,10 @@ export default (props: TLobbyInformation) => {
     const LobbyComponents = (
         <div className="rounded bg-main_dark shadow-lg shadow-main text-center py-2 flex flex-col items-center justify-center gap-2">
             <p className="flex gap-2"><span className="font-graffiti text-2xl">Lobby:</span><span className="text-xl font-semibold font-mono">{props.LobbyInfo.LobbyName}</span></p>
-            <Button text={"Participants"} onClick={()=> {}}/>
-            <Button text={"Leave"} onClick={leaveLobby}/>
+            <div className="flex flex-row items-center justify-center gap-2">
+                <Button text={"Players"} onClick={()=> {}}/>
+                <Button text={"Leave"} onClick={leaveLobby}/>
+            </div>
         </div>
     )
     const NoLobbyComponents = (

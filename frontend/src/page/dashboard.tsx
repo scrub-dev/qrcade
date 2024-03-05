@@ -17,6 +17,7 @@ export default () => {
     const [userInfo, setUserInfo] = useState<any>([])
     const [isAdmin, setIsAdmin] = useState(false)
 
+    const [showTeam, setShowTeam] = useState(false)
     const [teamInfo, setTeamInfo] = useState<any>([{}])
     const [lobbyInfo, setLobbyInfo] = useState<any>([{}])
 
@@ -25,6 +26,7 @@ export default () => {
     const rerenderCallback = () => {
         setLobbyInfo({})
         setTeamInfo({})
+        setShowTeam(false)
         refreshDashboard(!_refresh)
     }
     const getUserInformation = async () => (await request.get(`user/${user.UserID}`))
@@ -42,8 +44,9 @@ export default () => {
                 let _lobbyInfo = (await request.get(`lobby/${_userInfo.data.LobbyID}`)).data
                 setLobbyInfo(_lobbyInfo.data)
 
-                if((_lobbyInfo.data.GameInfo.rules as string[]).includes("REQUIRE_TEAMS")) {
-                    let _teamInfo = (await request.get(`lobby/${_userInfo.data.TeamID}/teams`)).data
+                if((_lobbyInfo.data.GameInfo.rules as string[]).includes("REQUIRED_TEAM")) {
+                    setShowTeam(true)
+                    let _teamInfo = (await request.get(`lobby/${_userInfo.data.LobbyID}/teams`)).data
                     setTeamInfo(_teamInfo.data)
                 }
             }
@@ -77,7 +80,7 @@ export default () => {
             <Button text={"Scores"} onClick={() => {}} className={defaultButtonStyleAlt}/>
             <UserInformation DisplayName={userInfo.DisplayName}/>
             <LobbyInformation LobbyInfo={lobbyInfo} ParentCallback = {rerenderCallback}/>
-            {teamInfo.TeamID ? <TeamInformation/> : ""}
+            {showTeam ? <TeamInformation TeamInfo={teamInfo} UserTeam={userInfo.TeamID}/> : ""}
         </div>
         <div id="footer" className="text-white bg-black">
             <p>QRCade © {new Date(Date.now()).getFullYear()}</p>

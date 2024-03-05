@@ -1,7 +1,11 @@
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import BackButton from "../../components/core/BackButton"
+import CreateTeamForm from "../../components/admin/team/createTeamForm"
+import { useEffect } from "react"
 
 export default ( ) => {
+
+    const nav = useNavigate()
 
     const {lobbyid} = useParams<{lobbyid: string}>()
 
@@ -16,7 +20,8 @@ export default ( ) => {
                         <BackButton/>
                     </div>
                 </div>
-                <div id="content-wrapper" className="bg-black flex-grow p-10 gap-2 flex flex-col md:px-[10%] lg:px-[20%] xl:px-[25%] items-center justify-center">
+                <div id="content-wrapper" className="bg-black flex-grow gap-2 flex flex-col md:px-[10%] lg:px-[20%] xl:px-[25%] items-center">
+                    <CreateTeamForm LobbyID={lobbyid as string}/>
                 </div>
                 <div id="footer" className="text-white bg-black">
                     <p>QRCade © {new Date(Date.now()).getFullYear()}</p>
