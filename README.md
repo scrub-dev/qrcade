@@ -5,6 +5,13 @@
 
 A simple QR Code-based mobile exercise gaming platform designed to provide an augmented gaming platform based in the real world.
 
+Originally designed and developed around a Masters Disseration involving the possible gammification of QR Codes and designing for Open-Play, the MVP showed some merit in a more mainstream version. Hence V2 of QRC being made.
+
+Now featuring:
+* Lobbies
+* Gamemodes
+* Admin Accounts
+
 ### The Stack:
 Backend:
   * Typescript
@@ -18,7 +25,13 @@ Frontend:
   * Tailwind
 
 ## Todo
-* Lobby Creation
-* Lobby Type Management
-* Lobby Editing
-* Hit management and game logic
+* Lobby Admin CRUD
+  * Team CRUD
+  * Flag CRUD
+* Dashboard
+  * Joining / Leaving a Team
+  * Scores
+* Scoreboard
+  * Lobby lookup
+* Hit
+  * Logic and Implementation
