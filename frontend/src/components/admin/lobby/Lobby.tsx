@@ -74,6 +74,7 @@ export default (props: TLobbyProps) => {
         <div className="flex flex-col justify-center items-center gap-3 m-5">
             {rules.includes("REQUIRED_FLAG") ? FlagComponents : null}
             {rules.includes("REQUIRED_TEAM") ? TeamComponents : null}
+            <Button text={"Participants"} onClick={()=> {nav(`/list/${lobbyInfo.LobbyID}`)}} className="rounded bg-main p-1 font-mono w-full px-5"/>
             <Button text={"Delete Lobby"} onClick={deleteLobby} className="rounded bg-main p-1 font-mono w-full px-5"/>
         </div>
         <div className="flex items-center justify-center">

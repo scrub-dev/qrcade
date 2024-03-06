@@ -70,10 +70,7 @@ export default () => {
             <Button text={"Scores"} onClick={() => {}} className={defaultButtonStyleAlt}/>
             <UserInformation DisplayName={userInfo.DisplayName}/>
             <LobbyInformation LobbyInfo={lobbyInfo} ParentCallback = {rerenderCallback}/>
-            {showTeam ? <TeamInformation TeamInfo={teamInfo} UserTeam={userInfo.TeamID}/> : ""}
-        </div>
-        <div id="footer" className="text-white bg-black">
-            <p>QRCade © {new Date(Date.now()).getFullYear()}</p>
+            {showTeam ? <TeamInformation TeamInfo={teamInfo} UserTeam={userInfo.TeamID} ParentCallback={rerenderCallback} UserID={userInfo.UserID}/> : ""}
         </div>
     </div>
     )

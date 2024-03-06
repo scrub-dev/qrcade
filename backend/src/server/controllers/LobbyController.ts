@@ -2,14 +2,14 @@ import getGamemodes from "@src/lib/lobby/getGamemodes.js"
 import { Request, Response } from "express"
 import JsonResponse from "../responses/JsonResponse.js"
 import { GeneralCode, ResponseCode } from "../responses/DefaultResponse.js"
-import { getAllLobbies, getLobbyByID, getLobbyByName, getLobbyUsers } from "@src/lib/models/lobby/get/getLobby.js"
+import { getAllLobbies, getLobbyByID, getLobbyByName, getLobbyUsers, getTeamUsers } from "@src/lib/models/lobby/get/getLobby.js"
 import {default as createNewLobby } from '@src/lib/models/lobby/create/createLobby.js'
 import { sequelize } from "@src/lib/database/database.js"
 import getLobbyInformation from "@src/lib/lobby/getLobbyInformation.js"
 import removeUsersFromLobby from "@src/lib/lobby/removeUsersFromLobby.js"
 import { getUserByID } from "@src/lib/models/user/getUser.js"
 import { IUser } from "@src/models/user.js"
-import { getTeamsInLobby } from "@src/lib/models/lobby/get/getTeam.js"
+import { getTeamByID, getTeamsInLobby } from "@src/lib/models/lobby/get/getTeam.js"
 import { default as createLobbyTeam } from "@src/lib/models/lobby/create/createTeam.js"
 import { deleteTeam as deleteLobbyTeam, deleteLobbyTeams } from "@src/lib/models/lobby/delete/deleteTeam.js"
 import removeUsersFromTeam from "@src/lib/lobby/removeUsersFromTeam.js"
@@ -85,6 +85,22 @@ export const getLobbyTeams = async (req: Request, res: Response) => {
     if(teams.length <= 0) return JsonResponse.NoResults(res).send()
 
     return new JsonResponse(res, {statusCode: ResponseCode.SUCCESS, contents: {code: GeneralCode.SUCCESS, message: `Teams found: ${teams.length}`, data: teams}}).send()
+}
+
+export const getLobbyTeam = async (req: Request, res: Response) => {
+    let team = (await getTeamByID(req.params.teamid))?.dataValues
+    if(!team) return JsonResponse.NotFound(res, "team").send()
+
+    return new JsonResponse(res, {statusCode: ResponseCode.SUCCESS, contents: {code: GeneralCode.SUCCESS, message: `Team Found`, data: team}}).send()
+}
+
+export const getTeamPlayers = async (req: Request, res: Response) => {
+    let team = (await getTeamByID(req.params.teamid))?.dataValues
+    if(!team) return JsonResponse.NotFound(res, "team").send()
+
+    let [users, userCount] = await getTeamUsers(team.TeamID)
+    if((userCount as number) <= 0) return JsonResponse.NoResults(res).send()
+    else return new JsonResponse(res, {statusCode: ResponseCode.SUCCESS, contents: {code: GeneralCode.SUCCESS, message: `Players found: ${userCount}`, data: users}}).send()
 }
 
 export const getLobbyPlayers = async (req: Request, res: Response) => {
@@ -186,24 +202,35 @@ export const deleteTeam = async (req: Request, res: Response) => {
 }
 
 export const joinTeam = async (req: Request, res: Response) => {
-    // let team = (await getTeamByID(req.params.teamid))?.dataValues
-    // if(!team) return JsonResponse.NotFound(res, "team").send()
 
-    // let user = (await getUserByID(req.params.userid)) as unknown as IUser
-    // if(!user) return JsonResponse.NotFound(res, "user").send()
+    let teamID = req.params.teamid
+    let userID = req.params.userid
 
-    // await sequelize.models.Users.update({TeamID: team.TeamID}, {where: {UserID: user.UserID}})
+    if(teamID == undefined || userID == undefined) return JsonResponse.MissingFields(res).send()
 
-    // return JsonResponse.UserJoinedTeam(res).send()
+    let team = (await getTeamByID(teamID))?.dataValues
+    if(!team) return JsonResponse.NotFound(res, "team").send()
+
+    let user = (await getUserByID(userID)) as unknown as IUser
+    if(!user) return JsonResponse.NotFound(res, "user").send()
+
+    await sequelize.models.Users.update({TeamID: team.TeamID}, {where: {UserID: user.UserID}})
+
+    return JsonResponse.UserJoinedTeam(res).send()
 }
 export const leaveTeam = async (req: Request, res: Response) => {
-    // let team = (await getTeamByID(req.params.teamid))?.dataValues
-    // if(!team) return JsonResponse.NotFound(res, "team").send()
+    let teamID = req.params.teamid
+    let userID = req.params.userid
 
-    // let user = (await getUserByID(req.params.userid)) as unknown as IUser
-    // if(!user) return JsonResponse.NotFound(res, "user").send()
+    if(teamID == undefined || userID == undefined) return JsonResponse.MissingFields(res).send()
 
-    // await sequelize.models.Users.update({TeamID: null}, {where: {UserID: user.UserID}})
+    let team = (await getTeamByID(teamID))?.dataValues
+    if(!team) return JsonResponse.NotFound(res, "team").send()
 
-    // return JsonResponse.UserLeftTeam(res).send()
+    let user = (await getUserByID(userID)) as unknown as IUser
+    if(!user) return JsonResponse.NotFound(res, "user").send()
+
+    await sequelize.models.Users.update({TeamID: null}, {where: {UserID: user.UserID}})
+
+    return JsonResponse.UserLeftTeam(res).send()
 }

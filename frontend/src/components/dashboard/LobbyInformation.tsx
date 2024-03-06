@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom"
 import Button from "../core/Button"
 import Modal from "../core/Modal"
 import UserLobbyList from "../lobby/UserLobbyList"
@@ -10,6 +11,7 @@ export interface TLobbyInformation {
 }
 
 export default (props: TLobbyInformation) => {
+    const nav = useNavigate()
     const authedUser = useAuthUser() as any
 
     const leaveLobby = async () => {
@@ -21,7 +23,7 @@ export default (props: TLobbyInformation) => {
         <div className="rounded bg-main_dark shadow-lg shadow-main text-center py-2 flex flex-col items-center justify-center gap-2">
             <p className="flex gap-2"><span className="font-graffiti text-2xl">Lobby:</span><span className="text-xl font-semibold font-mono">{props.LobbyInfo.LobbyName}</span></p>
             <div className="flex flex-row items-center justify-center gap-2">
-                <Button text={"Players"} onClick={()=> {}}/>
+                <Button text={"Players"} onClick={()=> {nav(`/list/${props.LobbyInfo.LobbyID}`)}}/>
                 <Button text={"Leave"} onClick={leaveLobby}/>
             </div>
         </div>

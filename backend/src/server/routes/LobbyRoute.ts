@@ -1,7 +1,7 @@
 import express, {Request, Response} from "express"
 import JsonResponse from "../responses/JsonResponse.js"
 import AdminAuthorisationHandler from "../handlers/AdminAuthorisationHandler.js"
-import { createLobby, deleteLobby, getLobbyFlags, getLobbyInfo, getLobbyPlayers, getLobbyTeams, getLobbyTypes, joinLobby, leaveLobby, listLobbies, lobbyParamHandler } from "../controllers/LobbyController.js"
+import { createLobby, deleteLobby, getLobbyFlags, getLobbyInfo, getLobbyPlayers, getLobbyTeam, getLobbyTeams, getLobbyTypes, getTeamPlayers, joinLobby, joinTeam, leaveLobby, leaveTeam, listLobbies, lobbyParamHandler } from "../controllers/LobbyController.js"
 import UserAuthorisationHandler from "../handlers/UserAuthorisationHandler.js"
 
 export const router = express.Router()
@@ -22,13 +22,16 @@ router.get("/:lobbyid/flags", getLobbyFlags) // list lobby flags
 router.get("/:lobbyid/teams", getLobbyTeams) // List lobby teams
 
 
+
 router.patch("/:lobbyid/add/:param", AdminAuthorisationHandler, lobbyParamHandler) // add to a lobby (Flag, Team)
 router.delete("/:lobbyid/remove/:param/:paramid", AdminAuthorisationHandler, lobbyParamHandler) // remove from a lobby (Flag, Team)
 
 router.patch("/:lobbyid/join/:userid", UserAuthorisationHandler, joinLobby) // User joins a lobby
 router.patch("/:lobbyid/leave/:userid", UserAuthorisationHandler, leaveLobby) // User leaves a lobby
 
-router.patch("/:teamid/join/:userid") // User joins a team
-router.patch("/:teamid/leave/:userid") // User leaves a team
+router.get(  "/team/:teamid", getLobbyTeam)
+router.get(  "/team/:teamid/users", getTeamPlayers)                                     // List lobby teams                                     // List lobby teams
+router.patch("/team/:teamid/join/:userid", UserAuthorisationHandler ,joinTeam)  // User joins a team
+router.patch("/team/:teamid/leave/:userid", UserAuthorisationHandler,leaveTeam) // User leaves a team
 
 router.delete("/delete/:lobbyid", AdminAuthorisationHandler, deleteLobby) // delete a lobby

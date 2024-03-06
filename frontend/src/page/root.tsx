@@ -19,26 +19,11 @@ export default () => {
             </div>
         </div>
         <div id="content-wrapper" className="bg-black flex-grow pt-5 px-10 gap-2 flex flex-col md:px-[10%] lg:px-[20%] xl:px-[25%]">
-            <div id="content1" className="rounded justify-center bg-main_light p-2 shadow-lg shadow-main_light hover:bg-main_dark hover:shadow-main_dark transition-all">
+            <div id="content1" className="rounded justify-center bg-main_light p-5 shadow-lg shadow-main_light hover:bg-main_dark hover:shadow-main_dark transition-all lg:order-1">
                 <p className="text-2xl text-center">Welcome to QRCade!</p>
                 <p className="pt-1 text-center">QRCade is a simple, mobile gaming platform designed around open play!</p>
-                <br></br>
-                {/* <p className=" text-xl">Minimum Requirements:</p>
-                <div className="ml-10">
-                    <ul className="list-disc ">
-                        <li>A mobile phone with an internet connection.</li>
-                        <li>Said phone being able to scan QR Codes, either through:</li>
-                            <div className="ml-10">
-                                <ul className="list-disc ">
-                                    <li>The Phone Camera.</li>
-                                    <li>A 3rd Party App.</li>
-                                </ul>
-                            </div>
-                        <li>Access to a printer if you need to print off your own QR Code or are running a game.</li>
-                    </ul>
-                </div> */}
             </div>
-            <div className="flex flex-wrap items-center justify-center gap-2 pt-4">
+            <div className="flex flex-wrap items-center justify-center gap-2 pt-4 lg:order-0">
                 <Button text={"About QRCade"} onClick={() => {nav("/")}} className={defaultButtonStyleAlt + " w-full md:w-max"}/>
                 <Button text={"How 2 Play"} onClick={() => {nav("/")}} className={defaultButtonStyleAlt + " w-full md:w-max "}/>
                 <a target='_blank' rel='noopener noreferrer' href="https://scrub-dev.com" className={defaultButtonStyleAlt + " w-full md:w-max text-center"}>My Website</a>

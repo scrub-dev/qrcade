@@ -49,6 +49,7 @@ export default class {
     static Deleted = (res: Response, deleted?: string) => new this(res, {statusCode: ResponseCode.SUCCESS, contents: {code: GeneralCode.SUCCESS, message: `${deleted || "Object"} deleted`}})
     static Created = (res: Response, created: string) => new this(res, {statusCode: ResponseCode.SUCCESS, contents: {code: GeneralCode.SUCCESS, message: `${created} created!`}})
     static NoResults = (res: Response) => new this(res, {statusCode: ResponseCode.SUCCESS, contents: {code: GeneralCode.NOT_FOUND, message: `No Results`}})
+    static MissingFields = (res: Response) => new this(res, {statusCode: ResponseCode.SUCCESS, contents: {code: GeneralCode.NOT_FOUND, message: `One or more fields are missing`}})
 
     // GAME SPECIFIC
     static UserLeftLobby = (res: Response) => new this(res, {statusCode: ResponseCode.SUCCESS, contents: {code: GameCode.USER_LEFT_LOBBY, message: `Lobby Left`}})

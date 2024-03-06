@@ -19,6 +19,10 @@ import FlagCreate from './page/AdminSubPages/FlagCreate.tsx'
 import FlagList from './page/AdminSubPages/FlagList.tsx'
 import TeamCreate from './page/AdminSubPages/TeamCreate.tsx'
 import TeamList from './page/AdminSubPages/TeamList.tsx'
+import PlayerList from './page/playerlist.tsx'
+import ScoreboardLobbySelect from './page/Scoreboard/ScoreboardLobbySelect.tsx'
+import Scoreboard from './page/Scoreboard/Scoreboard.tsx'
+
 
 
 const authStore = createStore({
@@ -101,6 +105,22 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
               <RequireAuth fallbackPath={'/'}>
                 <TeamList/>
               </RequireAuth>}>
+            </Route>
+
+            <Route path='/list/:id' element={
+              <RequireAuth fallbackPath={'/'}>
+                <PlayerList/>
+              </RequireAuth>}>
+            </Route>
+
+
+            <Route path='/scoreboard/' element={
+                <ScoreboardLobbySelect/>
+            }>
+            </Route>
+            <Route path='/scoreboard/:id' element={
+                <Scoreboard/>
+            }>
             </Route>
 
             // Scoreboard
