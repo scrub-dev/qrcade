@@ -65,7 +65,7 @@ export default () => {
 
     return (
     <div id="layout" className="flex flex-col h-screen text-white">
-        <div id="banner" className="flex flex-col items-center justify-center w-screen bg-black py-3">
+        <div id="banner" className="flex flex-col items-center justify-center w-screen bg-black pt-3">
             <div id="title" className="w-full md:w-max flex items-center justify-center py-2">
                 <h1 className="text-7xl drop-shadow-2xl qrc-shadow shadow-main font-graffiti">QRCade</h1>
             </div>
