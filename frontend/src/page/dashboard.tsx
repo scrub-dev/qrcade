@@ -53,16 +53,6 @@ export default () => {
         })()
     }, [_refresh])
 
-    // get user information
-
-    // check if lobby is valid
-    // check if team is valid
-
-
-    // display user info
-    // display team info
-    // link to player score
-
     return (
     <div id="layout" className="flex flex-col h-screen text-white">
         <div id="banner" className="flex flex-col items-center justify-center w-screen bg-black pt-3">
