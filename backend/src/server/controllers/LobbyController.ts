@@ -10,7 +10,9 @@ import removeUsersFromLobby from "@src/lib/lobby/removeUsersFromLobby.js"
 import { getUserByID } from "@src/lib/models/user/getUser.js"
 import { IUser } from "@src/models/user.js"
 import { getTeamsInLobby } from "@src/lib/models/lobby/get/getTeam.js"
-import { create } from "domain"
+import { default as createLobbyTeam } from "@src/lib/models/lobby/create/createTeam.js"
+import { deleteTeam as deleteLobbyTeam, deleteLobbyTeams } from "@src/lib/models/lobby/delete/deleteTeam.js"
+import removeUsersFromTeam from "@src/lib/lobby/removeUsersFromTeam.js"
 
 export const getLobbyTypes = (req: Request, res: Response) => {
     let values = getGamemodes()
@@ -65,6 +67,7 @@ export const deleteLobby = async (req: Request, res: Response) => {
 
     await sequelize.models.Lobbies.destroy({where: {LobbyID: req.params.lobbyid}})
     await removeUsersFromLobby(req.params.lobbyid)
+    await deleteLobbyTeams(req.params.lobbyid)
 
     return JsonResponse.Deleted(res, "Lobby").send()
 }
@@ -154,14 +157,32 @@ export const isValidLobby = async(lobbyID: string) => {
 }
 
 export const createFlag = async (req: Request, res: Response) => {
+
 }
 export const deleteFlag = async (req: Request, res: Response) => {
+
 }
 
 export const createTeam = async (req: Request, res: Response) => {
+    let teamName = req.body.teamName
+    let teamColour = req.body.teamColour
+    let lobby = req.params.lobbyid
+
+    if(!isValidLobby(lobby)) return JsonResponse.NotFound(res, "lobby").send()
+
+    await createLobbyTeam(teamName, teamColour, lobby)
+    return JsonResponse.Created(res, "Team").send()
 }
 export const deleteTeam = async (req: Request, res: Response) => {
 
+    let team = req.params.paramid
+    let lobby = req.params.lobbyid
+
+    if(!isValidLobby(lobby)) return JsonResponse.NotFound(res, "lobby").send()
+
+    await deleteLobbyTeam(team)
+
+    return JsonResponse.Deleted(res, "Team").send()
 }
 
 export const joinTeam = async (req: Request, res: Response) => {

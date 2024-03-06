@@ -23,7 +23,7 @@ router.get("/:lobbyid/teams", getLobbyTeams) // List lobby teams
 
 
 router.patch("/:lobbyid/add/:param", AdminAuthorisationHandler, lobbyParamHandler) // add to a lobby (Flag, Team)
-router.delete("/:lobbyid/remove/:param", AdminAuthorisationHandler, lobbyParamHandler) // remove from a lobby (Flag, Team)
+router.delete("/:lobbyid/remove/:param/:paramid", AdminAuthorisationHandler, lobbyParamHandler) // remove from a lobby (Flag, Team)
 
 router.patch("/:lobbyid/join/:userid", UserAuthorisationHandler, joinLobby) // User joins a lobby
 router.patch("/:lobbyid/leave/:userid", UserAuthorisationHandler, leaveLobby) // User leaves a lobby

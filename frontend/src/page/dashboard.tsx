@@ -14,18 +14,18 @@ import Button, { defaultButtonStyleAlt } from "../components/core/Button"
 export default () => {
     const nav = useNavigate()
     const user = useAuthUser() as any
-    const [userInfo, setUserInfo] = useState<any>([])
+    const [userInfo, setUserInfo] = useState<any>({})
     const [isAdmin, setIsAdmin] = useState(false)
 
     const [showTeam, setShowTeam] = useState(false)
-    const [teamInfo, setTeamInfo] = useState<any>([{}])
-    const [lobbyInfo, setLobbyInfo] = useState<any>([{}])
+    const [teamInfo, setTeamInfo] = useState<any>([])
+    const [lobbyInfo, setLobbyInfo] = useState<any>([])
 
     const [_refresh, refreshDashboard] = useState(false)
 
     const rerenderCallback = () => {
         setLobbyInfo({})
-        setTeamInfo({})
+        setTeamInfo([])
         setShowTeam(false)
         refreshDashboard(!_refresh)
     }

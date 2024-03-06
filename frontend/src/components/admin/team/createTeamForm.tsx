@@ -1,7 +1,8 @@
-import { Form, Formik, FormikValues } from "formik"
+import { Field, Form, Formik, FormikValues } from "formik"
 import { useState } from "react"
 import { HexColorInput, HexColorPicker } from "react-colorful"
 import { defaultButtonStyle } from "../../core/Button"
+import request from "../../util/connection/request"
 
 
 export interface TCreateTeamFormProps {
@@ -19,13 +20,15 @@ export default (props: TCreateTeamFormProps) => {
     }
 
     const handleSubmit = async (values: FormikValues) => {
-        let teamName = values.teamName as string
-        let teamColour = colour
+        values.teamColour = colour
         let lobbyID = props.LobbyID
 
-        if(teamName.length <= 0 || teamName == undefined) return setError("Please enter a team name")
-        if(teamColour.length <= 0 || teamColour == undefined) return setError("Please select a team colour")
-        if(lobbyID.length <= 0 || lobbyID == undefined) return setError("Invalid Lobby ID")
+        if( values.teamName.length <= 0 ||  values.teamName == undefined) return setError("Please enter a team name")
+        if( values.teamColour.length <= 0 ||  values.teamColour == undefined) return setError("Please select a team colour")
+        if( lobbyID.length <= 0 || lobbyID == undefined) return setError("Invalid Lobby ID")
+        console.log(values)
+        let res = await request.patch(`lobby/${lobbyID}/add/team`, {data: values})
+        console.log(res)
 
         // Does lobby exist
         // Does lobby require teams
@@ -45,7 +48,7 @@ export default (props: TCreateTeamFormProps) => {
                 <div id="formBox" className="flex flex-col py-2">
                     <div id="TeamName" className="flex flex-col items-center justify-center mb-2">
                         <label htmlFor="teamName" className="font-bold w-full">Team Name</label>
-                        <input type="text" name="teamName" id="teamName" className="rounded p-2 shadow-main_light shadow-xl w-full text-black"/>
+                        <Field type="text" name="teamName" className="text-black rounded shadow-main_light shadow-xl w-full p-2 mb-2"/>
                     </div>
                     <div id="TeamColour" className="flex flex-col py-2">
                         <label htmlFor="teamName" className="font-bold w-full">Team Colour</label>

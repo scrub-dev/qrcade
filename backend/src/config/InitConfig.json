@@ -1,4 +1,4 @@
 {
-    "PERSIST_DB" : false,
+    "PERSIST_DB" : true,
     "GENERATE_ACCOUNTS" : true
 }

@@ -6,6 +6,8 @@ export interface TModalProps {
     title     : string,
     children  : ReactNode,
     style?    : string
+    outline? : string
+    background? : string
 }
 
 export default (props: TModalProps) => {
@@ -15,6 +17,11 @@ export default (props: TModalProps) => {
       <>
         <button
           className={props.style || defaultButtonStyle}
+          style={{
+            // borderColor: props.outline || "",
+            border: props.outline ? `2px solid ${props.outline}` : "",
+            backgroundColor: props.background ? props.background : ""
+          }}
           type="button"
           onClick={() => setShowModal(true)}
         >
