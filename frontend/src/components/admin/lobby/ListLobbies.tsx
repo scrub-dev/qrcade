@@ -9,8 +9,13 @@ export default () => {
 
     const getLobbyList = async () => {
         let result = (await request.get("lobby/list")).data
-        if(result.code != "SUCCESS") setError(`${result.message}`)
-        else setLobbyList(await result.data)
+
+        if(result.code != "SUCCESS") {
+            setLobbyList([])
+            return setError(`${result.message}`)
+        }
+
+        setLobbyList(result.data)
     }
 
     const lobbyListComponent = (lobbyList.length > 0) ? lobbyList.map((lobby: any) => <Lobby key={lobby.LobbyID} LobbyID={lobby.LobbyID} LobbyName={lobby.LobbyName} LobbyType={lobby.LobbyType} GameInfo={lobby.GameInfo} Participants={lobby.Participants}/>) : null
