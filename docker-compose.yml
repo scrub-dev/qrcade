@@ -1,10 +1,31 @@
 version: '3.1'
 
 services:
+# SERVICES
   backend:
+    images: node:hydrogen-slim
+    ports:
+      - "3000:3000"
+
   frontend:
+      images: node:hydrogen-slim
+      ports:
+        - "3000:3000"
+# ROUTING
   nginx:
+    image: nginx:mainline-alpine3.18-slim
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/:/etc/nginx/conf.d
+      - ./nginx/certbot/conf:/etc/letsencrypt
+      - ./nginx/certbot/www:/var/www/certbot
   certbot:
+    image: certbot/certbot
+    volumes:
+      - ./nginx/certbot/conf:/etc/letsencrypt
+      - ./nginx/certbot/www:/var/www/certbot
 
 networks:
   app-network:
