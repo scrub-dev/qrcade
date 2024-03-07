@@ -22,6 +22,7 @@ import TeamList from './page/AdminSubPages/TeamList.tsx'
 import PlayerList from './page/playerlist.tsx'
 import ScoreboardLobbySelect from './page/Scoreboard/ScoreboardLobbySelect.tsx'
 import Scoreboard from './page/Scoreboard/Scoreboard.tsx'
+import Hit from './page/hit.tsx'
 
 
 
@@ -123,8 +124,14 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
             }>
             </Route>
 
-            // Scoreboard
-            // Score
+
+            <Route path='/hit/:hitid' element={
+              <RequireAuth fallbackPath={'/'}>
+                <Hit/>
+              </RequireAuth>}>
+            </Route>
+
+            // Player Score
             // Hit
           </Routes>
         </BrowserRouter>

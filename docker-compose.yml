@@ -3,12 +3,12 @@ version: '3.1'
 services:
 # SERVICES
   backend:
-    images: node:hydrogen-slim
+    image: node:hydrogen-slim
     ports:
       - "3000:3000"
 
   frontend:
-      images: node:hydrogen-slim
+      image: node:hydrogen-slim
       ports:
         - "3000:3000"
 # ROUTING

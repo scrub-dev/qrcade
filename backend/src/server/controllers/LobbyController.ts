@@ -11,8 +11,11 @@ import { getUserByID } from "@src/lib/models/user/getUser.js"
 import { IUser } from "@src/models/user.js"
 import { getTeamByID, getTeamsInLobby } from "@src/lib/models/lobby/get/getTeam.js"
 import { default as createLobbyTeam } from "@src/lib/models/lobby/create/createTeam.js"
+import { default as createLobbyFlag } from "@src/lib/models/lobby/create/createFlag.js"
+import { getLobbyFlags as getFlags } from "@src/lib/models/lobby/get/getFlag.js"
+
 import { deleteTeam as deleteLobbyTeam, deleteLobbyTeams } from "@src/lib/models/lobby/delete/deleteTeam.js"
-import removeUsersFromTeam from "@src/lib/lobby/removeUsersFromTeam.js"
+import { deleteFlags, deleteFlag as deleteLobbyFlag } from "@src/lib/models/lobby/delete/deleteFlag.js"
 
 export const getLobbyTypes = (req: Request, res: Response) => {
     let values = getGamemodes()
@@ -68,6 +71,7 @@ export const deleteLobby = async (req: Request, res: Response) => {
     await sequelize.models.Lobbies.destroy({where: {LobbyID: req.params.lobbyid}})
     await removeUsersFromLobby(req.params.lobbyid)
     await deleteLobbyTeams(req.params.lobbyid)
+    await deleteFlags(req.params.lobbyid)
 
     return JsonResponse.Deleted(res, "Lobby").send()
 }
@@ -75,6 +79,11 @@ export const deleteLobby = async (req: Request, res: Response) => {
 export const getLobbyFlags = async (req: Request, res: Response) => {
     let lobby = (await getLobbyByID(req.params.lobbyid))?.dataValues
     if(!lobby) return JsonResponse.NotFound(res).send()
+
+    let flags = (await getFlags(lobby.LobbyID)).map(e => e.dataValues)
+    if(flags.length <= 0) return JsonResponse.NoResults(res).send()
+
+    return new JsonResponse(res, {statusCode: ResponseCode.SUCCESS, contents: {code: GeneralCode.SUCCESS, message: `Flags found: ${flags.length}`, data: flags}}).send()
 }
 
 export const getLobbyTeams = async (req: Request, res: Response) => {
@@ -151,18 +160,20 @@ export const lobbyParamHandler = async (req: Request, res: Response) => {
         default: return JsonResponse.FieldNotSupported(res).send()
         case "FLAG":
             if(method == "PATCH"){
-                createFlag(req,res)
+                return createFlag(req,res)
             }
             else if(method == "DELETE"){
-                deleteFlag(req,res)
+                return deleteFlag(req,res)
             }
+            return JsonResponse.FieldNotSupported(res).send()
         case "TEAM":
             if(method == "PATCH"){
-                createTeam(req,res)
+                return createTeam(req,res)
             }
             else if(method == "DELETE"){
-                deleteTeam(req,res)
+                return deleteTeam(req,res)
             }
+            return JsonResponse.FieldNotSupported(res).send()
     }
 }
 
@@ -173,10 +184,28 @@ export const isValidLobby = async(lobbyID: string) => {
 }
 
 export const createFlag = async (req: Request, res: Response) => {
+    let lobbyID = req.params.lobbyid
+    let flagName = req.body.flagName
+    let flagInfo = req.body.flagInfo
+    let flagDesc = req.body.flagDesc
 
+    if(!isValidLobby(lobbyID)) return JsonResponse.NotFound(res, "lobby").send()
+
+    await createLobbyFlag({
+        flagName: flagName,
+        flagInfo: flagInfo,
+        flagDesc: flagDesc,
+        lobbyID: lobbyID
+    })
+    return JsonResponse.Created(res, "Flag").send()
 }
 export const deleteFlag = async (req: Request, res: Response) => {
+    let flag = req.params.paramid
+    let lobby = req.params.lobbyid
 
+    if(!isValidLobby(lobby)) return JsonResponse.NotFound(res, "lobby").send()
+    await deleteLobbyFlag(flag)
+    return JsonResponse.Deleted(res, "Flag").send()
 }
 
 export const createTeam = async (req: Request, res: Response) => {
@@ -185,7 +214,6 @@ export const createTeam = async (req: Request, res: Response) => {
     let lobby = req.params.lobbyid
 
     if(!isValidLobby(lobby)) return JsonResponse.NotFound(res, "lobby").send()
-
     await createLobbyTeam(teamName, teamColour, lobby)
     return JsonResponse.Created(res, "Team").send()
 }
@@ -195,9 +223,7 @@ export const deleteTeam = async (req: Request, res: Response) => {
     let lobby = req.params.lobbyid
 
     if(!isValidLobby(lobby)) return JsonResponse.NotFound(res, "lobby").send()
-
     await deleteLobbyTeam(team)
-
     return JsonResponse.Deleted(res, "Team").send()
 }
 

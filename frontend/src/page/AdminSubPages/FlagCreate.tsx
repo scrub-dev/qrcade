@@ -17,7 +17,7 @@ export default () => {
                     <BackButton/>
                 </div>
             </div>
-            <div id="content-wrapper" className="bg-black flex-grow p-10 gap-2 flex flex-col md:px-[10%] lg:px-[20%] xl:px-[25%] items-center">
+            <div id="content-wrapper" className="bg-black flex-grow px-10 gap-2 flex flex-col md:px-[10%] lg:px-[20%] xl:px-[25%] items-center">
                 <CreateFlagForm lobbyID={lobbyid as string}/>
             </div>
             <div id="footer" className="text-white bg-black">

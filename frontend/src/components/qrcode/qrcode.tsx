@@ -5,6 +5,6 @@ export interface TQRCodeProps {
 }
 
 export default (props: TQRCodeProps) => {
-    let val = `${window.location.protocol}//${window.location.hostname}/hit?h=${props.ID}`
+    let val = `${window.location.protocol}//${window.location.hostname}/hit/${props.ID}`
     return <QRCodeSVG value={val} size={700}/>
 }

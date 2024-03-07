@@ -1,19 +1,14 @@
 {
     "LOG_INI" : true,
-    "LOG_ERRORS" : true,
+    "LOG_ERRORS" : false,
     "LOG_VERBOSE" : false,
 
-    "PRINT_CONFIGS" : true,
-    "PRINT_TO_CONSOLE": true,
+    "PRINT_CONFIGS" : false,
+    "PRINT_TO_CONSOLE": false,
 
-    "LOG_API": true,
-    "LOG_SERVER": true,
+    "LOG_API": false,
+    "LOG_SERVER": false,
 
     "LOG_DB_VERBOSE": false,
-    "LOG_DB": true,
-
-    "GAME_LOG" : {
-        "PREFIX" : "LOG-",
-        "TYPES" : ["LOOTER_SCANNING_FINISHED"]
-    }
+    "LOG_DB": false
 }

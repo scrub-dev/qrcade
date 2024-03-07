@@ -21,8 +21,6 @@ router.get("/:lobbyid/users", getLobbyPlayers) // List lobby users
 router.get("/:lobbyid/flags", getLobbyFlags) // list lobby flags
 router.get("/:lobbyid/teams", getLobbyTeams) // List lobby teams
 
-
-
 router.patch("/:lobbyid/add/:param", AdminAuthorisationHandler, lobbyParamHandler) // add to a lobby (Flag, Team)
 router.delete("/:lobbyid/remove/:param/:paramid", AdminAuthorisationHandler, lobbyParamHandler) // remove from a lobby (Flag, Team)
 

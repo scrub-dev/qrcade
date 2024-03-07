@@ -9,7 +9,6 @@ export interface TCreateFlagFormProps {
 }
 export default (props: TCreateFlagFormProps) => {
 
-
     const [success, setSuccess] = useState("")
     const [error, setError] = useState("")
 
@@ -17,7 +16,6 @@ export default (props: TCreateFlagFormProps) => {
         (async () => {
         })()
     }, [])
-
 
     const clearFeedback = () => {
         setError("")
@@ -30,9 +28,18 @@ export default (props: TCreateFlagFormProps) => {
         if(values.flagInfo == "") return setError("Please enter a flag title")
         if(values.flagDesc == "") return setError("Please enter a flag description")
 
-        // setTimeout(clearFeedback, 3000);
-    }
+        values.flagDesc = encodeURIComponent(values.flagDesc)
 
+        if(values.flagName.length > 40) return setError("Flag name is too long")
+        if(values.flagInfo.length > 80) return setError("Flag title is too long")
+        if(values.flagDesc.length > 1000) return setError("Flag description is too long")
+
+        let res = (await request.patch(`lobby/${props.lobbyID}/add/flag`, {data: values})).data
+
+        if(res.code !== "SUCCESS") return setError(res.message)
+        else setSuccess(res.message)
+        setTimeout(clearFeedback, 3000)
+    }
 
     return (
     <div id="form" className=''>
@@ -69,7 +76,8 @@ export default (props: TCreateFlagFormProps) => {
             </Form>
         </Formik>
         <div id='errorBox' className='absolute font-extrabold flex items-center justify-center left-0 right-0 m-auto pt-5'>
-             <p className='text-success'>{success}</p>
+            <p className='text-failure'>{error}</p>
+            <p className='text-success'>{success}</p>
         </div>
     </div>
     )

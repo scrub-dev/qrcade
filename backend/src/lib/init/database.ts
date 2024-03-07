@@ -14,10 +14,7 @@ export const deleteFile    = async (location: string,) => {
     fs.unlinkSync(location)
 }
 
-
 export const initialiseDatabase = async (location: string) => {
-    console.log(location)
-
     if(!iniConfig.PERSIST_DB && doesFileExist(location) ){
         Log(`Database file already exists, deleting...`, LogType.INI)
         deleteFile(location).then(() => Log(`Database file deleted: ${location}`, LogType.INI))

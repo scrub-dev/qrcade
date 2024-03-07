@@ -10,7 +10,7 @@ export default () => {
 
     Log(generateFiglet(sysConfig.NAME, {}))
     Log(`v${sysConfig.VERSION}`)
-    Log("Starting up...",undefined, true)
+    Log("QRC2 Starting", undefined, true)
 
     let configValues = [
         {name: "Initialisation", configs: iniConfig},

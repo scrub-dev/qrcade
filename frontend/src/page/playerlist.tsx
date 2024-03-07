@@ -1,18 +1,24 @@
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import BackButton from "../components/core/BackButton"
 import request from "../components/util/connection/request"
 import { useEffect, useState } from "react"
+import Button from "../components/core/Button"
+import useAuthUser from "react-auth-kit/hooks/useAuthUser"
+import PrintQRCodes from "../components/qrcode/printQRCodes"
 
 export default () => {
-
+    const nav = useNavigate()
+    const user = useAuthUser() as any
     let { id } = useParams<{id: string}>()
 
     const [error, setError] = useState("")
     const [playerList, setPlayerList] = useState([])
+    const [isAdmin, setIsAdmin] = useState(false)
 
     useEffect(() => {
         (async () => {
             getPlayers()
+            setIsAdmin(user.Admin)
         })()
     }, [])
 
@@ -55,8 +61,16 @@ export default () => {
                 </div>
             </div>
             <div id="content-wrapper" className="bg-black flex-grow px-10 gap-2 flex flex-col md:px-[10%] lg:px-[20%] xl:px-[25%] items-center pt-5">
-                {playerList.length > 0 ? playerList.map((player: any, i: number) => <div key={i} className="rounded p-2 bg-main w-full text-center font-graffiti">{player.DisplayName}</div>): ""}
-                <p>{error}</p>
+                <div className="h-full w-full flex flex-col">
+                    <div className="h-full p-5 overflow-scroll">
+                        {playerList.length > 0 ? playerList.map((player: any, i: number) => <div key={i} className="rounded p-2 bg-main w-full text-center font-graffiti">{player.DisplayName}</div>): ""}
+                        <p>{error}</p>
+                    </div>
+                    <div className="w-full flex flex-col items-center justify-center gap-2 pb-5">
+                        {isAdmin ? <PrintQRCodes IDList={playerList.map((e: any) => e.UserID)}/> : ""}
+                        <Button text="Refresh" onClick={() => {}} className="p-1 w-full bg-main rounded font-graffiti text-2xl"/>
+                    </div>
+                </div>
             </div>
         </div>
         )

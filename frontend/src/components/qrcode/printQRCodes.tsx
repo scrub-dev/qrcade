@@ -22,7 +22,7 @@ export default (props: TPrintQRCodeProps) => {
         {props.IDList.map(id => <QrcodeContent ID={id}/>)}
       </div>
     </div>
-        <Button text={'QR Code'} onClick={handlePrint}/>
+        <Button text={'QR Codes'} onClick={handlePrint} className='w-full rounded bg-main p-1 font-graffiti text-2xl'/>
     </>
   );
 };
