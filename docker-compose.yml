@@ -6,7 +6,7 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    envirionment:
+    environment:
       - JWT_SECRET=${JWT_SECRET}
     ports:
       - "5000:5000"
