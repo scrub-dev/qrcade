@@ -26,7 +26,6 @@ services:
     volumes:
       - ./nginx/certbot/conf:/etc/letsencrypt
       - ./nginx/certbot/www:/var/www/certbot
-
 networks:
   app-network:
     driver: bridge

@@ -15,3 +15,5 @@ qrcade.session.sql
 backend/.env
 
 .env
+
+nginx/certbot/
