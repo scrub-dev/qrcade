@@ -13,3 +13,5 @@ backend/database/qrcade_db.db
 qrcade.session.sql
 
 backend/.env
+
+.env
