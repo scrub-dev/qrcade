@@ -29,7 +29,7 @@ services:
     command: pm2 serve app/frontend/build 3000 --name frontend
 # REVERSE PROXY / ROUTING
   caddy:
-    image: caddy/2.7.6-alpine
+    image: caddy:2.7.6-alpine
     ports:
       - "80:80"
       - "443:443"
