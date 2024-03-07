@@ -11,22 +11,18 @@ services:
     ports:
       - "5000:5000"
     volumes:
-      - ./backend:/app/backend
+      - ./backend:/backend
     restart: unless-stopped
-    tty: true
-    command: pm2 start app/backend/build/index.js --name backend
 # REACT APP
   frontend:
     build:
       context: ./frontend
       dockerfile: Dockerfile
-    ports:
-      - "3000:3000"
-    volumes:
-      - ./frontend:/app/frontend
-    restart: unless-stopped
-    tty: true
-    command: pm2 serve app/frontend/build 3000 --name frontend
+      ports:
+        - "3000:3000"
+      volumes:
+        - ./frontend:/frontend
+      restart: unless-stopped
 # REVERSE PROXY / ROUTING
   caddy:
     image: caddy/2.7.6-alpine
@@ -34,7 +30,7 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - "./Caddyfile:/etc/caddy/Caddyfile"
+      - "./Caddyfile.dev:/etc/caddy/Caddyfile"
       - "/etc/caddy/data:/data"
     depends_on:
       - backend
