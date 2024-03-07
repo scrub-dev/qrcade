@@ -1,5 +1,6 @@
 import { useParams } from "react-router-dom"
 import BackButton from "../../components/core/BackButton"
+import CreateFlagForm from "../../components/admin/flag/CreateFlagForm"
 
 export default () => {
 
@@ -16,7 +17,8 @@ export default () => {
                     <BackButton/>
                 </div>
             </div>
-            <div id="content-wrapper" className="bg-black flex-grow p-10 gap-2 flex flex-col md:px-[10%] lg:px-[20%] xl:px-[25%] items-center justify-center">
+            <div id="content-wrapper" className="bg-black flex-grow p-10 gap-2 flex flex-col md:px-[10%] lg:px-[20%] xl:px-[25%] items-center">
+                <CreateFlagForm lobbyID={lobbyid as string}/>
             </div>
             <div id="footer" className="text-white bg-black">
                 <p>QRCade © {new Date(Date.now()).getFullYear()}</p>

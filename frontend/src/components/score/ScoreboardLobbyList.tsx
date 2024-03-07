@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import request from "../util/connection/request"
 import { useEffect, useState } from "react"
 import Button from "../core/Button"
@@ -19,7 +19,6 @@ export default () => {
 
         setLobbyList(res.data)
     }
-
 
     return (
     <div className="w-full flex flex-col gap-2">
