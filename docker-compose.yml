@@ -13,7 +13,7 @@ services:
     volumes:
       - ./backend:/app/backend
     restart: unless-stopped
-    command: node ./build/index.js
+    command: /build/index.js
 # REACT APP
   frontend:
     build:
@@ -24,7 +24,8 @@ services:
     volumes:
       - ./frontend:/app/frontend
     restart: unless-stopped
-    command: pm2-runtime serve ./build 3000 --name frontend
+    command: npm run dev
+    #command: pm2-runtime serve ./build 3000 --name frontend
 # REVERSE PROXY / ROUTING
   caddy:
     image: caddy:2.7.6-alpine
