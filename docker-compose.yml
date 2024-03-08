@@ -13,7 +13,7 @@ services:
     volumes:
       - ./backend:/app/backend
     restart: unless-stopped
-    command: npm run /build/index.js
+    command: node /build/index.js
     networks:
       - web-server
 # App and caddy
@@ -46,7 +46,6 @@ services:
   #     - backend
   #     - frontend
   #   restart: unless-stopped
-
 networks:
   web-server:
     driver: bridge
