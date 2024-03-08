@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router-dom"
+import { useParams } from "react-router-dom"
 import BackButton from "../components/core/BackButton"
 import request from "../components/util/connection/request"
 import { useEffect, useState } from "react"
@@ -7,7 +7,6 @@ import useAuthUser from "react-auth-kit/hooks/useAuthUser"
 import PrintQRCodes from "../components/qrcode/printQRCodes"
 
 export default () => {
-    const nav = useNavigate()
     const user = useAuthUser() as any
     let { id } = useParams<{id: string}>()
 

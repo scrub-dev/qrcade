@@ -29,11 +29,11 @@ export default (props: TTeamInformationProps) => {
     }
 
     const joinTeam = async (teamID: number) => {
-        let res = await request.patch(`lobby/team/${teamID}/join/${props.UserID}`)
+        await request.patch(`lobby/team/${teamID}/join/${props.UserID}`)
         props.ParentCallback()
     }
     const leaveTeam = async (teamID: string) => {
-        let res = await request.patch(`lobby/team/${teamID}/leave/${props.UserID}`)
+        await request.patch(`lobby/team/${teamID}/leave/${props.UserID}`)
         props.ParentCallback()
     }
 

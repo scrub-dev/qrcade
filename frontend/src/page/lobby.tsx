@@ -1,7 +1,5 @@
 import ViewDashboardBtn from "../components/dashboard/ViewDashboardBtn"
 import Loginout from "../components/login/loginout"
-import ViewProfileBtn from "../components/profile/ViewProfileBtn"
-
 
 export default () => {
     return (

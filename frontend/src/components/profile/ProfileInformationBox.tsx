@@ -1,40 +1,23 @@
 import { Field, Form, Formik, FormikValues } from "formik"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import useAuthUser from "react-auth-kit/hooks/useAuthUser"
-import useSignIn from "react-auth-kit/hooks/useSignIn"
 import { defaultButtonStyle } from "../core/Button"
 import useSignOut from "react-auth-kit/hooks/useSignOut"
 import request from "../util/connection/request"
-import { useCookies } from "react-cookie"
 import { useNavigate } from "react-router-dom"
 
 export default () => {
     const nav = useNavigate()
-    // const signIn = useSignIn()
     const signOut = useSignOut()
-    // const [cookies, setCookie] = useCookies();
 
     let user = useAuthUser() as any
 
-    // let [user, setUser] = useState({DisplayName: "", UserID: "", Username: "" })
-
-    // useEffect(() => {
-    //     (async () => {
-    //         const result = (await request.get(`user/${authedUser.UserID}`)).data.data
-    //         setUser({DisplayName: result.DisplayName, UserID: result.UserID, Username: result.Username})
-    //         console.log(result)
-    //     })()
-    // }, [])
 
     const [error, setError] = useState("")
     const setErrorBox = (err: string) => {
         setError(err)
     }
 
-    // const updateCookie = (key: string, newValue: any) => {
-    //     const currentCookie = cookies["_qrc_state"]
-    //     setCookie("_qrc_state", {...currentCookie, [key]: newValue})
-    // }
 
     const submitForm = async (values: FormikValues): Promise<void | Promise<any>> => {
 
@@ -48,17 +31,7 @@ export default () => {
         let newDisplayName = (await request.get(`user/${user.UserID}/displayname`))
         if(newDisplayName.data.code != "SUCCESS") return setErrorBox(`An Error occured : ${res.data.message}`)
 
-        // setUser({...user, DisplayName: newDisplayName.data.data.DisplayName})
-
-        // updateCookie("DisplayName", newDisplayName.data.data.DisplayName)
         signOut()
-        // signIn({
-        //     auth: {
-        //         token: cookies["_qrc"],
-        //         type: "Bearer",
-        //     },
-        //     userState: {...cookies["_qrc_state"]}
-        // })
         nav("/")
     }
 
