@@ -4,7 +4,6 @@ services:
 # EXPRESS API
   backend:
     build:
-      context: ./backend
       dockerfile: Dockerfile
     environment:
       - JWT_SECRET=${JWT_SECRET}
@@ -18,7 +17,6 @@ services:
 # REACT APP
   frontend:
     build:
-      context: ./frontend
       dockerfile: Dockerfile
     ports:
       - "3000:3000"
