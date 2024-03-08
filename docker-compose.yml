@@ -14,7 +14,7 @@ services:
       - ./backend:/app/backend
     restart: unless-stopped
     tty: true
-    command: pm2 start app/backend/build/index.js --name backend
+    command: node ./build/index.js
 # REACT APP
   frontend:
     build:
@@ -26,7 +26,7 @@ services:
       - ./frontend:/app/frontend
     restart: unless-stopped
     tty: true
-    command: pm2 serve app/frontend/build 3000 --name frontend
+    command: pm2 serve ./build 3000 --name frontend
 # REVERSE PROXY / ROUTING
   caddy:
     image: caddy:2.7.6-alpine
