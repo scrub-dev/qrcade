@@ -13,7 +13,6 @@ services:
     volumes:
       - ./backend:/app/backend
     restart: unless-stopped
-    tty: true
     command: node ./build/index.js
 # REACT APP
   frontend:
@@ -25,7 +24,6 @@ services:
     volumes:
       - ./frontend:/app/frontend
     restart: unless-stopped
-    tty: true
     command: pm2 serve ./build 3000 --name frontend
 # REVERSE PROXY / ROUTING
   caddy:
