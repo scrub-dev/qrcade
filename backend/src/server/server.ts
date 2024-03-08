@@ -23,7 +23,7 @@ import {addUserToReqFromBearerToken} from './middleware/getUserFromBearerToken.j
 
 export class Server {
 
-    private DEFAULT_PORT = 1234
+    private DEFAULT_PORT = 5000
     private _app: Express
 
     constructor(app?: Express){
@@ -46,7 +46,7 @@ export class Server {
 
     registerMiddleware = () => {
         const middleware = [
-            {name: "cors",         func: cors({credentials: true, origin: "http://localhost:5173", optionsSuccessStatus: 200})},
+            {name: "cors",         func: cors({credentials: true, origin: "http://localhost:3000", optionsSuccessStatus: 200})},
             {name: "logger",       func: logger},
             {name: "passport",     func: passport.initialize()},
             {name: "cookieparser", func: cookieParser()},

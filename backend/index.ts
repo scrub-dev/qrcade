@@ -22,6 +22,6 @@ const main = async () => {
 
     const app    = express()
     const server = new Server(app)
-    server.listen()
+    server.listen(5000)
 }
 main()
