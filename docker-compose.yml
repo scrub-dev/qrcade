@@ -1,4 +1,4 @@
-version: '3.1'
+version: '3'
 
 services:
 # EXPRESS API
@@ -13,28 +13,40 @@ services:
     volumes:
       - ./backend:/app/backend
     restart: unless-stopped
-    command: /build/index.js
-# REACT APP
+    command: npm run /build/index.js
+    networks:
+      - web-server
+# App and caddy
   frontend:
     build:
       context: ./frontend
       dockerfile: Dockerfile
     ports:
-      - "3000:3000"
-    volumes:
-      - ./frontend:/app/frontend
-    restart: unless-stopped
-    #command: pm2-runtime serve ./build 3000 --name frontend
-# REVERSE PROXY / ROUTING
-  caddy:
-    image: caddy:2.7.6-alpine
-    ports:
+      # - "3000:3000"
       - "80:80"
       - "443:443"
     volumes:
+      - ./frontend:/app/frontend
       - "./Caddyfile:/etc/caddy/Caddyfile"
       - "/etc/caddy/data:/data"
-    depends_on:
-      - backend
-      - frontend
     restart: unless-stopped
+    networks:
+      - web-server
+    #command: pm2-runtime serve ./build 3000 --name frontend
+# REVERSE PROXY / ROUTING
+  # caddy:
+  #   image: caddy:2.7.6-alpine
+  #   ports:
+  #     - "80:80"
+  #     - "443:443"
+  #   volumes:
+  #     - "./Caddyfile:/etc/caddy/Caddyfile"
+  #     - "/etc/caddy/data:/data"
+  #   depends_on:
+  #     - backend
+  #     - frontend
+  #   restart: unless-stopped
+
+networks:
+  web-server:
+    driver: bridge
