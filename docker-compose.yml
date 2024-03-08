@@ -16,6 +16,7 @@ services:
     # command: node /build/index.js
     networks:
       - web-server
+    entrypoint: ["node", "/app/backend/build/index.js"]
 # App and caddy
   frontend:
     build:
