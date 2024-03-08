@@ -15,4 +15,4 @@ FROM caddy:2.7.6-alpine
 EXPOSE 80
 EXPOSE 443
 
-COPY --from=build-step /app/frontend/build /svr
+COPY --from=build-step /app/frontend/dist /svr

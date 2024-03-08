@@ -50,15 +50,19 @@ export default class {
     static Created = (res: Response, created: string) => new this(res, {statusCode: ResponseCode.SUCCESS, contents: {code: GeneralCode.SUCCESS, message: `${created} created!`}})
     static NoResults = (res: Response) => new this(res, {statusCode: ResponseCode.SUCCESS, contents: {code: GeneralCode.NOT_FOUND, message: `No Results`}})
     static MissingFields = (res: Response) => new this(res, {statusCode: ResponseCode.SUCCESS, contents: {code: GeneralCode.NOT_FOUND, message: `One or more fields are missing`}})
+    static InvalidType = (res: Response) => new this(res, {statusCode: ResponseCode.SUCCESS, contents: {code: GeneralCode.NOT_FOUND, message: `Invalid type provided`}})
+
 
     // GAME SPECIFIC
     static UserLeftLobby = (res: Response) => new this(res, {statusCode: ResponseCode.SUCCESS, contents: {code: GameCode.USER_LEFT_LOBBY, message: `Lobby Left`}})
-
     static UserJoinedLobby = (res: Response) => new this(res, {statusCode: ResponseCode.SUCCESS, contents: {code: GameCode.USER_JOINED_LOBBY, message: `Lobby Joined`}})
-
     static UserLeftTeam = (res: Response) => new this(res, {statusCode: ResponseCode.SUCCESS, contents: {code: GameCode.USER_LEFT_TEAM, message: `Team Left`}})
-
     static UserJoinedTeam = (res: Response) => new this(res, {statusCode: ResponseCode.SUCCESS, contents: {code: GameCode.USER_JOINED_TEAM, message: `Team Joined`}})
+
+    static InvalidScanType = (res: Response, message: string) => new this(res, {statusCode: ResponseCode.SUCCESS, contents: {code: GameCode.INVALID_SCAN_TYPE, message: message}})
+    static DifferentLobby = (res: Response) => new this(res, {statusCode: ResponseCode.SUCCESS, contents: {code: GameCode.INVALID_LOBBY_DIFFERENT, message: "You are in a different lobby!"}})
+    static SameTeam = (res: Response) => new this(res, {statusCode: ResponseCode.SUCCESS, contents: {code: GameCode.INVALID_TEAM_SAME, message: "You are on the same team!"}})
+    static SamePlayer = (res: Response) => new this(res, {statusCode: ResponseCode.SUCCESS, contents: {code: GameCode.INVALID_PLAYER_SAME, message: "You cannot scan yourself!"}})
 
 
 

@@ -5,9 +5,7 @@ import { IUser } from '@src/models/user.js'
 import express, { NextFunction, Request, Response } from 'express'
 import passport from 'passport'
 import UserAuthorisationHandler from '../handlers/UserAuthorisationHandler.js'
-import AdminAuthorisationHandler from '../handlers/AdminAuthorisationHandler.js'
 export const router = express.Router()
-
 
 
 // router.get("/test", passport.authenticate('jwt', {session: false}), (req: Request, res: Response) => {

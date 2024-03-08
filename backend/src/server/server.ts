@@ -7,12 +7,13 @@ import LoginLocalStrategy from '@lib/auth/LoginLocalStrategy.js'
 import RegisterLocalStrategy from '@lib/auth/RegisterLocalStrategy.js'
 import AuthorizeJWTStrategy from '@src/lib/auth/AuthorizeJWTStrategy.js';
 
-import {router as AuthRouter} from './routes/AuthRoute.js'
-import {router as TestRouter} from './routes/TestRoute.js'
-import {router as UserRouter} from './routes/UserRoute.js'
-import {router as RootRouter} from './routes/RootRoute.js'
+import {router as AuthRouter } from './routes/AuthRoute.js'
+import {router as TestRouter } from './routes/TestRoute.js'
+import {router as UserRouter } from './routes/UserRoute.js'
+import {router as RootRouter } from './routes/RootRoute.js'
 import {router as AdminRouter} from './routes/AdminRoute.js'
 import {router as LobbyRouter} from './routes/LobbyRoute.js'
+import {router as HitRouter  } from './routes/HitRoute.js'
 
 
 import {logger} from './middleware/logger.js';
@@ -63,12 +64,13 @@ export class Server {
 
     registerRouters = () => {
         const routes: {name: string, route: string, router: Router}[] = [
-            {name: "Root", route: "/",     router: RootRouter},
-            {name: "Test", route: "/test", router: TestRouter},
-            {name: "Auth", route: "/auth", router: AuthRouter},
-            {name: "User", route: "/user", router: UserRouter},
+            {name: "Root",  route: "/",      router: RootRouter },
+            {name: "Test",  route: "/test",  router: TestRouter },
+            {name: "Auth",  route: "/auth",  router: AuthRouter },
+            {name: "User",  route: "/user",  router: UserRouter },
             {name: "Admin", route: "/admin", router: AdminRouter},
-            {name: "Lobby", route: "/lobby", router: LobbyRouter}
+            {name: "Lobby", route: "/lobby", router: LobbyRouter},
+            {name: "Hit",   route: "/hit",   router: HitRouter  }
         ]
         routes.forEach(e => {
             this._app.use(e.route, e.router);
