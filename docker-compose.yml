@@ -13,7 +13,7 @@ services:
     volumes:
       - ./backend:/app/backend
     restart: unless-stopped
-    command: node /build/index.js
+    # command: node /build/index.js
     networks:
       - web-server
 # App and caddy

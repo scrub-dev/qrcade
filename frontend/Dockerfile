@@ -6,6 +6,7 @@ FROM node:alpine as build-step
 
 WORKDIR /app/frontend
 COPY . .
+RUN npm ci
 RUN npm run build
 
 # Stage 2 reverse proxy and web server
