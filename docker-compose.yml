@@ -24,7 +24,6 @@ services:
     volumes:
       - ./frontend:/app/frontend
     restart: unless-stopped
-    command: npm run dev
     #command: pm2-runtime serve ./build 3000 --name frontend
 # REVERSE PROXY / ROUTING
   caddy:
