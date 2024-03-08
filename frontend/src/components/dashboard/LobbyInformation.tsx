@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom"
 import Button from "../core/Button"
 import Modal from "../core/Modal"
-import UserLobbyList from "../lobby/UserLobbyList"
+import UserLobbyList from "../lobby/userlobbylist"
 import request from "../util/connection/request"
 import useAuthUser from "react-auth-kit/hooks/useAuthUser"
 

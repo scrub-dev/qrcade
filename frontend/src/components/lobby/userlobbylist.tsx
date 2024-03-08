@@ -1,6 +1,6 @@
 import {useEffect, useState } from "react"
 import request from "../util/connection/request"
-import Userlobby from "./UserLobby"
+import Userlobby from "./userlobby"
 import Button from "../core/Button"
 import useAuthUser from "react-auth-kit/hooks/useAuthUser"
 
