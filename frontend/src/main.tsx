@@ -24,8 +24,6 @@ import ScoreboardLobbySelect from './page/Scoreboard/ScoreboardLobbySelect.tsx'
 import Scoreboard from './page/Scoreboard/Scoreboard.tsx'
 import Hit from './page/hit.tsx'
 
-
-
 const authStore = createStore({
   authName: '_qrc',
   authType: 'cookie',
