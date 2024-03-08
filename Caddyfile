@@ -1,15 +1,19 @@
-qrcade.xyz {
-	handle_path /api/* {
-		reverse_proxy backend:5000
-	}
+# qrcade.xyz {
+# 	handle_path /api/* {
+# 		reverse_proxy backend:5000
+# 	}
 
-	handle {
-		root * /src
-		try_files {path} {path}/ /index.html
-		file_server
-	}
-}
+# 	handle {
+# 		root * /src
+# 		try_files {path} {path}/ /index.html
+# 		file_server
+# 	}
+# }
 
 www.qrcade.xyz {
 	redir https://qrcade.xyz{uri} permanent
+}
+qrcade.xyz {
+  reverse_proxy /api/* backend:5000
+  reverse_proxy frontend:3000
 }

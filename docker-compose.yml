@@ -24,7 +24,7 @@ services:
     volumes:
       - ./frontend:/app/frontend
     restart: unless-stopped
-#    command: pm2-runtime serve ./build 3000 --name frontend
+    command: pm2-runtime serve ./build 3000 --name frontend
 # REVERSE PROXY / ROUTING
   caddy:
     image: caddy:2.7.6-alpine
@@ -34,7 +34,6 @@ services:
     volumes:
       - "./Caddyfile:/etc/caddy/Caddyfile"
       - "/etc/caddy/data:/data"
-      - "./frontend/build:/srv"
     depends_on:
       - backend
       - frontend
