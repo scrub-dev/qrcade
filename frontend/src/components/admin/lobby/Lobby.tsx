@@ -38,6 +38,11 @@ export default (props: TLobbyProps) => {
         setLobbyInfo(data)
     }
 
+    const deleteLobbyHits = async () => {
+        let res = (await request.delete(`admin/clear/lobbyhits/${props.LobbyID}`)).data
+        setResultBox(res.message)
+    }
+
     useEffect(() => {
         (async () => {
             updateLobbyInfo()
@@ -75,6 +80,7 @@ export default (props: TLobbyProps) => {
             {rules.includes("REQUIRED_FLAG") ? FlagComponents : null}
             {rules.includes("REQUIRED_TEAM") ? TeamComponents : null}
             <Button text={"Participants"} onClick={()=> {nav(`/list/${lobbyInfo.LobbyID}`)}} className="rounded bg-main p-1 font-mono w-full px-5"/>
+            <Button text={"Delete Hits"} onClick={deleteLobbyHits} className="rounded bg-main p-1 font-mono w-full px-5"/>
             <Button text={"Delete Lobby"} onClick={deleteLobby} className="rounded bg-main p-1 font-mono w-full px-5"/>
         </div>
         <div className="flex items-center justify-center">

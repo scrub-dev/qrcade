@@ -73,6 +73,11 @@ export default (props: TUserProps) => {
         } else setResultBox(`An Error Occured: ${res.code}`)
     }
 
+    const deleteUserHits = async () => {
+        let res = (await request.delete(`admin/clear/userhits/${userInfo.UserID}`)).data
+        setResultBox(res.message)
+    }
+
     return (
         <Modal buttonName={`${props.Username} (${props.UserID})`} title="User Controls" style="rounded bg-main p-1 font-mono w-full">
             <p>
@@ -88,6 +93,7 @@ export default (props: TUserProps) => {
             }
         <Button text={"Reset DisplayName"} onClick={resetDisplayName} className="rounded bg-main p-1 font-mono w-full px-5"/>
         <Button text={"Reset Password"} onClick={resetPassword} className="rounded bg-main p-1 font-mono w-full px-5"/>
+        <Button text={"Delete Hits"} onClick={deleteUserHits} className="rounded bg-main p-1 font-mono w-full px-5"/>
         <Button text={"Delete User"} onClick={deleteUser} className="rounded bg-main p-1 font-mono w-full px-5"/>
         </div>
         <div className="flex items-center justify-center">
