@@ -4,6 +4,7 @@ import { Request, Response } from "express"
 import JsonResponse from "../responses/JsonResponse.js"
 import { IUser } from "@src/models/user.js"
 import hashPassword from "@src/lib/user/hashPassword.js"
+import { clearUserHits as clearAUsersHits } from "@src/lib/models/hit/delete/clearHits.js"
 
 export const reset = async (req: Request, res: Response) => {
     let paramToReset = req.params.param.toUpperCase()
@@ -27,6 +28,7 @@ export const reset = async (req: Request, res: Response) => {
 export const deleteUser = async (req: Request, res: Response) => {
     let user = (await getUserByID(req.params.userid)) as unknown as IUser
     if(!user) return JsonResponse.NotFound(res).send()
+    await clearAUsersHits(user.UserID)
     await sequelize.models.Users.destroy({where: {UserID: req.params.userid}})
     return JsonResponse.Deleted(res).send()
 }
@@ -76,3 +78,12 @@ const addAdmin = async (userID : string) => {
 const removeAdmin = async (userID : string) => {
     (await sequelize.models.Users.update({Admin: false}, {where: {UserID : userID}}))
 }
+
+//#region Hit Management
+
+export const clearAllHits = async (req: Request, res: Response) => {}
+export const clearUserHits = async (req: Request, res: Response) => {}
+export const clearLobbyHits = async (req: Request, res: Response) => {}
+export const clearTeamHits = async (req: Request, res: Response) => {}
+
+//#endregion

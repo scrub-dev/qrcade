@@ -48,7 +48,7 @@ export default (props: TTeamInformationProps) => {
         <div className="rounded bg-main_dark shadow-lg shadow-main text-center py-2 flex flex-col items-center justify-center gap-1">
             <p className="font-graffiti qrc-shadow text-2xl">Join a Team</p>
             <div className="flex flex-col justify-center w-full px-5 pb-1 gap-1">
-                {props.TeamInfo.length <= 0 ? <p>No teams available</p> :
+                {!props.TeamInfo ? <p>No teams available</p> :
                     <>
                         {props?.TeamInfo?.map((team: any, i: number) =>
                         <Modal key={i} buttonName={team.TeamName} title={""} style="w-full bg-main rounded font-graffiti text-2xl py-1 text-stroke-md" background={team.TeamColour} outline="white">
@@ -61,12 +61,6 @@ export default (props: TTeamInformationProps) => {
             </div>
         </div>
     </>)
-
-
-    if(!props.UserTeam && props.TeamInfo.length <= 0){
-        return (<></>)
-    }
-
     return (
     <>
         {props.UserTeam ? TeamComponent : NoTeamComponent}

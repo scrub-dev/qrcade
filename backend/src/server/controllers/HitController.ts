@@ -1,12 +1,18 @@
-import { IUser } from "@src/models/user";
+import { IUser } from "@src/models/user.js";
 import { Request, Response } from "express";
-import JsonResponse from "../responses/JsonResponse";
-import { getLobbyByID } from "@src/lib/models/lobby/get/getLobby";
-import { getUserByID } from "@src/lib/models/user/getUser";
-import { getFlagByID } from "@src/lib/models/lobby/get/getFlag";
+import JsonResponse from "../responses/JsonResponse.js";
+import { getLobbyByID } from "@src/lib/models/lobby/get/getLobby.js";
+import { getUserByID } from "@src/lib/models/user/getUser.js";
+import { getFlagByID } from "@src/lib/models/lobby/get/getFlag.js";
+import { getUsersLastHitTime, isFlagDuplicate } from "@src/lib/models/hit/get/getHit.js";
+import { createLOOTER_FFAHit, createSHOOTER_FFAHit, createSHOOTER_TDMHit } from "@src/lib/models/hit/create/createHits.js";
+import { GameCode, ResponseCode } from "../responses/DefaultResponse.js";
+import sanitiseUser from "@src/lib/user/sanitiseUser.js";
+import { create } from "domain";
 
 const enum HIT {
-    USER, FLAG
+    USER,
+    FLAG
 }
 const enum LOBBY {
     SHOOTER_FFA, SHOOTER_TDM, LOOTER_FFA
@@ -20,27 +26,28 @@ export const hit = async (req: Request, res: Response) => {
     if(hitType === null) return JsonResponse.InvalidType(res).send()
 
     let [lobbyType, lobbyID] = await lobbyTypeParser(user.LobbyID)
-    if (lobbyID === null) return JsonResponse.NotFound(res, `Lobby invalid or not in a lobby`).send()
+    if (lobbyID === null || lobbyID === undefined) return JsonResponse.NotFound(res, `Lobby invalid or not in a lobby`).send()
     if (lobbyType === null) return JsonResponse.InvalidType(res).send()
 
-    let func: Function | undefined = undefined
+    let values: IHitRegisterValues = {
+            res: res,
+            scanner: user,
+            scannedID: hitID,
+            scannedType: hitType,
+            lobbyID: lobbyID,
+            lobbyType: lobbyType
+        }
 
     switch (lobbyType) {
-        case LOBBY.SHOOTER_FFA: func = SHOOTER_FFA_RegisterHit; break;
-        case LOBBY.SHOOTER_TDM: func = SHOOTER_TDM_RegisterHit; break;
-        case LOBBY.LOOTER_FFA:  func = LOOTER_FFA_RegisterHit ; break;
-        default: func = undefined; break;
+        case LOBBY.SHOOTER_FFA:
+            return await SHOOTER_FFA_RegisterHit(values)
+        case LOBBY.SHOOTER_TDM:
+            return await SHOOTER_TDM_RegisterHit(values)
+        case LOBBY.LOOTER_FFA:
+            return await LOOTER_FFA_RegisterHit(values)
+        default:
+            return JsonResponse.InvalidType(res).send()
     }
-
-    if (func === undefined) return JsonResponse.InvalidType(res).send()
-    else return await func({
-        res: res,
-        scanner: user,
-        scannedID: hitID,
-        scannedType: hitType,
-        lobbyID: lobbyID,
-        lobbyType: lobbyType
-    })
 }
 
 //#region Parsers
@@ -53,7 +60,7 @@ const userParser = (req: Request) => {
 
 const hitTypeParser = (req: Request) => {
     const hitID = req.params.hitid
-    const hitType = hitID.split("_")[0].toUpperCase()
+    const hitType = hitID.split("-")[0].toUpperCase()
 
     switch(hitType){
         case "USER":
@@ -71,9 +78,11 @@ const lobbyTypeParser = async (lobbyID: any) => {
 
     switch(lobby.LobbyType.toUpperCase()){
         case "SHOOTER_FFA":
+            return [LOBBY.SHOOTER_FFA, lobby.LobbyID] as [LOBBY, string]
         case "SHOOTER_TDM":
+            return [LOBBY.SHOOTER_TDM, lobby.LobbyID] as [LOBBY, string]
         case "LOOTER_FFA":
-            return [lobby.LobbyType.toUpperCase() as LOBBY, lobby.LobbyID] as [LOBBY, string]
+            return [LOBBY.LOOTER_FFA, lobby.LobbyID] as [LOBBY, string]
         default:
             return [null, lobby.LobbyID] as [null, string]
     }
@@ -100,19 +109,32 @@ const SHOOTER_FFA_RegisterHit = async (values: IHitRegisterValues) => {
     if(values.scanner.UserID === scannedUser.UserID) return JsonResponse.SamePlayer(values.res).send()
 
     let [error, message] = await addPlayerHit(values.scanner, scannedUser)
+    if(error) return JsonResponse.SomethingWentWrong(values.res, message).send()
+
+    return new JsonResponse(values.res,{
+        statusCode: ResponseCode.SUCCESS,
+        contents: {message: `Valid Hit`, code: GameCode.VALID_HIT, data: sanitiseUser(scannedUser)}
+    }).send()
 }
 
 const SHOOTER_TDM_RegisterHit = async (values: IHitRegisterValues) => {
     if(values.scannedType == HIT.FLAG) return JsonResponse.InvalidScanType(values.res, `You can't scan Flags in this gamemode`).send()
 
-    let scannedUser = await getUserByID(values.scannedID) as any
-    if(scannedUser === null) return JsonResponse.NotFound(values.res, `Flag not found`).send()
-
+    let scannedUser = await getUserByID(values.scannedID) as unknown as IUser
+    if(scannedUser === undefined)                      return JsonResponse.NotFound(values.res, `User not found`).send()
     if(values.scanner.LobbyID !== scannedUser.LobbyID) return JsonResponse.DifferentLobby(values.res).send()
-    if(values.scanner.TeamID === scannedUser.TeamID) return JsonResponse.SameTeam(values.res).send()
-    if(values.scanner.UserID === scannedUser.UserID) return JsonResponse.SamePlayer(values.res).send()
+    if(values.scanner.TeamID === scannedUser.TeamID)   return JsonResponse.SameTeam(values.res).send()
+    if(values.scanner.UserID === scannedUser.UserID)   return JsonResponse.SamePlayer(values.res).send()
+    if(!scannedUser.TeamID)                            return JsonResponse.ScannedUserNotInTeam(values.res).send()
 
-    let [error, message] = await addPlayerHit(values.scanner, scannedUser)
+    let [error, message] = await addPlayerHit(values.scanner, scannedUser, values.scanner.TeamID)
+    if(error) return JsonResponse.SomethingWentWrong(values.res, message).send()
+
+    return new JsonResponse(values.res,{
+        statusCode: ResponseCode.SUCCESS,
+        contents: {message: `Valid Hit`, code: GameCode.VALID_HIT, data: sanitiseUser(scannedUser)}
+    }).send()
+
 }
 const LOOTER_FFA_RegisterHit = async (values: IHitRegisterValues) => {
     if(values.scannedType == HIT.USER) return JsonResponse.InvalidScanType(values.res, `You can't scan Users in this gamemode`).send()
@@ -122,31 +144,55 @@ const LOOTER_FFA_RegisterHit = async (values: IHitRegisterValues) => {
 
     if(values.scanner.LobbyID !== scannedFlag.LobbyID) return JsonResponse.DifferentLobby(values.res).send()
 
-    // the scanned is a flag
-    // they are both in the same lobby
+    let [error, message] = await addFlagHit(values.scanner, values.scannedID)
+    if(error) return JsonResponse.SomethingWentWrong(values.res, message).send()
 
-    // TODO
-    // - check if the flag is already scanned
-
-
+    let response = new JsonResponse(values.res,{
+        statusCode: ResponseCode.SUCCESS,
+        contents: {message: `Valid Hit`, code: GameCode.VALID_HIT, data: scannedFlag}
+    })
+    return response.send()
 }
 //#endregion
 //#region Helper functions
 
 
 const addFlagHit = async (scanner: IUser, flag: any): Promise<[boolean, string]> => {
+    if(await isFlagDuplicate(scanner.UserID, flag.FlagID)) return [true, "INVALID_DUPLICATE"]
 
-    // check for duplicate flag hits
-
+    createLOOTER_FFAHit({
+        scanner: scanner.UserID,
+        flag: flag.FlagID,
+        lobby: scanner.LobbyID as string
+    })
     return [false, ""]
 }
 
-const addPlayerHit = async (scanner: IUser, player: any): Promise<[boolean, string]> => {
+const addPlayerHit = async (scanner: IUser, player: any, team?: string): Promise<[boolean, string]> => {
+    const threshold = 3
 
-    const threshold = 5
+    let lastHit = await getUsersLastHitTime(scanner.UserID)
+    if(lastHit){
+        let lastHitTime = new Date(lastHit).getTime()
+        let thresholdTime = new Date(lastHitTime + (threshold * 1000)).getTime()
+        let currentTime = new Date(Date.now()).getTime()
+        if(currentTime <= thresholdTime) return [true, "INVALID_TOO_SOON"]
+    }
 
-    // check for double intant-scans w/ threshold
-
+    if(team){
+        createSHOOTER_TDMHit({
+            scanner: scanner.UserID,
+            scanned: player.UserID,
+            lobby: scanner.LobbyID as string,
+            team: team
+        })
+    }else{
+        createSHOOTER_FFAHit({
+            scanner: scanner.UserID,
+            scanned: player.UserID,
+            lobby: scanner.LobbyID as string
+        })
+    }
     return [false, ""]
 }
 

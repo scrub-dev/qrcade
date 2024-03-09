@@ -9,7 +9,7 @@ import { IUser } from "@src/models/user.js";
 export default async (req : Request, res : Response, next: NextFunction) => {
 
     if(!req.body.user) return JsonResponse.InsuffientPermissions(res).send()
-    if(req.body.user.admin) next()
+    if(req.body.user.admin) return next()
 
     let authUser = (req.body.user as IUser).UserID
 

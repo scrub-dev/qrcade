@@ -16,6 +16,7 @@ import { getLobbyFlags as getFlags } from "@src/lib/models/lobby/get/getFlag.js"
 
 import { deleteTeam as deleteLobbyTeam, deleteLobbyTeams } from "@src/lib/models/lobby/delete/deleteTeam.js"
 import { deleteFlags, deleteFlag as deleteLobbyFlag } from "@src/lib/models/lobby/delete/deleteFlag.js"
+import { clearLobbyHits, clearTeamHits, clearUserHits } from "@src/lib/models/hit/delete/clearHits.js"
 
 export const getLobbyTypes = (req: Request, res: Response) => {
     let values = getGamemodes()
@@ -68,10 +69,12 @@ export const deleteLobby = async (req: Request, res: Response) => {
     let lobby = (await getLobbyByID(req.params.lobbyid))?.dataValues
     if(!lobby) return JsonResponse.NotFound(res).send()
 
-    await sequelize.models.Lobbies.destroy({where: {LobbyID: req.params.lobbyid}})
+    await clearLobbyHits(req.params.lobbyid)
     await removeUsersFromLobby(req.params.lobbyid)
     await deleteLobbyTeams(req.params.lobbyid)
     await deleteFlags(req.params.lobbyid)
+    await sequelize.models.Lobbies.destroy({where: {LobbyID: req.params.lobbyid}})
+
 
     return JsonResponse.Deleted(res, "Lobby").send()
 }
@@ -223,6 +226,7 @@ export const deleteTeam = async (req: Request, res: Response) => {
     let lobby = req.params.lobbyid
 
     if(!isValidLobby(lobby)) return JsonResponse.NotFound(res, "lobby").send()
+    await clearTeamHits(team)
     await deleteLobbyTeam(team)
     return JsonResponse.Deleted(res, "Team").send()
 }
@@ -256,6 +260,7 @@ export const leaveTeam = async (req: Request, res: Response) => {
     let user = (await getUserByID(userID)) as unknown as IUser
     if(!user) return JsonResponse.NotFound(res, "user").send()
 
+    await clearUserHits(user.UserID)
     await sequelize.models.Users.update({TeamID: null}, {where: {UserID: user.UserID}})
 
     return JsonResponse.UserLeftTeam(res).send()

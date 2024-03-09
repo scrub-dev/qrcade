@@ -36,4 +36,11 @@ export default async (s: Sequelize) => {
     // Hit.hasOne(User, {as: "Scanner"})
     // Hit.hasOne(User, {as: "ScannedPlayer"})
     // Hit.hasOne(Flag, {as: "ScannedFlag"})
+
+    Hit.belongsTo(User, {foreignKey: "ScannerID", as: ""})
+    Hit.belongsTo(User, {foreignKey: "ScannedUser", as: ""})
+    Hit.belongsTo(Lobby, {foreignKey: "LobbyID", as: ""})
+    Hit.belongsTo(Flag, {foreignKey: "ScannedFlag", as: ""})
+    Hit.belongsTo(Team, {foreignKey: "TeamID", as: ""})
+
 }

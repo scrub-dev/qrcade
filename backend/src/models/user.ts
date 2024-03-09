@@ -17,5 +17,7 @@ export interface IUser {
     Username: string,
     DisplayName: string,
     Passwd: string,
-    Admin: Boolean
+    Admin: Boolean,
+    TeamID?: string,
+    LobbyID?: string
 }
