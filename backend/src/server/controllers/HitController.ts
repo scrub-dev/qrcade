@@ -99,7 +99,7 @@ interface IHitRegisterValues {
 }
 
 const SHOOTER_FFA_RegisterHit = async (values: IHitRegisterValues) => {
-    if(values.scannedType == HIT.FLAG) return JsonResponse.InvalidScanType(values.res, `You can't scan Flags in this gamemode`).send()
+    if(values.scannedType == HIT.FLAG) return JsonResponse.InvalidScanType(values.res, `INVALID_LOBBY_SCAN_FLAG`).send()
 
     let scannedUser = await getUserByID(values.scannedID) as any
     if(!scannedUser || scannedUser === null) return JsonResponse.ScannedUserDoesNotExist(values.res).send()
@@ -118,7 +118,7 @@ const SHOOTER_FFA_RegisterHit = async (values: IHitRegisterValues) => {
 }
 
 const SHOOTER_TDM_RegisterHit = async (values: IHitRegisterValues) => {
-    if(values.scannedType == HIT.FLAG) return JsonResponse.InvalidScanType(values.res, `You can't scan Flags in this gamemode`).send()
+    if(values.scannedType == HIT.FLAG) return JsonResponse.InvalidScanType(values.res, `INVALID_LOBBY_SCAN_FLAG`).send()
 
     let scannedUser = await getUserByID(values.scannedID) as unknown as IUser
     if(!scannedUser || scannedUser === undefined) return JsonResponse.ScannedUserDoesNotExist(values.res).send()
@@ -139,9 +139,9 @@ const SHOOTER_TDM_RegisterHit = async (values: IHitRegisterValues) => {
 
 }
 const LOOTER_FFA_RegisterHit = async (values: IHitRegisterValues) => {
-    if(values.scannedType == HIT.USER) return JsonResponse.InvalidScanType(values.res, `You can't scan Users in this gamemode`).send()
+    if(values.scannedType == HIT.USER) return JsonResponse.InvalidScanType(values.res, `INVALID_LOBBY_SCAN_USER`).send()
 
-    let scannedFlag = await getFlagByID(values.scannedID)
+    let scannedFlag = (await getFlagByID(values.scannedID))?.dataValues
     if(scannedFlag === null) return JsonResponse.NotFound(values.res, `Flag not found`).send()
 
     if(values.scanner.LobbyID !== scannedFlag.LobbyID) return JsonResponse.DifferentLobby(values.res).send()
@@ -159,12 +159,13 @@ const LOOTER_FFA_RegisterHit = async (values: IHitRegisterValues) => {
 //#region Helper functions
 
 
-const addFlagHit = async (scanner: IUser, flag: any): Promise<[boolean, string]> => {
-    if(await isFlagDuplicate(scanner.UserID, flag.FlagID)) return [true, "INVALID_DUPLICATE"]
+const addFlagHit = async (scanner: IUser, flagID: any): Promise<[boolean, string]> => {
+
+    if(await isFlagDuplicate(scanner.UserID, flagID)) return [true, "INVALID_DUPLICATE"]
 
     createLOOTER_FFAHit({
         scanner: scanner.UserID,
-        flag: flag.FlagID,
+        flag: flagID,
         lobby: scanner.LobbyID as string
     })
     return [false, ""]
