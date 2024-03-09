@@ -14,7 +14,7 @@ import {router as RootRouter } from './routes/RootRoute.js'
 import {router as AdminRouter} from './routes/AdminRoute.js'
 import {router as LobbyRouter} from './routes/LobbyRoute.js'
 import {router as HitRouter  } from './routes/HitRoute.js'
-
+import {router as ScoreRouter  } from './routes/ScoreRoute.js'
 
 import {logger} from './middleware/logger.js';
 import { GeneralCode, ResponseCode } from './responses/DefaultResponse.js';
@@ -70,7 +70,8 @@ export class Server {
             {name: "User",  route: "/user",  router: UserRouter },
             {name: "Admin", route: "/admin", router: AdminRouter},
             {name: "Lobby", route: "/lobby", router: LobbyRouter},
-            {name: "Hit",   route: "/hit",   router: HitRouter  }
+            {name: "Hit",   route: "/hit",   router: HitRouter  },
+            {name: "Score", route: "/score", router: ScoreRouter}
         ]
         routes.forEach(e => {
             this._app.use(e.route, e.router);

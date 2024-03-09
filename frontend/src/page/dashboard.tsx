@@ -67,7 +67,7 @@ export default () => {
             </div>
         </div>
         <div id="content-wrapper" className="bg-black flex-grow px-10 gap-2 flex flex-col md:px-[10%] lg:px-[20%] xl:px-[25%]">
-            <Button text={"Scores"} onClick={() => {}} className={defaultButtonStyleAlt}/>
+            {lobbyInfo.LobbyID != undefined && <Button text={"Scores"} onClick={() => {nav(`/scoreboard/${lobbyInfo.LobbyID}`)}} className={defaultButtonStyleAlt}/>}
             <UserInformation DisplayName={userInfo.DisplayName}/>
             <LobbyInformation LobbyInfo={lobbyInfo} ParentCallback = {rerenderCallback}/>
             {showTeam ? <TeamInformation TeamInfo={teamInfo} UserTeam={userInfo.TeamID} ParentCallback={rerenderCallback} UserID={userInfo.UserID}/> : ""}

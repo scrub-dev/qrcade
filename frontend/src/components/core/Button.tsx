@@ -2,6 +2,7 @@ export interface IButtonProps {
     text: string,
     onClick: () => void,
     className?: string
+    style?: any
 }
 
 
@@ -10,6 +11,6 @@ export const defaultButtonStyleAlt = "text-2xl px-4 py-1 bg-main rounded font-gr
 
 export default (props: IButtonProps) => {
     return (
-        <button className={`${props.className || defaultButtonStyle}`} onClick={() => props.onClick()}>{props.text}</button>
+        <button className={`${props.className || defaultButtonStyle}`} onClick={() => props.onClick()} style={props.style}>{props.text}</button>
     )
 }
