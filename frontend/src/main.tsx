@@ -23,6 +23,8 @@ import PlayerList from './page/playerlist.tsx'
 import ScoreboardLobbySelect from './page/Scoreboard/ScoreboardLobbySelect.tsx'
 import Scoreboard from './page/Scoreboard/Scoreboard.tsx'
 import Hit from './page/hit.tsx'
+import Play from './page/RootSubPages/Play.tsx'
+import About from './page/RootSubPages/About.tsx'
 
 const authStore = createStore({
   authName: '_qrc',
@@ -128,6 +130,11 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
                 <Hit/>
               </RequireAuth>}>
             </Route>
+
+
+            <Route path='/play' element={<Play/>}></Route>
+            <Route path='/about' element={<About/>}></Route>
+
 
             // Player Score
             // Hit
