@@ -60,8 +60,8 @@ export default () => {
                 </div>
             </div>
             <div id="content-wrapper" className="bg-black flex-grow px-10 gap-2 flex flex-col md:px-[10%] lg:px-[20%] xl:px-[25%] items-center pt-5">
-                <div className="h-full w-full flex flex-col">
-                    <div className="h-full p-5 overflow-scroll">
+                <div className="h-full w-full flex flex-col p-5">
+                    <div className="h-full flex flex-col gap-1">
                         {playerList.length > 0 ? playerList.map((player: any, i: number) => <div key={i} className="rounded p-2 bg-main w-full text-center font-graffiti">{player.DisplayName}</div>): ""}
                         <p>{error}</p>
                     </div>

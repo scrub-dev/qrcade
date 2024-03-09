@@ -18,6 +18,11 @@ import { deleteTeam as deleteLobbyTeam, deleteLobbyTeams } from "@src/lib/models
 import { deleteFlags, deleteFlag as deleteLobbyFlag } from "@src/lib/models/lobby/delete/deleteFlag.js"
 import { clearLobbyHits, clearTeamHits, clearUserHits } from "@src/lib/models/hit/delete/clearHits.js"
 
+import { leaveTeam as leaveUserTeam } from "@src/lib/models/lobby/leave/leaveTeam.js"
+import { joinTeam as joinUserTeam } from "@src/lib/models/lobby/join/joinTeam.js"
+import { leaveLobby as leaveUserLobby } from "@src/lib/models/lobby/leave/leaveLobby.js"
+import { joinLobby as joinUserLobby } from "@src/lib/models/lobby/join/joinLobby.js"
+
 export const getLobbyTypes = (req: Request, res: Response) => {
     let values = getGamemodes()
 
@@ -132,7 +137,7 @@ export const joinLobby = async (req: Request, res: Response) => {
     let user = (await getUserByID(req.params.userid)) as unknown as IUser
     if(!user) return JsonResponse.NotFound(res, "user").send()
 
-    await sequelize.models.Users.update({LobbyID: lobby.LobbyID}, {where: {UserID: user.UserID}})
+    await joinUserLobby(user.UserID, lobby.LobbyID)
 
     return JsonResponse.UserJoinedLobby(res).send()
 }
@@ -145,7 +150,8 @@ export const leaveLobby = async (req: Request, res: Response) => {
     let user = (await getUserByID(req.params.userid)) as unknown as IUser
     if(!user) return JsonResponse.NotFound(res, "user").send()
 
-    await sequelize.models.Users.update({LobbyID: null, TeamID: null}, {where: {UserID: req.params.userid}})
+    await clearUserHits(user.UserID)
+    await leaveUserLobby(user.UserID)
 
     return JsonResponse.UserLeftLobby(res).send()
 }
@@ -244,7 +250,7 @@ export const joinTeam = async (req: Request, res: Response) => {
     let user = (await getUserByID(userID)) as unknown as IUser
     if(!user) return JsonResponse.NotFound(res, "user").send()
 
-    await sequelize.models.Users.update({TeamID: team.TeamID}, {where: {UserID: user.UserID}})
+    await joinUserTeam(user.UserID, team.TeamID)
 
     return JsonResponse.UserJoinedTeam(res).send()
 }
@@ -261,7 +267,7 @@ export const leaveTeam = async (req: Request, res: Response) => {
     if(!user) return JsonResponse.NotFound(res, "user").send()
 
     await clearUserHits(user.UserID)
-    await sequelize.models.Users.update({TeamID: null}, {where: {UserID: user.UserID}})
+    await leaveUserTeam(user.UserID)
 
     return JsonResponse.UserLeftTeam(res).send()
 }

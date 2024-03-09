@@ -4,7 +4,16 @@ import { Request, Response } from "express"
 import JsonResponse from "../responses/JsonResponse.js"
 import { IUser } from "@src/models/user.js"
 import hashPassword from "@src/lib/user/hashPassword.js"
-import { clearUserHits as clearAUsersHits } from "@src/lib/models/hit/delete/clearHits.js"
+
+import  {
+            clearUserHits as clearAUsersHits,
+            clearAllHits as clearHits,
+            clearLobbyHits as clearAllLobbyHits,
+            clearTeamHits as clearAllTeamHits
+        }
+        from "@src/lib/models/hit/delete/clearHits.js"
+import { getLobbyByID } from "@src/lib/models/lobby/get/getLobby.js"
+import { getTeamByID } from "@src/lib/models/lobby/get/getTeam.js"
 
 export const reset = async (req: Request, res: Response) => {
     let paramToReset = req.params.param.toUpperCase()
@@ -81,9 +90,36 @@ const removeAdmin = async (userID : string) => {
 
 //#region Hit Management
 
-export const clearAllHits = async (req: Request, res: Response) => {}
-export const clearUserHits = async (req: Request, res: Response) => {}
-export const clearLobbyHits = async (req: Request, res: Response) => {}
-export const clearTeamHits = async (req: Request, res: Response) => {}
+export const clearAllHits = async (req: Request, res: Response) => {
+    await clearHits()
+    return JsonResponse.Deleted(res, `All Hits`).send()
+}
+export const clearUserHits = async (req: Request, res: Response) => {
+    let userID = req.params.userid
+
+    let user = (await getUserByID(userID)) as unknown as IUser
+    if(!user) return JsonResponse.NotFound(res).send()
+
+    await clearAUsersHits(userID)
+    return JsonResponse.Deleted(res, `All Hits for ${user.Username}`).send()
+}
+export const clearLobbyHits = async (req: Request, res: Response) => {
+    let lobbyID = req.params.lobbyid
+
+    let lobby = await getLobbyByID(lobbyID) as any
+    if(!lobby) return JsonResponse.NotFound(res).send()
+
+    await clearAllLobbyHits(lobbyID)
+    return JsonResponse.Deleted(res, `All Hits for Lobby ${lobby.LobbyName}`).send()
+}
+export const clearTeamHits = async (req: Request, res: Response) => {
+    let teamID = req.params.teamid
+
+    let team = await getTeamByID(teamID) as any
+    if(!team) return JsonResponse.NotFound(res).send()
+
+    await clearAllTeamHits(teamID)
+    return JsonResponse.Deleted(res, `All Hits for Team ${team.TeamName}`).send()
+}
 
 //#endregion

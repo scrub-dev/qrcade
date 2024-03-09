@@ -48,16 +48,22 @@ export default (props: TTeamInformationProps) => {
         <div className="rounded bg-main_dark shadow-lg shadow-main text-center py-2 flex flex-col items-center justify-center gap-1">
             <p className="font-graffiti qrc-shadow text-2xl">Join a Team</p>
             <div className="flex flex-col justify-center w-full px-5 pb-1 gap-1">
-                {!props.TeamInfo ? <p>No teams available</p> :
-                    <>
-                        {props?.TeamInfo?.map((team: any, i: number) =>
-                        <Modal key={i} buttonName={team.TeamName} title={""} style="w-full bg-main rounded font-graffiti text-2xl py-1 text-stroke-md" background={team.TeamColour} outline="white">
-                            <div className="flex items-center justify-center">
-                                <Button text={`Join ${team.TeamName}`} onClick={() => joinTeam(team.TeamID)}/>
-                            </div>
-                        </Modal>)}
-                    </>
+                {!props.TeamInfo ?
+                <div className="flex flex-col gap-2">
+                    <p>There are no teams available</p>
+                    <Button text="Refresh" onClick={() => {props.ParentCallback()}}/>
+                </div>
+                :
+                <div className="flex flex-col gap-2">
+                    {props?.TeamInfo?.map((team: any, i: number) =>
+                    <Modal key={i} buttonName={team.TeamName} title={""} style="w-full bg-main rounded font-graffiti text-2xl py-1 text-stroke-md" background={team.TeamColour} outline="white">
+                        <div className="flex items-center justify-center">
+                            <Button text={`Join ${team.TeamName}`} onClick={() => joinTeam(team.TeamID)}/>
+                        </div>
+                    </Modal>)}
+                </div>
                 }
+
             </div>
         </div>
     </>)

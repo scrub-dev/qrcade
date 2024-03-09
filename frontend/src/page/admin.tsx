@@ -4,6 +4,7 @@ import { useEffect } from "react"
 import BackButton from "../components/core/BackButton"
 import { useNavigate } from "react-router-dom"
 import Button from "../components/core/Button"
+import RemoveAllHitsBtn from "../components/admin/hit/RemoveAllHitsBtn"
 
 export default () => {
     const nav = useNavigate()
@@ -40,11 +41,17 @@ export default () => {
                     <Button text={"List"} onClick={() => {nav("/admin/user/list")}}/>
                     </div>
                 </div>
-                <div id="content1" className="mt-2 p-2 border-main border-2 rounded">
+                <div id="content2" className="mt-2 p-2 border-main border-2 rounded">
                     <p className="pb-1 font-bold">Lobbies</p>
                     <div className="flex gap-2 items-center justify-center">
                     <Button text={"Create"} onClick={() => {nav("/admin/lobby/create")}}/>
                     <Button text={"List"} onClick={() => {nav("/admin/lobby/list")}}/>
+                    </div>
+                </div>
+                <div id="content3" className="mt-2 p-2 border-main border-2 rounded">
+                    <p className="pb-1 font-bold">Hits</p>
+                    <div className="flex gap-2 items-center justify-center">
+                        <RemoveAllHitsBtn/>
                     </div>
                 </div>
             </div>

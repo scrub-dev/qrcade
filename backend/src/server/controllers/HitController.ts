@@ -8,7 +8,6 @@ import { getUsersLastHitTime, isFlagDuplicate } from "@src/lib/models/hit/get/ge
 import { createLOOTER_FFAHit, createSHOOTER_FFAHit, createSHOOTER_TDMHit } from "@src/lib/models/hit/create/createHits.js";
 import { GameCode, ResponseCode } from "../responses/DefaultResponse.js";
 import sanitiseUser from "@src/lib/user/sanitiseUser.js";
-import { create } from "domain";
 
 const enum HIT {
     USER,
@@ -103,7 +102,8 @@ const SHOOTER_FFA_RegisterHit = async (values: IHitRegisterValues) => {
     if(values.scannedType == HIT.FLAG) return JsonResponse.InvalidScanType(values.res, `You can't scan Flags in this gamemode`).send()
 
     let scannedUser = await getUserByID(values.scannedID) as any
-    if(scannedUser === null) return JsonResponse.NotFound(values.res, `Flag not found`).send()
+    if(!scannedUser || scannedUser === null) return JsonResponse.ScannedUserDoesNotExist(values.res).send()
+    if(!scannedUser.LobbyID || scannedUser.LobbyID === null) return JsonResponse.ScannedUserNotInLobby(values.res).send()
 
     if(values.scanner.LobbyID !== scannedUser.LobbyID) return JsonResponse.DifferentLobby(values.res).send()
     if(values.scanner.UserID === scannedUser.UserID) return JsonResponse.SamePlayer(values.res).send()
@@ -121,11 +121,13 @@ const SHOOTER_TDM_RegisterHit = async (values: IHitRegisterValues) => {
     if(values.scannedType == HIT.FLAG) return JsonResponse.InvalidScanType(values.res, `You can't scan Flags in this gamemode`).send()
 
     let scannedUser = await getUserByID(values.scannedID) as unknown as IUser
-    if(scannedUser === undefined)                      return JsonResponse.NotFound(values.res, `User not found`).send()
+    if(!scannedUser || scannedUser === undefined) return JsonResponse.ScannedUserDoesNotExist(values.res).send()
+    if(!scannedUser.LobbyID || scannedUser.LobbyID === null) return JsonResponse.ScannedUserNotInLobby(values.res).send()
+
     if(values.scanner.LobbyID !== scannedUser.LobbyID) return JsonResponse.DifferentLobby(values.res).send()
-    if(values.scanner.TeamID === scannedUser.TeamID)   return JsonResponse.SameTeam(values.res).send()
-    if(values.scanner.UserID === scannedUser.UserID)   return JsonResponse.SamePlayer(values.res).send()
-    if(!scannedUser.TeamID)                            return JsonResponse.ScannedUserNotInTeam(values.res).send()
+    if(values.scanner.TeamID === scannedUser.TeamID) return JsonResponse.SameTeam(values.res).send()
+    if(values.scanner.UserID === scannedUser.UserID) return JsonResponse.SamePlayer(values.res).send()
+    if(!scannedUser.TeamID) return JsonResponse.ScannedUserNotInTeam(values.res).send()
 
     let [error, message] = await addPlayerHit(values.scanner, scannedUser, values.scanner.TeamID)
     if(error) return JsonResponse.SomethingWentWrong(values.res, message).send()

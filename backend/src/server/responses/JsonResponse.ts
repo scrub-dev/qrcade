@@ -64,5 +64,8 @@ export default class {
     static SameTeam = (res: Response) => new this(res, {statusCode: ResponseCode.SUCCESS, contents: {code: GameCode.INVALID_TEAM_SAME, message: "You are on the same team!"}})
     static SamePlayer = (res: Response) => new this(res, {statusCode: ResponseCode.SUCCESS, contents: {code: GameCode.INVALID_PLAYER_SAME, message: "You cannot scan yourself!"}})
     static SomethingWentWrong = (res: Response, message: string) => new this(res, {statusCode: ResponseCode.SUCCESS, contents: {code: GameCode.INVALID_HIT, message: message}})
+
     static ScannedUserNotInTeam = (res: Response) => new this(res, {statusCode: ResponseCode.SUCCESS, contents: {code: GameCode.INVALID_HIT, message: "Scanned Player not in a team"}})
+    static ScannedUserNotInLobby = (res: Response) => new this(res, {statusCode: ResponseCode.SUCCESS, contents: {code: GameCode.INVALID_HIT, message: "Scanned Player not in a lobby"}})
+    static ScannedUserDoesNotExist = (res: Response) => new this(res, {statusCode: ResponseCode.SUCCESS, contents: {code: GameCode.INVALID_HIT, message: "Scanned Player does not exist"}})
 }
