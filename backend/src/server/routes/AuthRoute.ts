@@ -1,10 +1,11 @@
 
 import { AuthState } from '@lib/auth/states.js'
-import { login, register } from '@server/controllers/AuthController.js'
+import { login, logout, register } from '@server/controllers/AuthController.js'
 import { IUser } from '@src/models/user.js'
 import express, { NextFunction, Request, Response } from 'express'
 import passport from 'passport'
 import UserAuthorisationHandler from '../handlers/UserAuthorisationHandler.js'
+import AuthorisationHandler from '../handlers/AuthorisationHandler.js'
 export const router = express.Router()
 
 
@@ -28,3 +29,5 @@ router.post("/register", (req, res) => {
         register(err, user, info, req, res)
     })(req, res)
 })
+
+router.delete("/logout", AuthorisationHandler, logout)

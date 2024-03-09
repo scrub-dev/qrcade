@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom"
 import useSignOut from "react-auth-kit/hooks/useSignOut"
 import ViewDashboardBtn from "../dashboard/ViewDashboardBtn"
 import ViewRootBtn from "../root/ViewRootBtn"
+import request from "../util/connection/request"
 
 export interface ILogInOutProps {
     isRoot?: boolean
@@ -23,14 +24,11 @@ export default (props: ILogInOutProps) => {
         nav("/login")
     }
 
-    const handleOnClick_Logout = () => {
-        signOut()
-        nav("/")
-        // TODO:
-        /**
-         *  1. LEAVE TEAM
-         *  2. LEAVE LOBBY
-         */
+    const handleOnClick_Logout = async () => {
+        await request.delete("auth/logout").then(() => {
+            signOut()
+            nav("/")
+        })
     }
 
     return (

@@ -3,6 +3,9 @@ import { Log, LogType } from '@lib/logging/log.js'
 import { AuthCode, GeneralCode, ResponseCode } from '@server/responses/DefaultResponse.js'
 import JsonResponse from '@server/responses/JsonResponse.js'
 import getAuthSecret from '@src/lib/auth/getAuthSecret.js'
+import { clearUserHits } from '@src/lib/models/hit/delete/clearHits.js'
+import { leaveLobby } from '@src/lib/models/lobby/leave/leaveLobby.js'
+import { leaveTeam } from '@src/lib/models/lobby/leave/leaveTeam.js'
 import sanitiseUser from '@src/lib/user/sanitiseUser.js'
 import { IUser } from '@src/models/user.js'
 import { Request, Response } from 'express'
@@ -98,4 +101,15 @@ export const login = (err: Error | null, user: IUser | boolean, info: {state: Au
             }
         ).send()
     })
+}
+
+export const logout = async (req: Request, res: Response) => {
+    let user = req.body.user as IUser
+    if(!user) return JsonResponse.InsuffientPermissions(res).send()
+
+    await clearUserHits(user.UserID)
+    await leaveTeam(user.UserID)
+    await leaveLobby(user.UserID)
+
+    return JsonResponse.FieldUpdated(res, `Hits, Team, Lobby`).send()
 }
