@@ -1,5 +1,5 @@
 export default {
-    PROD                : false,
+    PROD                : true,
     BACKEND_DOMAIN_TEST : "http://localhost:5000",
     BACKEND_DOMAIN_LIVE : "https://qrcade.xyz/api",
 

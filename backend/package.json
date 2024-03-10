@@ -22,6 +22,7 @@
     "undici-types": "^5.26.5"
   },
   "scripts": {
+    "prod": "tsc --project tsconfig.json && tsc-alias -p tsconfig.json && pm2 start ./build/index.js --name backend --port 5000",
     "test": "tsc --project tsconfig.json && tsc-alias -p tsconfig.json && node ./build/index.js --experimental-specifier-resolution=node",
     "build": "tsc --project tsconfig.json && tsc-alias -p tsconfig.json",
     "build:watch": "tsc && (concurrently \"tsc -w\" \"tsc-alias -w\")"

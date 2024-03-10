@@ -47,7 +47,7 @@ export class Server {
 
     registerMiddleware = () => {
         const middleware = [
-            {name: "cors",         func: cors({credentials: true, origin: "http://localhost:3000", optionsSuccessStatus: 200})},
+            {name: "cors",         func: cors({credentials: true, origin: "https://qrcade.xyz", optionsSuccessStatus: 200})},
             {name: "logger",       func: logger},
             {name: "passport",     func: passport.initialize()},
             {name: "cookieparser", func: cookieParser()},
