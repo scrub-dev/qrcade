@@ -7,8 +7,18 @@ import {getUserCount } from "@lib/models/user/getUser.js";
 import { Sequelize } from "sequelize";
 
 
-export default () => {
-    if(!config.PERSIST_DB) createDefaultUser().then(() => {Log("Created default user...", LogType.INI)})
+export default async () => {
+
+    // get count of existing users
+    // if no users, create default user
+
+    let userCount = await getUserCount()
+
+    if(!config.PERSIST_DB && userCount === 0) {
+        Log("Creating default user", LogType.INI)
+        await createDefaultUser()
+    }
+
 
     if(config.PERSIST_DB && config.GENERATE_ACCOUNTS) return Log("Skipping generating accounts, database persisted")
 
